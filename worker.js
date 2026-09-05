@@ -43,11 +43,11 @@ function json(data, status = 200) {
   });
 }
 
-async function getProducts(env) {
-  const saved = await env.PRODUCTS.get("products", "json");
+async function readProducts(env) {
+  const value = await env.PRODUCTS.get("products", "json");
 
-  if (Array.isArray(saved)) {
-    return saved;
+  if (Array.isArray(value)) {
+    return value;
   }
 
   await env.PRODUCTS.put(
@@ -58,19 +58,14 @@ async function getProducts(env) {
   return DEFAULT_PRODUCTS;
 }
 
-function checkPassword(request, env, body = {}) {
-  const headerPassword =
-    request.headers.get("X-Admin-Password") || "";
-
-  const bodyPassword =
-    body.password || "";
-
-  const password =
-    headerPassword || bodyPassword;
+function validPassword(request, env, body) {
+  const header = request.headers.get("X-Admin-Password") || "";
+  const bodyPassword = body?.password || "";
 
   return Boolean(
     env.ADMIN_PASSWORD &&
-    password === env.ADMIN_PASSWORD
+    (header === env.ADMIN_PASSWORD ||
+     bodyPassword === env.ADMIN_PASSWORD)
   );
 }
 
@@ -79,10 +74,15 @@ export default {
 
     const url = new URL(request.url);
 
+    if (request.method === "OPTIONS") {
+      return json({});
+    }
+
     /*
      * ПРОВЕРКА KV
      */
     if (url.pathname === "/api/test-kv") {
+
       try {
 
         await env.PRODUCTS.put(
@@ -95,8 +95,8 @@ export default {
 
         return json({
           ok: true,
-          products: "KV подключен",
-          value: value
+          kv: true,
+          value
         });
 
       } catch (error) {
@@ -109,14 +109,7 @@ export default {
     }
 
     /*
-     * OPTIONS
-     */
-    if (request.method === "OPTIONS") {
-      return json({});
-    }
-
-    /*
-     * API ТОВАРОВ
+     * ТОВАРЫ
      */
     if (url.pathname === "/api/products") {
 
@@ -126,7 +119,10 @@ export default {
         try {
           body = await request.json();
         } catch {
-          body = {};
+          return json({
+            ok: false,
+            error: "Неверный JSON."
+          }, 400);
         }
       }
 
@@ -140,42 +136,38 @@ export default {
        */
       if (action === "login") {
 
-        if (!checkPassword(request, env, body)) {
+        if (!validPassword(request, env, body)) {
           return json({
             ok: false,
             error: "Неверный пароль."
           }, 401);
         }
 
-        const products =
-          await getProducts(env);
-
         return json({
-          ok: true,
-          products: products
+          ok: true
         });
       }
 
       /*
-       * СПИСОК ТОВАРОВ
+       * СПИСОК
        */
       if (action === "list") {
 
         const products =
-          await getProducts(env);
+          await readProducts(env);
 
         return json({
           ok: true,
-          products: products
+          products
         });
       }
 
       /*
-       * СОХРАНЕНИЕ ТОВАРОВ
+       * СОХРАНЕНИЕ
        */
       if (action === "save") {
 
-        if (!checkPassword(request, env, body)) {
+        if (!validPassword(request, env, body)) {
           return json({
             ok: false,
             error: "Неверный пароль."
@@ -185,16 +177,19 @@ export default {
         if (!Array.isArray(body.products)) {
           return json({
             ok: false,
-            error: "Товары не переданы."
+            error: "Список товаров не передан."
           }, 400);
         }
 
+        const data =
+          JSON.stringify(body.products);
+
         await env.PRODUCTS.put(
           "products",
-          JSON.stringify(body.products)
+          data
         );
 
-        const saved =
+        const check =
           await env.PRODUCTS.get(
             "products",
             "json"
@@ -202,7 +197,7 @@ export default {
 
         return json({
           ok: true,
-          products: saved
+          products: check
         });
       }
 
@@ -222,7 +217,7 @@ export default {
     }
 
     /*
-     * СОЗДАНИЕ ЗАКАЗА
+     * ЗАКАЗ
      */
     if (
       (
@@ -256,8 +251,7 @@ export default {
         ) {
           return json({
             хорошо: false,
-            ошибка:
-              "Заполните обязательные поля."
+            ошибка: "Заполните обязательные поля."
           }, 400);
         }
 
@@ -267,19 +261,16 @@ export default {
         ) {
           return json({
             хорошо: false,
-            ошибка:
-              "Telegram ещё не настроен."
+            ошибка: "Telegram ещё не настроен."
           }, 500);
         }
 
         const lines =
-          предметы
-            .map(item =>
-              `• ${item.имя} × ${item.количество} — ${Number(
-                item.цена * item.количество
-              ).toLocaleString("ru-RU")} ₽`
-            )
-            .join("\n");
+          предметы.map(item =>
+            `• ${item.имя} × ${item.количество} — ${Number(
+              item.цена * item.количество
+            ).toLocaleString("ru-RU")} ₽`
+          ).join("\n");
 
         const telegram =
           telegramUser?.имя_пользователя
@@ -303,31 +294,28 @@ export default {
           ) +
           `\n\n👤 Telegram: ${telegram}`;
 
-        const tgResponse =
+        const response =
           await fetch(
             `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
             {
               method: "POST",
               headers: {
-                "Content-Type":
-                  "application/json"
+                "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                chat_id:
-                  env.ADMIN_CHAT_ID,
-                text: text
+                chat_id: env.ADMIN_CHAT_ID,
+                text
               })
             }
           );
 
         const result =
-          await tgResponse.json();
+          await response.json();
 
         if (!result.ok) {
           return json({
             хорошо: false,
-            ошибка:
-              "Telegram не принял сообщение."
+            ошибка: "Telegram не принял сообщение."
           }, 502);
         }
 
@@ -339,8 +327,7 @@ export default {
 
         return json({
           хорошо: false,
-          ошибка:
-            "Ошибка сервера."
+          ошибка: "Ошибка сервера."
         }, 500);
       }
     }
@@ -361,9 +348,6 @@ export default {
       );
     }
 
-    /*
-     * СТАТИЧЕСКИЙ САЙТ
-     */
     return env.ASSETS.fetch(request);
   }
 };
