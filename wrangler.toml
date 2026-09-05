@@ -1,5 +1,6 @@
 name = "seouldrop-shop"
 compatibility_date = "2026-09-05"
+main = "worker.js"
 
 [assets]
 directory = "."
