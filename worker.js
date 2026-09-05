@@ -33,6 +33,9 @@ function json(data, status = 200) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+      "Pragma": "no-cache",
+      "Expires": "0",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, X-Admin-Password"
@@ -81,6 +84,7 @@ export default {
      */
     if (url.pathname === "/api/test-kv") {
       try {
+
         await env.PRODUCTS.put(
           "test",
           "работает"
@@ -167,7 +171,7 @@ export default {
       }
 
       /*
-       * СОХРАНЕНИЕ
+       * СОХРАНЕНИЕ ТОВАРОВ
        */
       if (action === "save") {
 
@@ -269,11 +273,13 @@ export default {
         }
 
         const lines =
-          предметы.map(item =>
-            `• ${item.имя} × ${item.количество} — ${Number(
-              item.цена * item.количество
-            ).toLocaleString("ru-RU")} ₽`
-          ).join("\n");
+          предметы
+            .map(item =>
+              `• ${item.имя} × ${item.количество} — ${Number(
+                item.цена * item.количество
+              ).toLocaleString("ru-RU")} ₽`
+            )
+            .join("\n");
 
         const telegram =
           telegramUser?.имя_пользователя
@@ -307,7 +313,8 @@ export default {
                   "application/json"
               },
               body: JSON.stringify({
-                chat_id: env.ADMIN_CHAT_ID,
+                chat_id:
+                  env.ADMIN_CHAT_ID,
                 text: text
               })
             }
@@ -332,7 +339,8 @@ export default {
 
         return json({
           хорошо: false,
-          ошибка: "Ошибка сервера."
+          ошибка:
+            "Ошибка сервера."
         }, 500);
       }
     }
@@ -354,7 +362,7 @@ export default {
     }
 
     /*
-     * САЙТ
+     * СТАТИЧЕСКИЙ САЙТ
      */
     return env.ASSETS.fetch(request);
   }
