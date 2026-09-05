@@ -1,5 +1,3 @@
-const PRODUCTS_KEY = "products";
-
 const DEFAULT_PRODUCTS = [
   {
     id: "dynamite",
@@ -35,19 +33,25 @@ function json(data, status = 200) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Access-Control-Allow-Origin": "*"
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, X-Admin-Password"
     }
   });
 }
 
-function getProducts() {
-  const saved = globalThis.__SEOULDROP_PRODUCTS__;
+async function loadProducts(env) {
+  const saved = await env.PRODUCTS.get("products", "json");
 
   if (Array.isArray(saved)) {
     return saved;
   }
 
-  globalThis.__SEOULDROP_PRODUCTS__ = DEFAULT_PRODUCTS;
+  await env.PRODUCTS.put(
+    "products",
+    JSON.stringify(DEFAULT_PRODUCTS)
+  );
+
   return DEFAULT_PRODUCTS;
 }
 
@@ -66,13 +70,7 @@ export default {
     const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
-      return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST,DELETE,OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type,X-Admin-Password"
-        }
-      });
+      return json({});
     }
 
     // Получить товары
@@ -80,10 +78,22 @@ export default {
       url.pathname === "/api/products" ||
       url.pathname === "/.netlify/functions/products"
     ) {
-      return json({
-        ok: true,
-        products: getProducts()
-      });
+      try {
+        const products = await loadProducts(env);
+
+        return json({
+          ok: true,
+          products
+        });
+      } catch (error) {
+        return json(
+          {
+            ok: false,
+            error: "Ошибка чтения каталога."
+          },
+          500
+        );
+      }
     }
 
     // Сохранить товары
@@ -94,31 +104,42 @@ export default {
     ) {
       if (!checkPassword(request, env)) {
         return json(
-          { ok: false, error: "Неверный пароль администратора." },
+          {
+            ok: false,
+            error: "Неверный пароль администратора."
+          },
           401
         );
       }
 
       try {
         const body = await request.json();
-        const products = body.products;
 
-        if (!Array.isArray(products)) {
+        if (!Array.isArray(body.products)) {
           return json(
-            { ok: false, error: "Неверный формат товаров." },
+            {
+              ok: false,
+              error: "Неверный формат товаров."
+            },
             400
           );
         }
 
-        globalThis.__SEOULDROP_PRODUCTS__ = products;
+        await env.PRODUCTS.put(
+          "products",
+          JSON.stringify(body.products)
+        );
 
         return json({
           ok: true,
-          products
+          products: body.products
         });
-      } catch {
+      } catch (error) {
         return json(
-          { ok: false, error: "Ошибка сохранения." },
+          {
+            ok: false,
+            error: "Ошибка сохранения каталога."
+          },
           500
         );
       }
@@ -197,7 +218,7 @@ export default {
             : "") +
           `\n\n👤 Telegram: ${telegram}`;
 
-        const telegramResponse = await fetch(
+        const response = await fetch(
           `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
           {
             method: "POST",
@@ -211,7 +232,7 @@ export default {
           }
         );
 
-        const result = await telegramResponse.json();
+        const result = await response.json();
 
         if (!result.ok) {
           return json(
@@ -223,8 +244,10 @@ export default {
           );
         }
 
-        return json({ хорошо: true });
-      } catch {
+        return json({
+          хорошо: true
+        });
+      } catch (error) {
         return json(
           {
             хорошо: false,
@@ -235,14 +258,17 @@ export default {
       }
     }
 
-    // Страница админки
+    // Админка
     if (url.pathname === "/admin") {
       return env.ASSETS.fetch(
-        new Request(new URL("/admin.html", request.url), request)
+        new Request(
+          new URL("/admin.html", request.url),
+          request
+        )
       );
     }
 
-    // Обычные страницы магазина
+    // Магазин
     return env.ASSETS.fetch(request);
   }
 };
