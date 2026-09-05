@@ -250,6 +250,7 @@ body{
 
 <label>
 Название
+
 <input
   class="input"
   id="fName"
@@ -258,6 +259,7 @@ body{
 
 <label>
 Цена
+
 <input
   class="input"
   id="fPrice"
@@ -363,40 +365,34 @@ let adminPassword = "";
 
 /* API */
 
-async function api(action, body){
+async function api(action, body = {}) {
 
-  const headers = {
-    "Content-Type":"application/json"
-  };
-
-  if(adminPassword){
-    headers["X-Admin-Password"] = adminPassword;
-  }
-
-  let url = "/api/products";
-
-  if(action === "list"){
-    url += "?action=list";
-  }
+  let url = "/api/products?action=" +
+    encodeURIComponent(action);
 
   const options = {
-    method: action === "list" ? "GET" : "POST",
-    headers
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Admin-Password": adminPassword
+    },
+    body: JSON.stringify({
+      ...body,
+      action: action
+    })
   };
 
-  if(action !== "list"){
-    options.body = JSON.stringify(body || {});
-  }
+  const response =
+    await fetch(url, options);
 
-  const response = await fetch(url, options);
+  const data =
+    await response
+      .json()
+      .catch(() => ({
+        error: "Ошибка ответа сервера"
+      }));
 
-  const data = await response
-    .json()
-    .catch(() => ({
-      error:"Ошибка ответа сервера"
-    }));
-
-  if(!response.ok){
+  if (!response.ok) {
     throw new Error(
       data.error || "Ошибка"
     );
@@ -408,146 +404,166 @@ async function api(action, body){
 
 /* LOGIN */
 
-async function login(){
+async function login() {
 
   const password =
-    document.getElementById("password").value.trim();
+    document
+      .getElementById("password")
+      .value
+      .trim();
 
-  if(!password){
-    document.getElementById("loginError").textContent =
+  if (!password) {
+
+    document
+      .getElementById("loginError")
+      .textContent =
       "Введите пароль";
+
     return;
   }
 
-  try{
+  try {
 
     adminPassword = password;
 
-    const data = await api("list");
+    const data =
+      await api(
+        "login",
+        {
+          password: password
+        }
+      );
 
-    if(!Array.isArray(data.products)){
+    if (!data.ok) {
       throw new Error(
-        "Не удалось загрузить каталог"
+        data.error ||
+        "Ошибка входа"
       );
     }
 
-    products = data.products;
+    await load();
 
     document
       .getElementById("login")
-      .classList.add("hidden");
+      .classList
+      .add("hidden");
 
     document
       .getElementById("app")
-      .classList.remove("hidden");
+      .classList
+      .remove("hidden");
 
-    render();
-
-  }catch(error){
+  } catch (error) {
 
     adminPassword = "";
 
     document
       .getElementById("loginError")
-      .textContent = error.message;
-
+      .textContent =
+      error.message;
   }
 }
 
 
 /* LOAD */
 
-async function load(){
+async function load() {
 
-  try{
+  const data =
+    await api("list");
 
-    const data = await api("list");
+  products =
+    Array.isArray(data.products)
+      ? data.products
+      : [];
 
-    products = data.products || [];
-
-    render();
-
-  }catch(error){
-
-    alert(error.message);
-
-  }
+  render();
 }
 
 
 /* RENDER */
 
-function render(){
+function render() {
 
   const box =
-    document.getElementById("products");
+    document
+      .getElementById("products");
 
   box.innerHTML = "";
 
-  products.forEach((product,index)=>{
+  products.forEach(
+    (product, index) => {
 
-    const element =
-      document.createElement("div");
+      const element =
+        document
+          .createElement("div");
 
-    element.className = "product";
+      element.className =
+        "product";
 
-    element.innerHTML = `
+      element.innerHTML = `
 
-      <img
-        src="${product.image || ""}"
-        onerror="this.style.visibility='hidden'"
-      >
+        <img
+          src="${product.image || ""}"
+          onerror="
+            this.style.visibility='hidden'
+          "
+        >
 
-      <div>
+        <div>
 
-        <b>${esc(product.name)}</b>
+          <b>
+            ${esc(product.name)}
+          </b>
 
-        <div class="muted">
+          <div class="muted">
 
-          ${Number(product.price)
-            .toLocaleString("ru-RU")} ₽
+            ${Number(product.price)
+              .toLocaleString("ru-RU")} ₽
 
-          ·
+            ·
 
-          ${
-            product.available
-              ? "🟢 В наличии"
-              : "🔴 Нет в наличии"
-          }
+            ${
+              product.available
+                ? "🟢 В наличии"
+                : "🔴 Нет в наличии"
+            }
+
+          </div>
 
         </div>
 
-      </div>
+        <div class="actions">
 
-      <div class="actions">
+          <button
+            class="btn secondary"
+            onclick="edit(${index})"
+          >
+            Изменить
+          </button>
 
-        <button
-          class="btn secondary"
-          onclick="edit(${index})"
-        >
-          Изменить
-        </button>
+          <button
+            class="btn secondary"
+            onclick="
+              removeProduct(${index})
+            "
+          >
+            Удалить
+          </button>
 
-        <button
-          class="btn secondary"
-          onclick="removeProduct(${index})"
-        >
-          Удалить
-        </button>
+        </div>
+      `;
 
-      </div>
-    `;
+      box.appendChild(element);
 
-    box.appendChild(element);
-
-  });
-
+    }
+  );
 }
 
 
 /* ESCAPE */
 
-function esc(value){
+function esc(value) {
 
   return String(value || "")
     .replace(
@@ -560,74 +576,85 @@ function esc(value){
         "'":"&#39;"
       }[char])
     );
-
 }
 
 
-/* NEW PRODUCT */
+/* NEW */
 
-function newProduct(){
+function newProduct() {
 
   editing = null;
   imageData = null;
 
   document
     .getElementById("editorTitle")
-    .textContent = "Новый товар";
+    .textContent =
+    "Новый товар";
 
   fill({
-    name:"",
-    price:0,
-    category:"albums",
-    description:"",
-    available:true,
-    image:null
+    name: "",
+    price: 0,
+    category: "albums",
+    description: "",
+    available: true,
+    image: null
   });
 
   document
     .getElementById("editor")
-    .classList.remove("hidden");
-
+    .classList
+    .remove("hidden");
 }
 
 
 /* EDIT */
 
-function edit(index){
+function edit(index) {
 
   editing = index;
   imageData = null;
 
   document
     .getElementById("editorTitle")
-    .textContent = "Изменить товар";
+    .textContent =
+    "Изменить товар";
 
   fill(products[index]);
 
   document
     .getElementById("editor")
-    .classList.remove("hidden");
-
+    .classList
+    .remove("hidden");
 }
 
 
 /* FILL */
 
-function fill(product){
+function fill(product) {
 
-  document.getElementById("fName").value =
+  document
+    .getElementById("fName")
+    .value =
     product.name || "";
 
-  document.getElementById("fPrice").value =
+  document
+    .getElementById("fPrice")
+    .value =
     product.price || 0;
 
-  document.getElementById("fCategory").value =
+  document
+    .getElementById("fCategory")
+    .value =
     product.category || "albums";
 
-  document.getElementById("fDesc").value =
+  document
+    .getElementById("fDesc")
+    .value =
     product.description || "";
 
-  document.getElementById("fAvailable").checked =
+  document
+    .getElementById("fAvailable")
+    .checked =
     !!product.available;
 
   const preview =
@@ -637,21 +664,24 @@ function fill(product){
     product.image || "";
 
   preview.style.display =
-    product.image ? "block" : "none";
+    product.image
+      ? "block"
+      : "none";
 
-  document.getElementById("fImage").value = "";
-
+  document
+    .getElementById("fImage")
+    .value = "";
 }
 
 
-/* CLOSE EDITOR */
+/* CLOSE */
 
-function closeEditor(){
+function closeEditor() {
 
   document
     .getElementById("editor")
-    .classList.add("hidden");
-
+    .classList
+    .add("hidden");
 }
 
 
@@ -661,37 +691,41 @@ document
   .getElementById("fImage")
   .addEventListener(
     "change",
-    ()=>{
-      
-      const file =
-        document.getElementById("fImage").files[0];
+    function() {
 
-      if(!file)return;
+      const file =
+        this.files[0];
+
+      if (!file) return;
 
       const reader =
         new FileReader();
 
-      reader.onload = ()=>{
+      reader.onload =
+        function() {
 
-        imageData = reader.result;
+          imageData =
+            reader.result;
 
-        const preview =
-          document.getElementById("preview");
+          const preview =
+            document
+              .getElementById("preview");
 
-        preview.src = imageData;
-        preview.style.display = "block";
+          preview.src =
+            imageData;
 
-      };
+          preview.style.display =
+            "block";
+        };
 
       reader.readAsDataURL(file);
-
     }
   );
 
 
-/* APPLY EDITOR */
+/* APPLY */
 
-function applyEditor(){
+function applyEditor() {
 
   const old =
     editing === null
@@ -702,7 +736,7 @@ function applyEditor(){
 
     id:
       old?.id ||
-      ("p_" + Date.now()),
+      "p_" + Date.now(),
 
     name:
       document
@@ -738,80 +772,90 @@ function applyEditor(){
       imageData !== null
         ? imageData
         : (old?.image || null)
-
   };
 
-  if(editing === null){
+  if (editing === null) {
 
     products.push(product);
 
-  }else{
+  } else {
 
-    products[editing] = product;
-
+    products[editing] =
+      product;
   }
 
   render();
   closeEditor();
-
 }
 
 
 /* DELETE */
 
-function removeProduct(index){
+function removeProduct(index) {
 
-  if(
+  if (
     confirm(
       "Удалить этот товар?"
     )
-  ){
+  ) {
 
-    products.splice(index,1);
+    products.splice(index, 1);
 
     render();
-
   }
-
 }
 
 
 /* SAVE */
 
-async function saveAll(){
+async function saveAll() {
 
-  try{
+  try {
 
-    await api(
-      "save",
-      {
-        products: products
-      }
-    );
+    const data =
+      await api(
+        "save",
+        {
+          products: products
+        }
+      );
+
+    if (!data.ok) {
+
+      throw new Error(
+        data.error ||
+        "Не удалось сохранить"
+      );
+    }
+
+    products =
+      Array.isArray(data.products)
+        ? data.products
+        : products;
+
+    render();
 
     alert(
       "Изменения сохранены 💜"
     );
 
-  }catch(error){
+  } catch (error) {
 
     alert(
+      "Ошибка сохранения: " +
       error.message
     );
-
   }
-
 }
 
 
 /* LOGOUT */
 
-function logout(){
+function logout() {
 
   adminPassword = "";
 
   location.reload();
-
 }
 
 </script>
