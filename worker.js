@@ -28,7 +28,7 @@ const DEFAULT_PRODUCTS = [
   }
 ];
 
-function response(data, status = 200) {
+function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
@@ -55,7 +55,7 @@ async function getProducts(env) {
   return DEFAULT_PRODUCTS;
 }
 
-function authorized(request, env, body = {}) {
+function checkPassword(request, env, body = {}) {
   const headerPassword =
     request.headers.get("X-Admin-Password") || "";
 
@@ -76,14 +76,44 @@ export default {
 
     const url = new URL(request.url);
 
-    if (request.method === "OPTIONS") {
-      return response({});
+    /*
+     * ПРОВЕРКА KV
+     */
+    if (url.pathname === "/api/test-kv") {
+      try {
+        await env.PRODUCTS.put(
+          "test",
+          "работает"
+        );
+
+        const value =
+          await env.PRODUCTS.get("test");
+
+        return json({
+          ok: true,
+          products: "KV подключен",
+          value: value
+        });
+
+      } catch (error) {
+
+        return json({
+          ok: false,
+          error: error.message
+        }, 500);
+      }
     }
 
     /*
-     * PRODUCTS API
+     * OPTIONS
      */
+    if (request.method === "OPTIONS") {
+      return json({});
+    }
 
+    /*
+     * API ТОВАРОВ
+     */
     if (url.pathname === "/api/products") {
 
       let body = {};
@@ -102,82 +132,57 @@ export default {
         "list";
 
       /*
-       * LOGIN
+       * ВХОД
        */
-
       if (action === "login") {
 
-        if (!authorized(request, env, body)) {
-          return response(
-            {
-              ok: false,
-              error: "Неверный пароль."
-            },
-            401
-          );
+        if (!checkPassword(request, env, body)) {
+          return json({
+            ok: false,
+            error: "Неверный пароль."
+          }, 401);
         }
 
         const products =
           await getProducts(env);
 
-        return response({
+        return json({
           ok: true,
-          products
+          products: products
         });
       }
 
       /*
-       * LIST
+       * СПИСОК ТОВАРОВ
        */
-
       if (action === "list") {
 
-        if (
-          request.method === "POST" &&
-          !authorized(request, env, body)
-        ) {
-          return response(
-            {
-              ok: false,
-              error: "Неверный пароль."
-            },
-            401
-          );
-        }
-
         const products =
           await getProducts(env);
 
-        return response({
+        return json({
           ok: true,
-          products
+          products: products
         });
       }
 
       /*
-       * SAVE
+       * СОХРАНЕНИЕ
        */
-
       if (action === "save") {
 
-        if (!authorized(request, env, body)) {
-          return response(
-            {
-              ok: false,
-              error: "Неверный пароль."
-            },
-            401
-          );
+        if (!checkPassword(request, env, body)) {
+          return json({
+            ok: false,
+            error: "Неверный пароль."
+          }, 401);
         }
 
         if (!Array.isArray(body.products)) {
-          return response(
-            {
-              ok: false,
-              error: "Товары не переданы."
-            },
-            400
-          );
+          return json({
+            ok: false,
+            error: "Товары не переданы."
+          }, 400);
         }
 
         await env.PRODUCTS.put(
@@ -191,35 +196,30 @@ export default {
             "json"
           );
 
-        return response({
+        return json({
           ok: true,
           products: saved
         });
       }
 
       /*
-       * LOGOUT
+       * ВЫХОД
        */
-
       if (action === "logout") {
-        return response({
+        return json({
           ok: true
         });
       }
 
-      return response(
-        {
-          ok: false,
-          error: "Неизвестная команда."
-        },
-        400
-      );
+      return json({
+        ok: false,
+        error: "Неизвестная команда."
+      }, 400);
     }
 
     /*
-     * CREATE ORDER
+     * СОЗДАНИЕ ЗАКАЗА
      */
-
     if (
       (
         url.pathname === "/api/create-order" ||
@@ -250,41 +250,36 @@ export default {
           !Array.isArray(предметы) ||
           !предметы.length
         ) {
-          return response(
-            {
-              хорошо: false,
-              ошибка: "Заполните обязательные поля."
-            },
-            400
-          );
+          return json({
+            хорошо: false,
+            ошибка:
+              "Заполните обязательные поля."
+          }, 400);
         }
 
         if (
           !env.BOT_TOKEN ||
           !env.ADMIN_CHAT_ID
         ) {
-          return response(
-            {
-              хорошо: false,
-              ошибка: "Telegram ещё не настроен."
-            },
-            500
-          );
+          return json({
+            хорошо: false,
+            ошибка:
+              "Telegram ещё не настроен."
+          }, 500);
         }
 
         const lines =
-          предметы
-            .map(item =>
-              `• ${item.имя} × ${item.количество} — ${Number(
-                item.цена * item.количество
-              ).toLocaleString("ru-RU")} ₽`
-            )
-            .join("\n");
+          предметы.map(item =>
+            `• ${item.имя} × ${item.количество} — ${Number(
+              item.цена * item.количество
+            ).toLocaleString("ru-RU")} ₽`
+          ).join("\n");
 
         const telegram =
           telegramUser?.имя_пользователя
             ? `@${telegramUser.имя_пользователя}`
-            : telegramUser?.имя || "не указан";
+            : telegramUser?.имя ||
+              "не указан";
 
         const text =
           `🛍 НОВЫЙ ЗАКАЗ SEOULDROP\n\n` +
@@ -302,7 +297,7 @@ export default {
           ) +
           `\n\n👤 Telegram: ${telegram}`;
 
-        const tg =
+        const tgResponse =
           await fetch(
             `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
             {
@@ -313,44 +308,38 @@ export default {
               },
               body: JSON.stringify({
                 chat_id: env.ADMIN_CHAT_ID,
-                text
+                text: text
               })
             }
           );
 
         const result =
-          await tg.json();
+          await tgResponse.json();
 
         if (!result.ok) {
-          return response(
-            {
-              хорошо: false,
-              ошибка:
-                "Telegram не принял сообщение."
-            },
-            502
-          );
+          return json({
+            хорошо: false,
+            ошибка:
+              "Telegram не принял сообщение."
+          }, 502);
         }
 
-        return response({
+        return json({
           хорошо: true
         });
 
-      } catch {
-        return response(
-          {
-            хорошо: false,
-            ошибка: "Ошибка сервера."
-          },
-          500
-        );
+      } catch (error) {
+
+        return json({
+          хорошо: false,
+          ошибка: "Ошибка сервера."
+        }, 500);
       }
     }
 
     /*
-     * ADMIN
+     * АДМИНКА
      */
-
     if (url.pathname === "/admin") {
 
       return env.ASSETS.fetch(
@@ -365,9 +354,8 @@ export default {
     }
 
     /*
-     * STATIC SITE
+     * САЙТ
      */
-
     return env.ASSETS.fetch(request);
   }
 };
