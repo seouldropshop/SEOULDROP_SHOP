@@ -311,15 +311,17 @@ body{
 
 </label>
 
-<label class="check">
+<label>
+Статус товара
 
-<input
-  id="fAvailable"
-  type="checkbox"
+<select
+  class="input"
+  id="fStatus"
 >
-
-В наличии
-
+  <option value="in_stock">🟢 В наличии</option>
+  <option value="preorder">🟡 Под заказ</option>
+  <option value="out_of_stock">🔴 Нет в наличии</option>
+</select>
 </label>
 
 <label>
