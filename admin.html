@@ -144,6 +144,29 @@ select option{
   margin-top:5px;
   font-size:14px
 }
+
+.stock{
+  margin-top:5px;
+  font-size:14px;
+  color:#fff
+}
+
+.stock-input{
+  width:100%;
+  background:#0b0610;
+  color:#fff;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:12px;
+  font:inherit;
+  margin-top:6px
+}
+
+.stock-note{
+  margin-top:5px;
+  font-size:13px;
+  color:var(--muted)
+}
 </style>
 </head>
 
@@ -320,6 +343,7 @@ select option{
 <select
   class="input"
   id="fStatus"
+  onchange="toggleStockField()"
 >
 
 <option value="in_stock">
@@ -337,6 +361,30 @@ select option{
 </select>
 
 </label>
+
+<!-- КОЛИЧЕСТВО -->
+
+<div id="stockBlock">
+
+<label>
+Количество в наличии
+
+<input
+  class="stock-input"
+  id="fStock"
+  type="number"
+  min="0"
+  step="1"
+  value="0"
+>
+
+</label>
+
+<div class="stock-note">
+Укажи количество штук товара на складе.
+</div>
+
+</div>
 
 <label>
 Фото
@@ -527,6 +575,41 @@ function getStatusText(product) {
 }
 
 
+/* STOCK */
+
+function getStock(product) {
+
+  const stock =
+    Number(product.stock);
+
+  if (
+    !Number.isFinite(stock) ||
+    stock < 0
+  ) {
+    return 0;
+  }
+
+  return Math.floor(stock);
+}
+
+
+function getStockText(product) {
+
+  const status =
+    getStatus(product);
+
+  if (status === "preorder") {
+    return "";
+  }
+
+  if (status === "out_of_stock") {
+    return "";
+  }
+
+  return ` · ${getStock(product)} шт.`;
+}
+
+
 /* RENDER */
 
 function render() {
@@ -546,6 +629,9 @@ function render() {
 
       element.className =
         "product";
+
+      const stockText =
+        getStockText(product);
 
       element.innerHTML = `
 
@@ -571,7 +657,7 @@ function render() {
 
           <div class="status">
 
-            ${getStatusText(product)}
+            ${getStatusText(product)}${stockText}
 
           </div>
 
@@ -641,6 +727,7 @@ function newProduct() {
     category: "albums",
     description: "",
     status: "in_stock",
+    stock: 0,
     image: null
   });
 
@@ -648,6 +735,8 @@ function newProduct() {
     .getElementById("editor")
     .classList
     .remove("hidden");
+
+  toggleStockField();
 }
 
 
@@ -669,6 +758,8 @@ function edit(index) {
     .getElementById("editor")
     .classList
     .remove("hidden");
+
+  toggleStockField();
 }
 
 
@@ -701,6 +792,11 @@ function fill(product) {
     .value =
     getStatus(product);
 
+  document
+    .getElementById("fStock")
+    .value =
+    getStock(product);
+
   const preview =
     document.getElementById("preview");
 
@@ -715,6 +811,32 @@ function fill(product) {
   document
     .getElementById("fImage")
     .value = "";
+}
+
+
+/* SHOW / HIDE STOCK */
+
+function toggleStockField() {
+
+  const status =
+    document
+      .getElementById("fStatus")
+      .value;
+
+  const block =
+    document
+      .getElementById("stockBlock");
+
+  if (status === "in_stock") {
+
+    block.style.display =
+      "block";
+
+  } else {
+
+    block.style.display =
+      "none";
+  }
 }
 
 
@@ -781,6 +903,59 @@ function applyEditor() {
       .getElementById("fStatus")
       .value;
 
+  let stock = 0;
+
+  /*
+   * Количество только для
+   * "В наличии".
+   *
+   * Для "Под заказ" и
+   * "Нет в наличии" всегда 0.
+   */
+  if (status === "in_stock") {
+
+    stock =
+      Number(
+        document
+          .getElementById("fStock")
+          .value
+      ) || 0;
+
+    stock =
+      Math.max(
+        0,
+        Math.floor(stock)
+      );
+
+    /*
+     * Если количество 0,
+     * автоматически ставим
+     * "Нет в наличии".
+     */
+    if (stock === 0) {
+      stock = 0;
+    }
+
+  } else {
+
+    stock = 0;
+  }
+
+  let finalStatus = status;
+
+  /*
+   * Если "В наличии", но
+   * количество 0 — автоматически
+   * переводим в "Нет в наличии".
+   */
+  if (
+    status === "in_stock" &&
+    stock === 0
+  ) {
+    finalStatus =
+      "out_of_stock";
+  }
+
   const product = {
 
     id:
@@ -813,10 +988,13 @@ function applyEditor() {
         .trim(),
 
     status:
-      status,
+      finalStatus,
+
+    stock:
+      stock,
 
     available:
-      status !== "out_of_stock",
+      finalStatus !== "out_of_stock",
 
     image:
       imageData !== null
