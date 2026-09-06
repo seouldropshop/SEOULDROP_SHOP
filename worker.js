@@ -1,3 +1,5 @@
+const ADMIN_CHAT_ID = "8600388356";
+
 const DEFAULT_PRODUCTS = [
   {
     id: "dynamite",
@@ -69,7 +71,8 @@ function validPassword(request, env, body = {}) {
   const headerPassword =
     request.headers.get("X-Admin-Password") || "";
 
-  const bodyPassword = body.password || "";
+  const bodyPassword =
+    body.password || "";
 
   return Boolean(
     env.ADMIN_PASSWORD &&
@@ -81,7 +84,7 @@ function validPassword(request, env, body = {}) {
 }
 
 async function sendTelegramOrder(env, text) {
-  if (!env.BOT_TOKEN || !env.ADMIN_CHAT_ID) {
+  if (!env.BOT_TOKEN || !ADMIN_CHAT_ID) {
     return {
       ok: false,
       reason: "telegram_not_configured"
@@ -97,7 +100,7 @@ async function sendTelegramOrder(env, text) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          chat_id: env.ADMIN_CHAT_ID,
+          chat_id: ADMIN_CHAT_ID,
           text: text
         })
       }
@@ -116,6 +119,7 @@ async function sendTelegramOrder(env, text) {
     return {
       ok: true
     };
+
   } catch (error) {
     return {
       ok: false,
@@ -133,22 +137,19 @@ export default {
     }
 
     /*
-     * БЕЗОПАСНАЯ ПРОВЕРКА TELEGRAM
-     *
-     * Показывает только наличие переменных и их длину.
-     * Сам BOT_TOKEN никогда не показывается.
+     * ПРОВЕРКА TELEGRAM
+     * Сам токен никогда не показывается.
      */
     if (url.pathname === "/api/debug-telegram") {
       return json({
         ok: true,
         botToken: Boolean(env.BOT_TOKEN),
-        adminChatId: Boolean(env.ADMIN_CHAT_ID),
+        adminChatId: Boolean(ADMIN_CHAT_ID),
         botTokenLength: env.BOT_TOKEN
           ? env.BOT_TOKEN.length
           : 0,
-        adminChatIdLength: env.ADMIN_CHAT_ID
-          ? env.ADMIN_CHAT_ID.length
-          : 0
+        adminChatIdLength:
+          ADMIN_CHAT_ID.length
       });
     }
 
@@ -170,6 +171,7 @@ export default {
           kv: true,
           value
         });
+
       } catch (error) {
         return json({
           ok: false,
@@ -304,6 +306,9 @@ export default {
           telegramUser
         } = body;
 
+        /*
+         * Проверяем обязательные поля
+         */
         if (
           !имя ||
           !телефон ||
@@ -319,12 +324,10 @@ export default {
         }
 
         /*
-         * Проверяем Telegram
+         * BOT_TOKEN берём из секрета Cloudflare.
+         * ADMIN_CHAT_ID берём из кода.
          */
-        if (
-          !env.BOT_TOKEN ||
-          !env.ADMIN_CHAT_ID
-        ) {
+        if (!env.BOT_TOKEN) {
           return json({
             хорошо: false,
             ошибка:
@@ -366,6 +369,7 @@ export default {
         ) {
           telegram =
             `@${telegramUser.имя_пользователя}`;
+
         } else if (
           telegramUser &&
           telegramUser.имя
@@ -375,7 +379,7 @@ export default {
         }
 
         /*
-         * Сообщение администратору
+         * Сообщение заказа
          */
         const text =
           `🛍 НОВЫЙ ЗАКАЗ SEOULDROP\n\n` +
@@ -393,7 +397,7 @@ export default {
           `\n\n👤 Telegram: ${telegram}`;
 
         /*
-         * Отправляем в Telegram
+         * Отправляем заказ в Telegram
          */
         const telegramResult =
           await sendTelegramOrder(
@@ -402,17 +406,6 @@ export default {
           );
 
         if (!telegramResult.ok) {
-          if (
-            telegramResult.reason ===
-            "telegram_not_configured"
-          ) {
-            return json({
-              хорошо: false,
-              ошибка:
-                "Telegram ещё не настроен."
-            }, 500);
-          }
-
           return json({
             хорошо: false,
             ошибка:
