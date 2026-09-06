@@ -9,6 +9,7 @@ const DEFAULT_PRODUCTS = [
     description: "BTS — DYNAMITE",
     available: true,
     status: "preorder",
+    stock: 0,
     image: ""
   },
   {
@@ -19,6 +20,7 @@ const DEFAULT_PRODUCTS = [
     description: "BTS — You Never Walk Alone",
     available: true,
     status: "in_stock",
+    stock: 0,
     image: ""
   },
   {
@@ -29,6 +31,7 @@ const DEFAULT_PRODUCTS = [
     description: "BTS — Butter",
     available: true,
     status: "in_stock",
+    stock: 0,
     image: ""
   }
 ];
@@ -50,7 +53,8 @@ function json(data, status = 200) {
 
 async function readProducts(env) {
   try {
-    const value = await env.PRODUCTS.get("products", "json");
+    const value =
+      await env.PRODUCTS.get("products", "json");
 
     if (Array.isArray(value)) {
       return value;
@@ -62,6 +66,7 @@ async function readProducts(env) {
     );
 
     return DEFAULT_PRODUCTS;
+
   } catch (error) {
     return DEFAULT_PRODUCTS;
   }
@@ -83,8 +88,31 @@ function validPassword(request, env, body = {}) {
   );
 }
 
+function getStatus(product) {
+  if (product.status) {
+    return product.status;
+  }
+
+  return product.available === false
+    ? "out_of_stock"
+    : "in_stock";
+}
+
+function getStock(product) {
+  const stock = Number(product.stock);
+
+  if (
+    !Number.isFinite(stock) ||
+    stock < 0
+  ) {
+    return 0;
+  }
+
+  return Math.floor(stock);
+}
+
 async function sendTelegramOrder(env, text) {
-  if (!env.BOT_TOKEN || !ADMIN_CHAT_ID) {
+  if (!env.BOT_TOKEN) {
     return {
       ok: false,
       reason: "telegram_not_configured"
@@ -106,13 +134,15 @@ async function sendTelegramOrder(env, text) {
       }
     );
 
-    const result = await response.json();
+    const result =
+      await response.json();
 
     if (!result.ok) {
       return {
         ok: false,
         reason: "telegram_rejected",
-        telegramError: result.description || ""
+        telegramError:
+          result.description || ""
       };
     }
 
@@ -129,8 +159,11 @@ async function sendTelegramOrder(env, text) {
 }
 
 export default {
+
   async fetch(request, env) {
-    const url = new URL(request.url);
+
+    const url =
+      new URL(request.url);
 
     if (request.method === "OPTIONS") {
       return json({});
@@ -138,16 +171,29 @@ export default {
 
     /*
      * ПРОВЕРКА TELEGRAM
-     * Сам токен никогда не показывается.
+     *
+     * Сам BOT_TOKEN никогда
+     * не показывается.
      */
-    if (url.pathname === "/api/debug-telegram") {
+    if (
+      url.pathname ===
+      "/api/debug-telegram"
+    ) {
+
       return json({
         ok: true,
-        botToken: Boolean(env.BOT_TOKEN),
-        adminChatId: Boolean(ADMIN_CHAT_ID),
-        botTokenLength: env.BOT_TOKEN
-          ? env.BOT_TOKEN.length
-          : 0,
+
+        botToken:
+          Boolean(env.BOT_TOKEN),
+
+        adminChatId:
+          Boolean(ADMIN_CHAT_ID),
+
+        botTokenLength:
+          env.BOT_TOKEN
+            ? env.BOT_TOKEN.length
+            : 0,
+
         adminChatIdLength:
           ADMIN_CHAT_ID.length
       });
@@ -156,15 +202,22 @@ export default {
     /*
      * ПРОВЕРКА KV
      */
-    if (url.pathname === "/api/test-kv") {
+    if (
+      url.pathname ===
+      "/api/test-kv"
+    ) {
+
       try {
+
         await env.PRODUCTS.put(
           "test",
           "работает"
         );
 
         const value =
-          await env.PRODUCTS.get("test");
+          await env.PRODUCTS.get(
+            "test"
+          );
 
         return json({
           ok: true,
@@ -173,6 +226,7 @@ export default {
         });
 
       } catch (error) {
+
         return json({
           ok: false,
           kv: false,
@@ -184,16 +238,26 @@ export default {
     /*
      * API ТОВАРОВ
      */
-    if (url.pathname === "/api/products") {
+    if (
+      url.pathname ===
+      "/api/products"
+    ) {
+
       let body = {};
 
       if (request.method === "POST") {
+
         try {
-          body = await request.json();
+
+          body =
+            await request.json();
+
         } catch {
+
           return json({
             ok: false,
-            error: "Неверный JSON."
+            error:
+              "Неверный JSON."
           }, 400);
         }
       }
@@ -204,13 +268,22 @@ export default {
         "list";
 
       /*
-       * Вход в админку
+       * LOGIN
        */
       if (action === "login") {
-        if (!validPassword(request, env, body)) {
+
+        if (
+          !validPassword(
+            request,
+            env,
+            body
+          )
+        ) {
+
           return json({
             ok: false,
-            error: "Неверный пароль."
+            error:
+              "Неверный пароль."
           }, 401);
         }
 
@@ -220,9 +293,10 @@ export default {
       }
 
       /*
-       * Получить товары
+       * LIST
        */
       if (action === "list") {
+
         const products =
           await readProducts(env);
 
@@ -233,26 +307,97 @@ export default {
       }
 
       /*
-       * Сохранить товары
+       * SAVE
        */
       if (action === "save") {
-        if (!validPassword(request, env, body)) {
+
+        if (
+          !validPassword(
+            request,
+            env,
+            body
+          )
+        ) {
+
           return json({
             ok: false,
-            error: "Неверный пароль."
+            error:
+              "Неверный пароль."
           }, 401);
         }
 
-        if (!Array.isArray(body.products)) {
+        if (
+          !Array.isArray(
+            body.products
+          )
+        ) {
+
           return json({
             ok: false,
-            error: "Список товаров не передан."
+            error:
+              "Список товаров не передан."
           }, 400);
         }
 
+        /*
+         * Нормализуем остатки.
+         *
+         * Для preorder и
+         * out_of_stock остаток = 0.
+         */
+        const products =
+          body.products.map(
+            product => {
+
+              const status =
+                getStatus(product);
+
+              let stock = 0;
+
+              if (
+                status ===
+                "in_stock"
+              ) {
+
+                stock =
+                  getStock(product);
+              }
+
+              let finalStatus =
+                status;
+
+              if (
+                status ===
+                "in_stock" &&
+                stock === 0
+              ) {
+
+                finalStatus =
+                  "out_of_stock";
+              }
+
+              return {
+                ...product,
+
+                status:
+                  finalStatus,
+
+                stock:
+                  finalStatus ===
+                  "in_stock"
+                    ? stock
+                    : 0,
+
+                available:
+                  finalStatus !==
+                  "out_of_stock"
+              };
+            }
+          );
+
         await env.PRODUCTS.put(
           "products",
-          JSON.stringify(body.products)
+          JSON.stringify(products)
         );
 
         const check =
@@ -268,9 +413,10 @@ export default {
       }
 
       /*
-       * Выход из админки
+       * LOGOUT
        */
       if (action === "logout") {
+
         return json({
           ok: true
         });
@@ -278,7 +424,8 @@ export default {
 
       return json({
         ok: false,
-        error: "Неизвестная команда."
+        error:
+          "Неизвестная команда."
       }, 400);
     }
 
@@ -287,12 +434,17 @@ export default {
      */
     if (
       (
-        url.pathname === "/api/create-order" ||
-        url.pathname === "/.netlify/functions/create-order"
+        url.pathname ===
+        "/api/create-order" ||
+
+        url.pathname ===
+        "/.netlify/functions/create-order"
       ) &&
       request.method === "POST"
     ) {
+
       try {
+
         const body =
           await request.json();
 
@@ -307,15 +459,18 @@ export default {
         } = body;
 
         /*
-         * Проверяем обязательные поля
+         * ОБЯЗАТЕЛЬНЫЕ ПОЛЯ
          */
         if (
           !имя ||
           !телефон ||
           !адрес ||
-          !Array.isArray(предметы) ||
+          !Array.isArray(
+            предметы
+          ) ||
           !предметы.length
         ) {
+
           return json({
             хорошо: false,
             ошибка:
@@ -324,10 +479,10 @@ export default {
         }
 
         /*
-         * BOT_TOKEN берём из секрета Cloudflare.
-         * ADMIN_CHAT_ID берём из кода.
+         * TELEGRAM
          */
         if (!env.BOT_TOKEN) {
+
           return json({
             хорошо: false,
             ошибка:
@@ -336,16 +491,129 @@ export default {
         }
 
         /*
-         * Формируем список товаров
+         * ЧИТАЕМ АКТУАЛЬНЫЕ ОСТАТКИ
+         */
+        const products =
+          await readProducts(env);
+
+        /*
+         * ПРОВЕРЯЕМ ВСЕ ТОВАРЫ
+         * ДО ОТПРАВКИ ЗАКАЗА
+         */
+        for (
+          const item of предметы
+        ) {
+
+          const product =
+            products.find(
+              p =>
+                String(p.id) ===
+                String(item.id)
+            );
+
+          /*
+           * Если по какой-то причине
+           * id не передан, ищем
+           * по названию.
+           */
+          const found =
+            product ||
+            products.find(
+              p =>
+                p.name === item.имя
+            );
+
+          if (!found) {
+
+            return json({
+              хорошо: false,
+              ошибка:
+                `Товар "${item.имя}" ` +
+                `больше недоступен.`
+            }, 409);
+          }
+
+          const status =
+            getStatus(found);
+
+          /*
+           * Под заказ можно покупать
+           * без ограничения.
+           */
+          if (
+            status ===
+            "preorder"
+          ) {
+            continue;
+          }
+
+          /*
+           * Нет в наличии
+           */
+          if (
+            status ===
+            "out_of_stock"
+          ) {
+
+            return json({
+              хорошо: false,
+              ошибка:
+                `Товар "${found.name}" ` +
+                `нет в наличии.`
+            }, 409);
+          }
+
+          /*
+           * В наличии
+           */
+          const stock =
+            getStock(found);
+
+          const requested =
+            Number(
+              item.количество || 0
+            );
+
+          if (
+            requested <= 0
+          ) {
+
+            return json({
+              хорошо: false,
+              ошибка:
+                "Неверное количество товара."
+            }, 400);
+          }
+
+          if (
+            requested > stock
+          ) {
+
+            return json({
+              хорошо: false,
+              ошибка:
+                `Товара "${found.name}" ` +
+                `осталось только ${stock} шт.`
+            }, 409);
+          }
+        }
+
+        /*
+         * ФОРМИРУЕМ ЗАКАЗ
          */
         const lines =
           предметы
             .map(item => {
+
               const quantity =
-                Number(item.количество || 0);
+                Number(
+                  item.количество || 0
+                );
 
               const price =
-                Number(item.цена || 0);
+                Number(
+                  item.цена || 0
+                );
 
               const sum =
                 price * quantity;
@@ -358,7 +626,7 @@ export default {
             .join("\n");
 
         /*
-         * Telegram пользователя
+         * TELEGRAM ПОЛЬЗОВАТЕЛЯ
          */
         let telegram =
           "не указан";
@@ -367,6 +635,7 @@ export default {
           telegramUser &&
           telegramUser.имя_пользователя
         ) {
+
           telegram =
             `@${telegramUser.имя_пользователя}`;
 
@@ -374,12 +643,13 @@ export default {
           telegramUser &&
           telegramUser.имя
         ) {
+
           telegram =
             telegramUser.имя;
         }
 
         /*
-         * Сообщение заказа
+         * СООБЩЕНИЕ
          */
         const text =
           `🛍 НОВЫЙ ЗАКАЗ SEOULDROP\n\n` +
@@ -397,7 +667,8 @@ export default {
           `\n\n👤 Telegram: ${telegram}`;
 
         /*
-         * Отправляем заказ в Telegram
+         * СНАЧАЛА ОТПРАВЛЯЕМ
+         * ЗАКАЗ В TELEGRAM
          */
         const telegramResult =
           await sendTelegramOrder(
@@ -405,7 +676,10 @@ export default {
             text
           );
 
-        if (!telegramResult.ok) {
+        if (
+          !telegramResult.ok
+        ) {
+
           return json({
             хорошо: false,
             ошибка:
@@ -413,11 +687,113 @@ export default {
           }, 502);
         }
 
+        /*
+         * TELEGRAM ПРИНЯЛ ЗАКАЗ.
+         *
+         * ТЕПЕРЬ УМЕНЬШАЕМ ОСТАТКИ.
+         */
+        for (
+          const item of предметы
+        ) {
+
+          const found =
+            products.find(
+              p =>
+                String(p.id) ===
+                String(item.id)
+            ) ||
+            products.find(
+              p =>
+                p.name === item.имя
+            );
+
+          if (!found) {
+            continue;
+          }
+
+          const status =
+            getStatus(found);
+
+          /*
+           * Под заказ не списываем.
+           */
+          if (
+            status ===
+            "preorder"
+          ) {
+            continue;
+          }
+
+          /*
+           * Списываем только
+           * товары со склада.
+           */
+          if (
+            status ===
+            "in_stock"
+          ) {
+
+            const quantity =
+              Number(
+                item.количество || 0
+              );
+
+            const oldStock =
+              getStock(found);
+
+            const newStock =
+              Math.max(
+                0,
+                oldStock -
+                quantity
+              );
+
+            found.stock =
+              newStock;
+
+            /*
+             * Если стало 0 —
+             * автоматически
+             * "Нет в наличии".
+             */
+            if (
+              newStock === 0
+            ) {
+
+              found.status =
+                "out_of_stock";
+
+              found.available =
+                false;
+
+            } else {
+
+              found.status =
+                "in_stock";
+
+              found.available =
+                true;
+            }
+          }
+        }
+
+        /*
+         * СОХРАНЯЕМ НОВЫЕ ОСТАТКИ
+         */
+        await env.PRODUCTS.put(
+          "products",
+          JSON.stringify(products)
+        );
+
+        /*
+         * УСПЕШНЫЙ ЗАКАЗ
+         */
         return json({
           хорошо: true
         });
 
       } catch (error) {
+
         return json({
           хорошо: false,
           ошибка:
@@ -429,11 +805,17 @@ export default {
     /*
      * АДМИНКА
      */
-    if (url.pathname === "/admin") {
+    if (
+      url.pathname ===
+      "/admin"
+    ) {
+
       if (
         env.ASSETS &&
-        typeof env.ASSETS.fetch === "function"
+        typeof env.ASSETS.fetch ===
+          "function"
       ) {
+
         return env.ASSETS.fetch(
           new Request(
             new URL(
@@ -462,13 +844,18 @@ export default {
      */
     if (
       env.ASSETS &&
-      typeof env.ASSETS.fetch === "function"
+      typeof env.ASSETS.fetch ===
+        "function"
     ) {
-      return env.ASSETS.fetch(request);
+
+      return env.ASSETS.fetch(
+        request
+      );
     }
 
     return new Response(
-      "SEOULDROP Worker работает, но ASSETS binding не подключен.",
+      "SEOULDROP Worker работает, " +
+      "но ASSETS binding не подключен.",
       {
         status: 500,
         headers: {
