@@ -63,6 +63,11 @@ body{
   margin-top:6px
 }
 
+select option{
+  background:#0b0610;
+  color:#fff
+}
+
 .btn{
   border:0;
   border-radius:13px;
@@ -127,19 +132,17 @@ body{
   gap:10px
 }
 
-.check{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:8px
-}
-
 .preview{
   max-width:120px;
   max-height:120px;
   border-radius:12px;
   display:none;
   margin-top:8px
+}
+
+.status{
+  margin-top:5px;
+  font-size:14px
 }
 </style>
 </head>
@@ -318,14 +321,24 @@ body{
   class="input"
   id="fStatus"
 >
-  <option value="in_stock">🟢 В наличии</option>
-  <option value="preorder">🟡 Под заказ</option>
-  <option value="out_of_stock">🔴 Нет в наличии</option>
+
+<option value="in_stock">
+🟢 В наличии
+</option>
+
+<option value="preorder">
+🟡 Под заказ
+</option>
+
+<option value="out_of_stock">
+🔴 Нет в наличии
+</option>
+
 </select>
+
 </label>
 
 <label>
-
 Фото
 
 <input
@@ -483,6 +496,37 @@ async function load() {
 }
 
 
+/* STATUS */
+
+function getStatus(product) {
+
+  if (product.status) {
+    return product.status;
+  }
+
+  return product.available === false
+    ? "out_of_stock"
+    : "in_stock";
+}
+
+
+function getStatusText(product) {
+
+  const status =
+    getStatus(product);
+
+  if (status === "preorder") {
+    return "🟡 Под заказ";
+  }
+
+  if (status === "out_of_stock") {
+    return "🔴 Нет в наличии";
+  }
+
+  return "🟢 В наличии";
+}
+
+
 /* RENDER */
 
 function render() {
@@ -523,13 +567,11 @@ function render() {
             ${Number(product.price)
               .toLocaleString("ru-RU")} ₽
 
-            ·
+          </div>
 
-            ${
-              product.available
-                ? "🟢 В наличии"
-                : "🔴 Нет в наличии"
-            }
+          <div class="status">
+
+            ${getStatusText(product)}
 
           </div>
 
@@ -598,7 +640,7 @@ function newProduct() {
     price: 0,
     category: "albums",
     description: "",
-    available: true,
+    status: "in_stock",
     image: null
   });
 
@@ -655,9 +697,9 @@ function fill(product) {
     product.description || "";
 
   document
-    .getElementById("fAvailable")
-    .checked =
-    !!product.available;
+    .getElementById("fStatus")
+    .value =
+    getStatus(product);
 
   const preview =
     document.getElementById("preview");
@@ -734,6 +776,11 @@ function applyEditor() {
       ? null
       : products[editing];
 
+  const status =
+    document
+      .getElementById("fStatus")
+      .value;
+
   const product = {
 
     id:
@@ -765,10 +812,11 @@ function applyEditor() {
         .value
         .trim(),
 
+    status:
+      status,
+
     available:
-      document
-        .getElementById("fAvailable")
-        .checked,
+      status !== "out_of_stock",
 
     image:
       imageData !== null
