@@ -216,6 +216,12 @@ button,input,textarea{font:inherit}
   cursor:not-allowed;
 }
 
+.stock-text{
+  font-size:12px;
+  margin-top:4px;
+  color:#53e69a;
+}
+
 .empty,.loading{
   text-align:center;
   color:var(--muted);
@@ -320,6 +326,12 @@ button,input,textarea{font:inherit}
   margin-top:4px;
 }
 
+.cart-stock{
+  color:#53e69a;
+  font-size:11px;
+  margin-top:4px;
+}
+
 .qty{
   display:flex;
   align-items:center;
@@ -330,6 +342,11 @@ button,input,textarea{font:inherit}
   width:32px;
   height:32px;
   border-radius:10px;
+}
+
+.qty button:disabled{
+  opacity:.35;
+  cursor:not-allowed;
 }
 
 .total{
@@ -416,7 +433,6 @@ button,input,textarea{font:inherit}
 
 </header>
 
-
 <section class="hero">
 
 <h1>Твой K-POP из Кореи 🇰🇷</h1>
@@ -434,7 +450,6 @@ onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})"
 
 </section>
 
-
 <section class="section" id="catalog">
 
 <div class="section-head">
@@ -446,7 +461,6 @@ onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})"
 </span>
 
 </div>
-
 
 <div class="categories">
 
@@ -476,7 +490,6 @@ onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})"
 
 </div>
 
-
 <div id="products" class="grid">
 
 <div class="loading">
@@ -488,7 +501,6 @@ onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})"
 </section>
 
 </div>
-
 
 <nav class="bottom">
 
@@ -503,7 +515,6 @@ onclick="window.scrollTo({top:0,behavior:'smooth'})">
 
 </button>
 
-
 <button
 class="nav"
 onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
@@ -512,7 +523,6 @@ onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})"
 Каталог
 
 </button>
-
 
 <button
 class="nav"
@@ -530,9 +540,6 @@ onclick="showCart()">
 </div>
 
 </nav>
-
-
-<!-- КОРЗИНА -->
 
 <div
 class="overlay"
@@ -556,7 +563,6 @@ onclick="if(event.target===this)closeCart()">
 </div>
 
 </div>
-
 
 <script>
 
@@ -587,6 +593,7 @@ const FALLBACK_PRODUCTS=[
   description:'BTS — DYNAMITE',
   available:true,
   status:'preorder',
+  stock:0,
   image:''
 },
 
@@ -597,6 +604,8 @@ const FALLBACK_PRODUCTS=[
   category:'albums',
   description:'BTS — You Never Walk Alone',
   available:true,
+  status:'in_stock',
+  stock:0,
   image:''
 },
 
@@ -607,6 +616,8 @@ const FALLBACK_PRODUCTS=[
   category:'albums',
   description:'BTS — Butter',
   available:true,
+  status:'in_stock',
+  stock:0,
   image:''
 }
 
@@ -659,6 +670,26 @@ return 'in_stock';
 }
 
 
+/* ОСТАТОК */
+
+function getStock(product){
+
+const stock=Number(product.stock);
+
+if(
+!Number.isFinite(stock) ||
+stock<0
+){
+return 0;
+}
+
+return Math.floor(stock);
+
+}
+
+
+/* ТЕКСТ СТАТУСА */
+
 function getStatusText(product){
 
 const status=getStatus(product);
@@ -671,7 +702,13 @@ if(status==='out_of_stock'){
 return '🔴 Нет в наличии';
 }
 
-return '🟢 В наличии';
+const stock=getStock(product);
+
+if(stock>0){
+return '🟢 В наличии · '+stock+' шт.';
+}
+
+return '🔴 Нет в наличии';
 
 }
 
@@ -694,7 +731,7 @@ return names[category]||category||'Товар';
 }
 
 
-/* БЕЗОПАСНЫЙ HTML */
+/* HTML */
 
 function escapeHtml(value){
 
@@ -714,7 +751,7 @@ return{
 }
 
 
-/* ЗАГРУЗКА КАТАЛОГА */
+/* ЗАГРУЗКА */
 
 async function loadProducts(){
 
@@ -723,20 +760,12 @@ const box=document.getElementById('products');
 box.innerHTML=
 '<div class="loading">Загружаем каталог...</div>';
 
-
-/*
-ВАЖНО:
-если Cloudflare/KV не ответит за 5 секунд,
-каталог всё равно откроется.
-*/
-
 const controller=new AbortController();
 
 const timer=setTimeout(
 ()=>controller.abort(),
 5000
 );
-
 
 try{
 
@@ -751,14 +780,13 @@ signal:controller.signal
 
 clearTimeout(timer);
 
-
 if(!response.ok){
-throw new Error('HTTP '+response.status);
+throw new Error(
+'HTTP '+response.status
+);
 }
 
-
 const data=await response.json();
-
 
 if(
 data &&
@@ -770,22 +798,17 @@ products=data.products;
 
 }else{
 
-throw new Error('Неверный ответ API');
+throw new Error(
+'Неверный ответ API'
+);
 
 }
 
-
 renderProducts();
-
 
 }catch(error){
 
 clearTimeout(timer);
-
-/*
-Резервный список.
-Он нужен только если API временно недоступен.
-*/
 
 products=FALLBACK_PRODUCTS;
 
@@ -855,7 +878,24 @@ list.forEach(product=>{
 
 const status=getStatus(product);
 
-const disabled=status==='out_of_stock';
+const stock=getStock(product);
+
+/*
+ * Товар можно купить:
+ * - если Под заказ
+ * - если В наличии и stock > 0
+ *
+ * Нельзя:
+ * - Нет в наличии
+ * - В наличии, но 0 шт.
+ */
+
+const disabled=
+status==='out_of_stock' ||
+(
+status==='in_stock' &&
+stock<=0
+);
 
 const card=document.createElement('article');
 
@@ -873,7 +913,48 @@ escapeHtml(product.image)+
 
 }else{
 
-image='<div class="placeholder">💿</div>';
+image=
+'<div class="placeholder">💿</div>';
+
+}
+
+
+let statusClass='green';
+
+if(status==='preorder'){
+statusClass='yellow';
+}
+
+if(
+status==='out_of_stock' ||
+(
+status==='in_stock' &&
+stock<=0
+)
+){
+statusClass='red';
+}
+
+
+let buttonText='';
+
+if(status==='preorder'){
+
+buttonText='＋ Заказать';
+
+}else if(
+status==='out_of_stock' ||
+(
+status==='in_stock' &&
+stock<=0
+)
+){
+
+buttonText='Нет в наличии';
+
+}else{
+
+buttonText='＋ В корзину';
 
 }
 
@@ -898,31 +979,23 @@ ${escapeHtml(categoryName(product.category))}
 ${Number(product.price||0).toLocaleString('ru-RU')} ₽
 </div>
 
-<div class="status ${
-status==='preorder'
-?'yellow'
-:
-status==='out_of_stock'
-?'red'
-:'green'
-}">
+<div class="status ${statusClass}">
 ${getStatusText(product)}
 </div>
 
 <button
 class="add ${
-status==='preorder'?'preorder':''
+status==='preorder'
+?'preorder'
+:''
+} ${
+disabled
+?'disabled'
+:''
 }"
 ${disabled?'disabled':''}>
 
-${
-disabled
-?'Нет в наличии'
-:
-status==='preorder'
-?'＋ Заказать'
-:'＋ В корзину'
-}
+${buttonText}
 
 </button>
 
@@ -949,7 +1022,7 @@ box.appendChild(card);
 }
 
 
-/* ДОБАВЛЕНИЕ */
+/* ДОБАВИТЬ В КОРЗИНУ */
 
 function addToCart(id){
 
@@ -957,44 +1030,127 @@ const product=products.find(
 item=>String(item.id)===String(id)
 );
 
-if(
-!product ||
-getStatus(product)==='out_of_stock'
-){
+if(!product){
 return;
 }
 
+const status=getStatus(product);
+
+if(status==='out_of_stock'){
+return;
+}
+
+
+/*
+ * Под заказ — количество
+ * не ограничиваем.
+ */
+
+if(status==='preorder'){
 
 cart[id]=(cart[id]||0)+1;
 
 saveCart();
 
+return;
+}
+
+
 /*
-КОРЗИНА НЕ ОТКРЫВАЕТСЯ.
-Покупатель продолжает выбирать товары.
-*/
+ * В наличии — проверяем склад.
+ */
+
+const stock=getStock(product);
+
+const current=
+Number(cart[id]||0);
+
+if(current>=stock){
+
+alert(
+'Больше этого товара добавить нельзя. '+
+'В наличии: '+stock+' шт.'
+);
+
+return;
+}
+
+cart[id]=current+1;
+
+saveCart();
 
 }
 
 
-/* КОЛИЧЕСТВО */
+/* ИЗМЕНЕНИЕ КОЛИЧЕСТВА */
 
 function changeQty(id,difference){
 
+const product=products.find(
+item=>String(item.id)===String(id)
+);
+
+if(!product){
+return;
+}
+
+const status=getStatus(product);
+
+const current=
+Number(cart[id]||0);
+
 const newQuantity=
-(cart[id]||0)+difference;
+current+difference;
 
 
 if(newQuantity<=0){
 
 delete cart[id];
 
-}else{
+saveCart();
 
-cart[id]=newQuantity;
+renderCart();
+
+return;
 
 }
 
+
+/*
+ * Под заказ — без ограничения.
+ */
+
+if(status==='preorder'){
+
+cart[id]=newQuantity;
+
+saveCart();
+
+renderCart();
+
+return;
+
+}
+
+
+/*
+ * В наличии — ограничение по складу.
+ */
+
+const stock=getStock(product);
+
+if(newQuantity>stock){
+
+alert(
+'Нельзя добавить больше товара.\n\n'+
+'В наличии: '+stock+' шт.'
+);
+
+return;
+
+}
+
+cart[id]=newQuantity;
 
 saveCart();
 
@@ -1003,7 +1159,7 @@ renderCart();
 }
 
 
-/* ОТКРЫТЬ КОРЗИНУ */
+/* КОРЗИНА */
 
 function showCart(){
 
@@ -1016,8 +1172,6 @@ document
 }
 
 
-/* ЗАКРЫТЬ */
-
 function closeCart(){
 
 document
@@ -1027,7 +1181,7 @@ document
 }
 
 
-/* КОРЗИНА */
+/* ОТРИСОВКА КОРЗИНЫ */
 
 function renderCart(){
 
@@ -1077,6 +1231,20 @@ let html='';
 
 items.forEach(item=>{
 
+const product=item.product;
+
+const status=getStatus(product);
+
+const stock=getStock(product);
+
+const isLimited=
+status==='in_stock';
+
+const plusDisabled=
+isLimited &&
+item.quantity>=stock;
+
+
 html+=`
 
 <div class="cart-item">
@@ -1084,28 +1252,38 @@ html+=`
 <div>
 
 <div class="cart-name">
-${escapeHtml(item.product.name)}
+${escapeHtml(product.name)}
 </div>
 
 <div class="cart-price">
-${Number(item.product.price||0).toLocaleString('ru-RU')}
+${Number(product.price||0).toLocaleString('ru-RU')}
  ₽ × ${item.quantity}
 </div>
 
-</div>
+${
+isLimited
+?
+`<div class="cart-stock">
+Осталось: ${stock} шт.
+</div>`
+:
+''
+}
 
+</div>
 
 <div class="qty">
 
 <button
-data-minus="${escapeHtml(item.product.id)}">
+data-minus="${escapeHtml(product.id)}">
 −
 </button>
 
 <b>${item.quantity}</b>
 
 <button
-data-plus="${escapeHtml(item.product.id)}">
+data-plus="${escapeHtml(product.id)}"
+${plusDisabled?'disabled':''}>
 +
 </button>
 
@@ -1129,7 +1307,6 @@ ${total.toLocaleString('ru-RU')} ₽
 </span>
 
 </div>
-
 
 <div class="checkout">
 
@@ -1158,7 +1335,6 @@ onclick="submitOrder()">
 
 </button>
 
-
 <div class="note">
 
 🚚 Доставка рассчитывается отдельно.<br>
@@ -1175,7 +1351,7 @@ onclick="submitOrder()">
 box.innerHTML=html;
 
 
-/* КНОПКИ + И − */
+/* МИНУС */
 
 box.querySelectorAll('[data-minus]')
 .forEach(button=>{
@@ -1187,6 +1363,8 @@ button.dataset.minus,
 
 });
 
+
+/* ПЛЮС */
 
 box.querySelectorAll('[data-plus]')
 .forEach(button=>{
@@ -1201,7 +1379,7 @@ button.dataset.plus,
 }
 
 
-/* ОФОРМЛЕНИЕ */
+/* ОФОРМЛЕНИЕ ЗАКАЗА */
 
 async function submitOrder(){
 
@@ -1272,6 +1450,49 @@ return;
 }
 
 
+/*
+ * Повторно проверяем наличие
+ * перед отправкой заказа.
+ */
+
+for(const item of items){
+
+const product=products.find(
+p=>p.name===item.имя
+);
+
+if(!product)continue;
+
+if(
+getStatus(product)==='in_stock'
+){
+
+const stock=
+getStock(product);
+
+if(item.количество>stock){
+
+alert(
+'Товара "'+
+product.name+
+'" осталось только '+
+stock+
+' шт.'
+);
+
+await loadProducts();
+
+renderCart();
+
+return;
+
+}
+
+}
+
+}
+
+
 const button=
 document.querySelector('.submit');
 
@@ -1332,7 +1553,8 @@ telegramUser.first_name
 );
 
 
-const data=await response.json();
+const data=
+await response.json();
 
 
 if(
