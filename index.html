@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SEOULDROP | K-POP SHOP</title>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
 :root{
   --bg:#050308;
@@ -17,25 +19,41 @@
   --line:rgba(255,111,194,.18);
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:
-    radial-gradient(circle at 15% 5%,rgba(255,79,179,.14),transparent 28%),
-    radial-gradient(circle at 90% 20%,rgba(167,108,255,.14),transparent 30%),
+    radial-gradient(
+      circle at 15% 5%,
+      rgba(255,79,179,.14),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(167,108,255,.14),
+      transparent 30%
+    ),
     var(--bg);
   color:var(--text);
   font-family:Inter,system-ui,-apple-system,sans-serif;
 }
 
-button,input,textarea{font:inherit}
+button,
+input,
+textarea{
+  font:inherit;
+}
 
 .app{
   max-width:760px;
   margin:auto;
   padding:16px 14px 92px;
 }
+
+/* HEADER */
 
 .header{
   display:flex;
@@ -56,7 +74,12 @@ button,input,textarea{font:inherit}
   margin-top:2px;
 }
 
-.icon,.cat,.nav,.add,.qty button,.close{
+.icon,
+.cat,
+.nav,
+.add,
+.qty button,
+.close{
   border:1px solid var(--line);
   background:var(--panel);
   color:#fff;
@@ -64,7 +87,11 @@ button,input,textarea{font:inherit}
   cursor:pointer;
 }
 
-.icon{padding:10px 12px}
+.icon{
+  padding:10px 12px;
+}
+
+/* HERO */
 
 .hero{
   border:1px solid var(--line);
@@ -91,7 +118,11 @@ button,input,textarea{font:inherit}
 }
 
 .cta{
-  background:linear-gradient(90deg,var(--pink),var(--violet));
+  background:linear-gradient(
+    90deg,
+    var(--pink),
+    var(--violet)
+  );
   border:0;
   color:#fff;
   font-weight:800;
@@ -100,7 +131,11 @@ button,input,textarea{font:inherit}
   cursor:pointer;
 }
 
-.section{margin-top:22px}
+/* CATALOG */
+
+.section{
+  margin-top:22px;
+}
 
 .section-head{
   display:flex;
@@ -143,8 +178,15 @@ button,input,textarea{font:inherit}
   margin-top:12px;
 }
 
+/* PRODUCT CARD */
+
 .card{
-  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  background:
+    linear-gradient(
+      180deg,
+      var(--panel2),
+      var(--panel)
+    );
   border:1px solid var(--line);
   border-radius:19px;
   overflow:hidden;
@@ -156,7 +198,11 @@ button,input,textarea{font:inherit}
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(circle,rgba(255,79,179,.18),transparent 52%),
+    radial-gradient(
+      circle,
+      rgba(255,79,179,.18),
+      transparent 52%
+    ),
     #09050b;
 }
 
@@ -167,9 +213,13 @@ button,input,textarea{font:inherit}
   padding:12px;
 }
 
-.placeholder{font-size:48px}
+.placeholder{
+  font-size:48px;
+}
 
-.info{padding:12px}
+.info{
+  padding:12px;
+}
 
 .name{
   font-weight:750;
@@ -194,9 +244,17 @@ button,input,textarea{font:inherit}
   min-height:18px;
 }
 
-.green{color:#53e69a}
-.yellow{color:#ffd34d}
-.red{color:#ff667f}
+.green{
+  color:#53e69a;
+}
+
+.yellow{
+  color:#ffd34d;
+}
+
+.red{
+  color:#ff667f;
+}
 
 .add{
   width:100%;
@@ -216,17 +274,14 @@ button,input,textarea{font:inherit}
   cursor:not-allowed;
 }
 
-.stock-text{
-  font-size:12px;
-  margin-top:4px;
-  color:#53e69a;
-}
-
-.empty,.loading{
+.empty,
+.loading{
   text-align:center;
   color:var(--muted);
   padding:30px 15px;
 }
+
+/* BOTTOM NAV */
 
 .bottom{
   position:fixed;
@@ -256,7 +311,9 @@ button,input,textarea{font:inherit}
   font-size:11px;
 }
 
-.nav.active{color:#fff}
+.nav.active{
+  color:#fff;
+}
 
 .nav strong{
   display:block;
@@ -276,7 +333,7 @@ button,input,textarea{font:inherit}
   margin-left:3px;
 }
 
-/* КОРЗИНА */
+/* CART */
 
 .overlay{
   display:none;
@@ -288,7 +345,9 @@ button,input,textarea{font:inherit}
   justify-content:center;
 }
 
-.overlay.open{display:flex}
+.overlay.open{
+  display:flex;
+}
 
 .sheet{
   width:min(760px,100%);
@@ -306,9 +365,13 @@ button,input,textarea{font:inherit}
   align-items:center;
 }
 
-.sheet h2{margin:0}
+.sheet h2{
+  margin:0;
+}
 
-.close{padding:8px 12px}
+.close{
+  padding:8px 12px;
+}
 
 .cart-item{
   display:grid;
@@ -318,7 +381,9 @@ button,input,textarea{font:inherit}
   border-bottom:1px solid var(--line);
 }
 
-.cart-name{font-weight:700}
+.cart-name{
+  font-weight:700;
+}
 
 .cart-price{
   color:var(--muted);
@@ -349,6 +414,24 @@ button,input,textarea{font:inherit}
   cursor:not-allowed;
 }
 
+/* TELEGRAM */
+
+.telegram-line{
+  background:rgba(167,108,255,.10);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  color:#fff;
+  font-size:13px;
+  margin-bottom:2px;
+}
+
+.telegram-line b{
+  color:#fff;
+}
+
+/* TOTAL */
+
 .total{
   display:flex;
   justify-content:space-between;
@@ -356,6 +439,8 @@ button,input,textarea{font:inherit}
   font-weight:850;
   padding:16px 0;
 }
+
+/* CHECKOUT */
 
 .checkout{
   display:grid;
@@ -380,12 +465,21 @@ button,input,textarea{font:inherit}
 
 .submit{
   border:0;
-  background:linear-gradient(90deg,var(--pink),var(--violet));
+  background:linear-gradient(
+    90deg,
+    var(--pink),
+    var(--violet)
+  );
   color:#fff;
   font-weight:800;
   border-radius:14px;
   padding:13px;
   cursor:pointer;
+}
+
+.submit:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .note{
@@ -399,16 +493,26 @@ button,input,textarea{font:inherit}
   padding:30px 10px;
 }
 
-.success b{font-size:20px}
+.success b{
+  font-size:20px;
+}
+
+/* DESKTOP */
 
 @media(min-width:650px){
+
   .grid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
   }
 
-  .pic{height:190px}
+  .pic{
+    height:190px;
+  }
 
-  .overlay{align-items:center}
+  .overlay{
+    align-items:center;
+  }
 
   .sheet{
     border-radius:24px;
@@ -429,13 +533,20 @@ button,input,textarea{font:inherit}
 <span>K-POP SHOP</span>
 </div>
 
-<button class="icon" onclick="loadProducts()">↻</button>
+<button
+class="icon"
+onclick="loadProducts()">
+↻
+</button>
 
 </header>
 
+
 <section class="hero">
 
-<h1>Твой K-POP из Кореи 🇰🇷</h1>
+<h1>
+Твой K-POP из Кореи 🇰🇷
+</h1>
 
 <p>
 Альбомы, photocards и оригинальный merch —
@@ -444,53 +555,82 @@ button,input,textarea{font:inherit}
 
 <button
 class="cta"
-onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+onclick="
+document
+.getElementById('catalog')
+.scrollIntoView({
+behavior:'smooth'
+})
+">
 Смотреть каталог
 </button>
 
 </section>
 
-<section class="section" id="catalog">
+
+<section
+class="section"
+id="catalog">
 
 <div class="section-head">
 
-<h2>Каталог</h2>
+<h2>
+Каталог
+</h2>
 
-<span class="muted" id="productCount">
+<span
+class="muted"
+id="productCount">
 Загрузка...
 </span>
 
 </div>
 
+
 <div class="categories">
 
-<button class="cat active" data-category="all">
+<button
+class="cat active"
+data-category="all">
 Все
 </button>
 
-<button class="cat" data-category="albums">
+<button
+class="cat"
+data-category="albums">
 💿 Альбомы
 </button>
 
-<button class="cat" data-category="photocards">
+<button
+class="cat"
+data-category="photocards">
 🃏 Photocards
 </button>
 
-<button class="cat" data-category="merch">
+<button
+class="cat"
+data-category="merch">
 🎁 Merch
 </button>
 
-<button class="cat" data-category="cosmetics">
+<button
+class="cat"
+data-category="cosmetics">
 🧴 Косметика
 </button>
 
-<button class="cat" data-category="sweets">
+<button
+class="cat"
+data-category="sweets">
 🍪 Сладости
 </button>
 
 </div>
 
-<div id="products" class="grid">
+
+<div
+id="products"
+class="grid">
 
 <div class="loading">
 Загружаем каталог...
@@ -502,35 +642,62 @@ onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})"
 
 </div>
 
+
 <nav class="bottom">
 
 <div class="bottom-inner">
 
 <button
 class="nav active"
-onclick="window.scrollTo({top:0,behavior:'smooth'})">
+onclick="
+window.scrollTo({
+top:0,
+behavior:'smooth'
+})
+">
 
-<strong>⌂</strong>
+<strong>
+⌂
+</strong>
+
 Главная
 
 </button>
 
+
 <button
 class="nav"
-onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+onclick="
+document
+.getElementById('catalog')
+.scrollIntoView({
+behavior:'smooth'
+})
+">
 
-<strong>◈</strong>
+<strong>
+◈
+</strong>
+
 Каталог
 
 </button>
+
 
 <button
 class="nav"
 onclick="showCart()">
 
 <strong>
+
 🛒
-<span class="badge" id="navCount">0</span>
+
+<span
+class="badge"
+id="navCount">
+0
+</span>
+
 </strong>
 
 Корзина
@@ -541,28 +708,40 @@ onclick="showCart()">
 
 </nav>
 
+
 <div
 class="overlay"
 id="cartOverlay"
-onclick="if(event.target===this)closeCart()">
+onclick="
+if(event.target===this)
+closeCart()
+">
 
 <div class="sheet">
 
 <div class="sheet-head">
 
-<h2>🛒 Корзина</h2>
+<h2>
+🛒 Корзина
+</h2>
 
-<button class="close" onclick="closeCart()">
+<button
+class="close"
+onclick="closeCart()">
 ✕
 </button>
 
 </div>
 
-<div id="cartContent"></div>
 
+<div
+id="cartContent">
 </div>
 
 </div>
+
+</div>
+
 
 <script>
 
@@ -571,11 +750,17 @@ let products=[];
 let cart={};
 
 try{
+
   cart=JSON.parse(
-    localStorage.getItem('seouldrop_cart')||'{}'
+    localStorage.getItem(
+      'seouldrop_cart'
+    )||'{}'
   );
+
 }catch{
+
   cart={};
+
 }
 
 let currentCategory='all';
@@ -624,31 +809,64 @@ const FALLBACK_PRODUCTS=[
 ];
 
 
+/* TELEGRAM */
+
+function getTelegramUser(){
+
+  return (
+    window.Telegram &&
+    window.Telegram.WebApp &&
+    window.Telegram.WebApp.initDataUnsafe &&
+    window.Telegram.WebApp.initDataUnsafe.user
+  ) || null;
+
+}
+
+
+function getTelegramUsername(){
+
+  const user=getTelegramUser();
+
+  if(user && user.username){
+
+    return '@'+user.username;
+
+  }
+
+  return 'не указан';
+
+}
+
+
 /* КОРЗИНА */
 
 function saveCart(){
 
-localStorage.setItem(
-'seouldrop_cart',
-JSON.stringify(cart)
-);
+  localStorage.setItem(
+    'seouldrop_cart',
+    JSON.stringify(cart)
+  );
 
-updateCount();
+  updateCount();
 
 }
 
 
 function updateCount(){
 
-const el=document.getElementById('navCount');
+  const el=
+    document.getElementById(
+      'navCount'
+    );
 
-if(!el)return;
+  if(!el)return;
 
-el.textContent=
-Object.values(cart).reduce(
-(a,b)=>a+Number(b||0),
-0
-);
+  el.textContent=
+    Object.values(cart).reduce(
+      (a,b)=>
+        a+Number(b||0),
+      0
+    );
 
 }
 
@@ -657,15 +875,19 @@ Object.values(cart).reduce(
 
 function getStatus(product){
 
-if(product.status){
-return product.status;
-}
+  if(product.status){
 
-if(product.available===false){
-return 'out_of_stock';
-}
+    return product.status;
 
-return 'in_stock';
+  }
+
+  if(product.available===false){
+
+    return 'out_of_stock';
+
+  }
+
+  return 'in_stock';
 
 }
 
@@ -674,16 +896,19 @@ return 'in_stock';
 
 function getStock(product){
 
-const stock=Number(product.stock);
+  const stock=
+    Number(product.stock);
 
-if(
-!Number.isFinite(stock) ||
-stock<0
-){
-return 0;
-}
+  if(
+    !Number.isFinite(stock) ||
+    stock<0
+  ){
 
-return Math.floor(stock);
+    return 0;
+
+  }
+
+  return Math.floor(stock);
 
 }
 
@@ -692,23 +917,33 @@ return Math.floor(stock);
 
 function getStatusText(product){
 
-const status=getStatus(product);
+  const status=
+    getStatus(product);
 
-if(status==='preorder'){
-return '🟡 Под заказ';
-}
+  if(status==='preorder'){
 
-if(status==='out_of_stock'){
-return '🔴 Нет в наличии';
-}
+    return '🟡 Под заказ';
 
-const stock=getStock(product);
+  }
 
-if(stock>0){
-return '🟢 В наличии · '+stock+' шт.';
-}
+  if(status==='out_of_stock'){
 
-return '🔴 Нет в наличии';
+    return '🔴 Нет в наличии';
+
+  }
+
+  const stock=
+    getStock(product);
+
+  if(stock>0){
+
+    return '🟢 В наличии · '+
+      stock+
+      ' шт.';
+
+  }
+
+  return '🔴 Нет в наличии';
 
 }
 
@@ -717,249 +952,292 @@ return '🔴 Нет в наличии';
 
 function categoryName(category){
 
-const names={
-albums:'Альбом',
-photocards:'Photocards',
-merch:'Merch',
-cosmetics:'Косметика',
-sweets:'Сладости',
-'Альбомы':'Альбомы'
-};
+  const names={
 
-return names[category]||category||'Товар';
+    albums:'Альбом',
+    photocards:'Photocards',
+    merch:'Merch',
+    cosmetics:'Косметика',
+    sweets:'Сладости',
+    'Альбомы':'Альбомы'
+
+  };
+
+  return (
+    names[category] ||
+    category ||
+    'Товар'
+  );
 
 }
 
 
-/* HTML */
+/* ЗАЩИТА HTML */
 
 function escapeHtml(value){
 
-return String(value??'')
-.replace(/[&<>'"]/g,function(c){
+  return String(
+    value??''
+  ).replace(
+    /[&<>'"]/g,
+    function(c){
 
-return{
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-"'":'&#39;',
-'"':'&quot;'
-}[c];
+      return {
 
-});
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        "'":'&#39;',
+        '"':'&quot;'
+
+      }[c];
+
+    }
+  );
 
 }
 
 
-/* ЗАГРУЗКА */
+/* ЗАГРУЗКА ТОВАРОВ */
 
 async function loadProducts(){
 
-const box=document.getElementById('products');
+  const box=
+    document.getElementById(
+      'products'
+    );
 
-box.innerHTML=
-'<div class="loading">Загружаем каталог...</div>';
+  box.innerHTML=
+    '<div class="loading">'+
+    'Загружаем каталог...'+
+    '</div>';
 
-const controller=new AbortController();
+  const controller=
+    new AbortController();
 
-const timer=setTimeout(
-()=>controller.abort(),
-5000
-);
+  const timer=
+    setTimeout(
+      ()=>controller.abort(),
+      5000
+    );
 
-try{
+  try{
 
-const response=await fetch(
-'/api/products?action=list&_='+
-Date.now(),
-{
-cache:'no-store',
-signal:controller.signal
+    const response=
+      await fetch(
+        '/api/products?action=list&_='+
+        Date.now(),
+        {
+          cache:'no-store',
+          signal:controller.signal
+        }
+      );
+
+    clearTimeout(timer);
+
+    if(!response.ok){
+
+      throw new Error(
+        'HTTP '+response.status
+      );
+
+    }
+
+    const data=
+      await response.json();
+
+    if(
+      data &&
+      data.ok &&
+      Array.isArray(data.products)
+    ){
+
+      products=
+        data.products;
+
+    }else{
+
+      throw new Error(
+        'Неверный ответ API'
+      );
+
+    }
+
+    renderProducts();
+
+  }catch(error){
+
+    clearTimeout(timer);
+
+    products=
+      FALLBACK_PRODUCTS;
+
+    renderProducts();
+
+    document.getElementById(
+      'productCount'
+    ).textContent=
+      products.length+
+      ' товара';
+
+  }
+
 }
-);
-
-clearTimeout(timer);
-
-if(!response.ok){
-throw new Error(
-'HTTP '+response.status
-);
-}
-
-const data=await response.json();
-
-if(
-data &&
-data.ok &&
-Array.isArray(data.products)
-){
-
-products=data.products;
-
-}else{
-
-throw new Error(
-'Неверный ответ API'
-);
-
-}
-
-renderProducts();
-
-}catch(error){
-
-clearTimeout(timer);
-
-products=FALLBACK_PRODUCTS;
-
-renderProducts();
-
-document.getElementById(
-'productCount'
-).textContent=
-products.length+' товара';
-
-}
-
-}
 
 
-/* ОТРИСОВКА */
+/* ОТРИСОВКА ТОВАРОВ */
 
 function renderProducts(){
 
-const box=document.getElementById('products');
+  const box=
+    document.getElementById(
+      'products'
+    );
 
-const list=products.filter(product=>{
+  const list=
+    products.filter(
+      product=>{
 
-if(currentCategory==='all'){
-return true;
-}
+        if(
+          currentCategory==='all'
+        ){
 
-return(
-product.category===currentCategory ||
-(
-currentCategory==='albums' &&
-product.category==='Альбомы'
-)
-);
+          return true;
 
-});
+        }
 
+        return (
+          product.category===
+            currentCategory ||
 
-document.getElementById(
-'productCount'
-).textContent=
-products.length+
-' товар'+
-(
-products.length===1
-?''
-:'а'
-);
+          (
+            currentCategory==='albums' &&
+            product.category==='Альбомы'
+          )
+        );
 
-
-if(!list.length){
-
-box.innerHTML=
-'<div class="empty">'+
-'В этой категории пока нет товаров.'+
-'</div>';
-
-return;
-
-}
+      }
+    );
 
 
-box.innerHTML='';
+  document.getElementById(
+    'productCount'
+  ).textContent=
+    products.length+
+    ' товар'+
+    (
+      products.length===1
+      ?''
+      :'а'
+    );
 
 
-list.forEach(product=>{
+  if(!list.length){
 
-const status=getStatus(product);
+    box.innerHTML=
+      '<div class="empty">'+
+      'В этой категории пока нет товаров.'+
+      '</div>';
 
-const stock=getStock(product);
+    return;
 
-/*
- * Товар можно купить:
- * - если Под заказ
- * - если В наличии и stock > 0
- *
- * Нельзя:
- * - Нет в наличии
- * - В наличии, но 0 шт.
- */
-
-const disabled=
-status==='out_of_stock' ||
-(
-status==='in_stock' &&
-stock<=0
-);
-
-const card=document.createElement('article');
-
-card.className='card';
+  }
 
 
-let image='';
-
-if(product.image){
-
-image=
-'<img src="'+
-escapeHtml(product.image)+
-'" alt="">';
-
-}else{
-
-image=
-'<div class="placeholder">💿</div>';
-
-}
+  box.innerHTML='';
 
 
-let statusClass='green';
+  list.forEach(
+    product=>{
 
-if(status==='preorder'){
-statusClass='yellow';
-}
+      const status=
+        getStatus(product);
 
-if(
-status==='out_of_stock' ||
-(
-status==='in_stock' &&
-stock<=0
-)
-){
-statusClass='red';
-}
+      const stock=
+        getStock(product);
 
-
-let buttonText='';
-
-if(status==='preorder'){
-
-buttonText='＋ Заказать';
-
-}else if(
-status==='out_of_stock' ||
-(
-status==='in_stock' &&
-stock<=0
-)
-){
-
-buttonText='Нет в наличии';
-
-}else{
-
-buttonText='＋ В корзину';
-
-}
+      const disabled=
+        status==='out_of_stock' ||
+        (
+          status==='in_stock' &&
+          stock<=0
+        );
 
 
-card.innerHTML=`
+      const card=
+        document.createElement(
+          'article'
+        );
+
+      card.className='card';
+
+
+      let image='';
+
+
+      if(product.image){
+
+        image=
+          '<img src="'+
+          escapeHtml(product.image)+
+          '" alt="">';
+
+      }else{
+
+        image=
+          '<div class="placeholder">'+
+          '💿'+
+          '</div>';
+
+      }
+
+
+      let statusClass=
+        'green';
+
+      if(status==='preorder'){
+
+        statusClass=
+          'yellow';
+
+      }
+
+      if(
+        status==='out_of_stock' ||
+        (
+          status==='in_stock' &&
+          stock<=0
+        )
+      ){
+
+        statusClass=
+          'red';
+
+      }
+
+
+      let buttonText='';
+
+
+      if(status==='preorder'){
+
+        buttonText=
+          '＋ Заказать';
+
+      }else if(disabled){
+
+        buttonText=
+          'Нет в наличии';
+
+      }else{
+
+        buttonText=
+          '＋ В корзину';
+
+      }
+
+
+      card.innerHTML=`
 
 <div class="pic">
 ${image}
@@ -968,15 +1246,21 @@ ${image}
 <div class="info">
 
 <div class="name">
-${escapeHtml(product.name||'Товар')}
+${escapeHtml(
+  product.name||'Товар'
+)}
 </div>
 
 <div class="meta">
-${escapeHtml(categoryName(product.category))}
+${escapeHtml(
+  categoryName(product.category)
+)}
 </div>
 
 <div class="price">
-${Number(product.price||0).toLocaleString('ru-RU')} ₽
+${Number(
+  product.price||0
+).toLocaleString('ru-RU')} ₽
 </div>
 
 <div class="status ${statusClass}">
@@ -985,13 +1269,13 @@ ${getStatusText(product)}
 
 <button
 class="add ${
-status==='preorder'
-?'preorder'
-:''
+  status==='preorder'
+  ?'preorder'
+  :''
 } ${
-disabled
-?'disabled'
-:''
+  disabled
+  ?'disabled'
+  :''
 }"
 ${disabled?'disabled':''}>
 
@@ -1003,21 +1287,28 @@ ${buttonText}
 `;
 
 
-const button=card.querySelector('.add');
-
-if(!disabled){
-
-button.addEventListener(
-'click',
-()=>addToCart(product.id)
-);
-
-}
+      const button=
+        card.querySelector(
+          '.add'
+        );
 
 
-box.appendChild(card);
+      if(!disabled){
 
-});
+        button.addEventListener(
+          'click',
+          ()=>addToCart(
+            product.id
+          )
+        );
+
+      }
+
+
+      box.appendChild(card);
+
+    }
+  );
 
 }
 
@@ -1026,157 +1317,181 @@ box.appendChild(card);
 
 function addToCart(id){
 
-const product=products.find(
-item=>String(item.id)===String(id)
-);
+  const product=
+    products.find(
+      item=>
+        String(item.id)===
+        String(id)
+    );
 
-if(!product){
-return;
-}
-
-const status=getStatus(product);
-
-if(status==='out_of_stock'){
-return;
-}
+  if(!product)return;
 
 
-/*
- * Под заказ — количество
- * не ограничиваем.
- */
-
-if(status==='preorder'){
-
-cart[id]=(cart[id]||0)+1;
-
-saveCart();
-
-return;
-}
+  const status=
+    getStatus(product);
 
 
-/*
- * В наличии — проверяем склад.
- */
+  if(
+    status==='out_of_stock'
+  ){
 
-const stock=getStock(product);
+    return;
 
-const current=
-Number(cart[id]||0);
+  }
 
-if(current>=stock){
 
-alert(
-'Больше этого товара добавить нельзя. '+
-'В наличии: '+stock+' шт.'
-);
+  if(
+    status==='preorder'
+  ){
 
-return;
-}
+    cart[id]=
+      (cart[id]||0)+1;
 
-cart[id]=current+1;
+    saveCart();
 
-saveCart();
+    return;
+
+  }
+
+
+  const stock=
+    getStock(product);
+
+  const current=
+    Number(cart[id]||0);
+
+
+  if(current>=stock){
+
+    alert(
+      'Больше этого товара '+
+      'добавить нельзя.\n\n'+
+      'В наличии: '+
+      stock+
+      ' шт.'
+    );
+
+    return;
+
+  }
+
+
+  cart[id]=
+    current+1;
+
+  saveCart();
 
 }
 
 
 /* ИЗМЕНЕНИЕ КОЛИЧЕСТВА */
 
-function changeQty(id,difference){
+function changeQty(
+  id,
+  difference
+){
 
-const product=products.find(
-item=>String(item.id)===String(id)
-);
+  const product=
+    products.find(
+      item=>
+        String(item.id)===
+        String(id)
+    );
 
-if(!product){
-return;
+  if(!product)return;
+
+
+  const status=
+    getStatus(product);
+
+  const current=
+    Number(cart[id]||0);
+
+  const newQuantity=
+    current+difference;
+
+
+  if(newQuantity<=0){
+
+    delete cart[id];
+
+    saveCart();
+
+    renderCart();
+
+    return;
+
+  }
+
+
+  if(
+    status==='preorder'
+  ){
+
+    cart[id]=
+      newQuantity;
+
+    saveCart();
+
+    renderCart();
+
+    return;
+
+  }
+
+
+  const stock=
+    getStock(product);
+
+
+  if(newQuantity>stock){
+
+    alert(
+      'Нельзя добавить больше товара.\n\n'+
+      'В наличии: '+
+      stock+
+      ' шт.'
+    );
+
+    return;
+
+  }
+
+
+  cart[id]=
+    newQuantity;
+
+  saveCart();
+
+  renderCart();
+
 }
 
-const status=getStatus(product);
 
-const current=
-Number(cart[id]||0);
-
-const newQuantity=
-current+difference;
-
-
-if(newQuantity<=0){
-
-delete cart[id];
-
-saveCart();
-
-renderCart();
-
-return;
-
-}
-
-
-/*
- * Под заказ — без ограничения.
- */
-
-if(status==='preorder'){
-
-cart[id]=newQuantity;
-
-saveCart();
-
-renderCart();
-
-return;
-
-}
-
-
-/*
- * В наличии — ограничение по складу.
- */
-
-const stock=getStock(product);
-
-if(newQuantity>stock){
-
-alert(
-'Нельзя добавить больше товара.\n\n'+
-'В наличии: '+stock+' шт.'
-);
-
-return;
-
-}
-
-cart[id]=newQuantity;
-
-saveCart();
-
-renderCart();
-
-}
-
-
-/* КОРЗИНА */
+/* ПОКАЗАТЬ КОРЗИНУ */
 
 function showCart(){
 
-renderCart();
+  renderCart();
 
-document
-.getElementById('cartOverlay')
-.classList.add('open');
+  document
+    .getElementById(
+      'cartOverlay'
+    )
+    .classList.add('open');
 
 }
 
 
+/* ЗАКРЫТЬ КОРЗИНУ */
+
 function closeCart(){
 
-document
-.getElementById('cartOverlay')
-.classList.remove('open');
+  document
+    .getElementById(
+      'cartOverlay'
+    )
+    .classList.remove('open');
 
 }
 
@@ -1185,67 +1500,91 @@ document
 
 function renderCart(){
 
-const box=
-document.getElementById('cartContent');
+  const box=
+    document.getElementById(
+      'cartContent'
+    );
 
 
-const items=
-Object.entries(cart)
-.map(([id,quantity])=>({
+  const items=
+    Object.entries(cart)
+    .map(
+      ([id,quantity])=>({
 
-product:products.find(
-item=>String(item.id)===String(id)
-),
+        product:
+          products.find(
+            item=>
+              String(item.id)===
+              String(id)
+          ),
 
-quantity:Number(quantity)
+        quantity:
+          Number(quantity)
 
-}))
-.filter(item=>item.product);
-
-
-if(!items.length){
-
-box.innerHTML=
-'<div class="empty">'+
-'Корзина пока пуста.<br>'+
-'Добавьте товары из каталога.'+
-'</div>';
-
-return;
-
-}
+      })
+    )
+    .filter(
+      item=>item.product
+    );
 
 
-const total=
-items.reduce(
-(sum,item)=>
-sum+
-Number(item.product.price||0)*
-item.quantity,
-0
-);
+  if(!items.length){
+
+    box.innerHTML=
+      '<div class="empty">'+
+      'Корзина пока пуста.<br>'+
+      'Добавьте товары из каталога.'+
+      '</div>';
+
+    return;
+
+  }
 
 
-let html='';
+  const total=
+    items.reduce(
+      (sum,item)=>
+        sum+
+        Number(
+          item.product.price||0
+        )*
+        item.quantity,
+      0
+    );
 
 
-items.forEach(item=>{
+  /*
+   * TELEGRAM USER
+   */
 
-const product=item.product;
-
-const status=getStatus(product);
-
-const stock=getStock(product);
-
-const isLimited=
-status==='in_stock';
-
-const plusDisabled=
-isLimited &&
-item.quantity>=stock;
+  const telegramUsername=
+    getTelegramUsername();
 
 
-html+=`
+  let html='';
+
+
+  items.forEach(
+    item=>{
+
+      const product=
+        item.product;
+
+      const status=
+        getStatus(product);
+
+      const stock=
+        getStock(product);
+
+      const isLimited=
+        status==='in_stock';
+
+      const plusDisabled=
+        isLimited &&
+        item.quantity>=stock;
+
+
+      html+=`
 
 <div class="cart-item">
 
@@ -1256,18 +1595,22 @@ ${escapeHtml(product.name)}
 </div>
 
 <div class="cart-price">
-${Number(product.price||0).toLocaleString('ru-RU')}
+${Number(
+  product.price||0
+).toLocaleString('ru-RU')}
  ₽ × ${item.quantity}
 </div>
 
 ${
-isLimited
-?
-`<div class="cart-stock">
-Осталось: ${stock} шт.
-</div>`
-:
-''
+  isLimited
+  ?
+  `
+  <div class="cart-stock">
+  Осталось: ${stock} шт.
+  </div>
+  `
+  :
+  ''
 }
 
 </div>
@@ -1275,14 +1618,20 @@ isLimited
 <div class="qty">
 
 <button
-data-minus="${escapeHtml(product.id)}">
+data-minus="${escapeHtml(
+  product.id
+)}">
 −
 </button>
 
-<b>${item.quantity}</b>
+<b>
+${item.quantity}
+</b>
 
 <button
-data-plus="${escapeHtml(product.id)}"
+data-plus="${escapeHtml(
+  product.id
+)}"
 ${plusDisabled?'disabled':''}>
 +
 </button>
@@ -1293,39 +1642,64 @@ ${plusDisabled?'disabled':''}>
 
 `;
 
-});
+    }
+  );
 
 
-html+=`
+  html+=`
 
 <div class="total">
 
-<span>Итого</span>
+<span>
+Итого
+</span>
 
 <span>
-${total.toLocaleString('ru-RU')} ₽
+${total.toLocaleString(
+  'ru-RU'
+)} ₽
 </span>
 
 </div>
 
+
 <div class="checkout">
+
+
+<!-- TELEGRAM -->
+
+<div class="telegram-line">
+
+👤 Telegram:
+<b>
+${escapeHtml(
+  telegramUsername
+)}
+</b>
+
+</div>
+
 
 <input
 id="orderName"
 placeholder="Ваше имя *">
+
 
 <input
 id="orderPhone"
 placeholder="Телефон *"
 type="tel">
 
+
 <textarea
 id="orderAddress"
 placeholder="Адрес доставки *"></textarea>
 
+
 <textarea
 id="orderComment"
 placeholder="Комментарий к заказу"></textarea>
+
 
 <button
 class="submit"
@@ -1334,6 +1708,7 @@ onclick="submitOrder()">
 Оформить заказ
 
 </button>
+
 
 <div class="note">
 
@@ -1348,33 +1723,46 @@ onclick="submitOrder()">
 `;
 
 
-box.innerHTML=html;
+  box.innerHTML=
+    html;
 
 
-/* МИНУС */
+  /* МИНУС */
 
-box.querySelectorAll('[data-minus]')
-.forEach(button=>{
+  box
+    .querySelectorAll(
+      '[data-minus]'
+    )
+    .forEach(
+      button=>{
 
-button.onclick=()=>changeQty(
-button.dataset.minus,
--1
-);
+        button.onclick=
+          ()=>changeQty(
+            button.dataset.minus,
+            -1
+          );
 
-});
+      }
+    );
 
 
-/* ПЛЮС */
+  /* ПЛЮС */
 
-box.querySelectorAll('[data-plus]')
-.forEach(button=>{
+  box
+    .querySelectorAll(
+      '[data-plus]'
+    )
+    .forEach(
+      button=>{
 
-button.onclick=()=>changeQty(
-button.dataset.plus,
-1
-);
+        button.onclick=
+          ()=>changeQty(
+            button.dataset.plus,
+            1
+          );
 
-});
+      }
+    );
 
 }
 
@@ -1383,201 +1771,281 @@ button.dataset.plus,
 
 async function submitOrder(){
 
-const name=
-document.getElementById('orderName')
-.value.trim();
+  const name=
+    document
+      .getElementById(
+        'orderName'
+      )
+      .value
+      .trim();
 
-const phone=
-document.getElementById('orderPhone')
-.value.trim();
 
-const address=
-document.getElementById('orderAddress')
-.value.trim();
+  const phone=
+    document
+      .getElementById(
+        'orderPhone'
+      )
+      .value
+      .trim();
 
-const comment=
-document.getElementById('orderComment')
-.value.trim();
 
+  const address=
+    document
+      .getElementById(
+        'orderAddress'
+      )
+      .value
+      .trim();
 
-const items=
-Object.entries(cart)
-.map(([id,quantity])=>{
 
-const product=products.find(
-item=>String(item.id)===String(id)
-);
+  const comment=
+    document
+      .getElementById(
+        'orderComment'
+      )
+      .value
+      .trim();
 
-if(!product)return null;
 
-return{
+  const items=
+    Object.entries(cart)
+    .map(
+      ([id,quantity])=>{
 
-имя:product.name,
+        const product=
+          products.find(
+            item=>
+              String(item.id)===
+              String(id)
+          );
 
-цена:Number(product.price||0),
+        if(!product){
 
-количество:Number(quantity)
+          return null;
 
-};
+        }
 
-})
-.filter(Boolean);
 
+        return {
 
-const total=
-items.reduce(
-(sum,item)=>
-sum+
-item.цена*
-item.количество,
-0
-);
+          id:
+            product.id,
 
+          имя:
+            product.name,
 
-if(
-!name||
-!phone||
-!address||
-!items.length
-){
+          цена:
+            Number(
+              product.price||0
+            ),
 
-alert(
-'Заполните имя, телефон и адрес.'
-);
+          количество:
+            Number(quantity)
 
-return;
+        };
 
-}
+      }
+    )
+    .filter(Boolean);
 
 
-/*
- * Повторно проверяем наличие
- * перед отправкой заказа.
- */
+  const total=
+    items.reduce(
+      (sum,item)=>
+        sum+
+        item.цена*
+        item.количество,
+      0
+    );
 
-for(const item of items){
 
-const product=products.find(
-p=>p.name===item.имя
-);
+  if(
+    !name ||
+    !phone ||
+    !address ||
+    !items.length
+  ){
 
-if(!product)continue;
+    alert(
+      'Заполните имя, телефон и адрес.'
+    );
 
-if(
-getStatus(product)==='in_stock'
-){
+    return;
 
-const stock=
-getStock(product);
+  }
 
-if(item.количество>stock){
 
-alert(
-'Товара "'+
-product.name+
-'" осталось только '+
-stock+
-' шт.'
-);
+  /*
+   * Проверяем остаток
+   * перед отправкой.
+   */
 
-await loadProducts();
+  for(
+    const item of items
+  ){
 
-renderCart();
+    const product=
+      products.find(
+        p=>
+          String(p.id)===
+          String(item.id)
+      );
 
-return;
+    if(!product)continue;
 
-}
 
-}
+    if(
+      getStatus(product)==='in_stock'
+    ){
 
-}
+      const stock=
+        getStock(product);
 
 
-const button=
-document.querySelector('.submit');
+      if(
+        item.количество>stock
+      ){
 
-button.disabled=true;
+        alert(
+          'Товара "'+
+          product.name+
+          '" осталось только '+
+          stock+
+          ' шт.'
+        );
 
-button.textContent=
-'Отправляем заказ...';
 
+        await loadProducts();
 
-try{
+        renderCart();
 
-const telegramUser=
-window.Telegram?.WebApp
-?.initDataUnsafe?.user
-||null;
+        return;
 
+      }
 
-const response=
-await fetch(
-'/api/create-order',
-{
+    }
 
-method:'POST',
+  }
 
-headers:{
-'Content-Type':'application/json'
-},
 
-body:JSON.stringify({
+  const button=
+    document.querySelector(
+      '.submit'
+    );
 
-имя:name,
 
-телефон:phone,
+  button.disabled=true;
 
-адрес:address,
+  button.textContent=
+    'Отправляем заказ...';
 
-комментарий:comment,
 
-предметы:items,
+  try{
 
-общий:total,
+    /*
+     * Получаем пользователя
+     * Telegram автоматически.
+     */
 
-telegramUser:
-telegramUser
-?
-{
-имя_пользователя:
-telegramUser.username,
+    const telegramUser=
+      getTelegramUser();
 
-имя:
-telegramUser.first_name
-}
-:null
 
-})
+    const telegramData=
+      telegramUser
+      ?
+      {
 
-}
-);
+        id:
+          telegramUser.id,
 
+        имя_пользователя:
+          telegramUser.username,
 
-const data=
-await response.json();
+        имя:
+          telegramUser.first_name,
 
+        фамилия:
+          telegramUser.last_name
 
-if(
-!response.ok ||
-!data.хорошо
-){
+      }
+      :
+      null;
 
-throw new Error(
-data.ошибка||
-'Не удалось отправить заказ'
-);
 
-}
+    const response=
+      await fetch(
+        '/api/create-order',
+        {
 
+          method:'POST',
 
-cart={};
+          headers:{
+            'Content-Type':
+              'application/json'
+          },
 
-saveCart();
+          body:
+            JSON.stringify({
 
+              имя:name,
 
-document.getElementById(
-'cartContent'
-).innerHTML=`
+              телефон:phone,
+
+              адрес:address,
+
+              комментарий:comment,
+
+              предметы:items,
+
+              общий:total,
+
+              telegramUser:
+                telegramData
+
+            })
+
+        }
+      );
+
+
+    const data=
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.хорошо
+    ){
+
+      throw new Error(
+        data.ошибка ||
+        'Не удалось отправить заказ'
+      );
+
+    }
+
+
+    /*
+     * Очищаем корзину
+     */
+
+    cart={};
+
+    saveCart();
+
+
+    /*
+     * Обновляем товары,
+     * чтобы показать новый остаток.
+     */
+
+    await loadProducts();
+
+
+    document.getElementById(
+      'cartContent'
+    ).innerHTML=`
 
 <div class="success">
 
@@ -1586,7 +2054,10 @@ document.getElementById(
 </b>
 
 <p class="note">
-Мы получили ваш заказ и свяжемся с вами для подтверждения.
+
+Мы получили ваш заказ
+и свяжемся с вами для подтверждения.
+
 </p>
 
 <button
@@ -1602,19 +2073,20 @@ onclick="closeCart()">
 `;
 
 
-}catch(error){
+  }catch(error){
 
-button.disabled=false;
+    button.disabled=false;
 
-button.textContent=
-'Оформить заказ';
+    button.textContent=
+      'Оформить заказ';
 
-alert(
-error.message||
-'Не удалось отправить заказ'
-);
 
-}
+    alert(
+      error.message ||
+      'Не удалось отправить заказ'
+    );
+
+  }
 
 }
 
@@ -1622,30 +2094,68 @@ error.message||
 /* КАТЕГОРИИ */
 
 document
-.querySelectorAll('.cat')
-.forEach(button=>{
+  .querySelectorAll('.cat')
+  .forEach(
+    button=>{
 
-button.addEventListener(
-'click',
-()=>{
+      button.addEventListener(
+        'click',
+        ()=>{
 
-document
-.querySelectorAll('.cat')
-.forEach(item=>
-item.classList.remove('active')
-);
+          document
+            .querySelectorAll(
+              '.cat'
+            )
+            .forEach(
+              item=>
+                item.classList
+                  .remove(
+                    'active'
+                  )
+            );
 
-button.classList.add('active');
 
-currentCategory=
-button.dataset.category;
+          button.classList.add(
+            'active'
+          );
 
-renderProducts();
+
+          currentCategory=
+            button.dataset.category;
+
+
+          renderProducts();
+
+        }
+      );
+
+    }
+  );
+
+
+/* TELEGRAM MINI APP */
+
+try{
+
+  if(
+    window.Telegram &&
+    window.Telegram.WebApp
+  ){
+
+    window.Telegram.WebApp.ready();
+
+    window.Telegram.WebApp.expand();
+
+  }
+
+}catch(error){
+
+  console.log(
+    'Telegram WebApp:',
+    error
+  );
 
 }
-);
-
-});
 
 
 /* СТАРТ */
