@@ -6,6 +6,7 @@ const DEFAULT_PRODUCTS = [
     category: "albums",
     description: "BTS — DYNAMITE",
     available: true,
+    status: "preorder",
     image: ""
   },
   {
@@ -15,6 +16,7 @@ const DEFAULT_PRODUCTS = [
     category: "albums",
     description: "BTS — You Never Walk Alone",
     available: true,
+    status: "in_stock",
     image: ""
   },
   {
@@ -24,6 +26,7 @@ const DEFAULT_PRODUCTS = [
     category: "albums",
     description: "BTS — Butter",
     available: true,
+    status: "in_stock",
     image: ""
   }
 ];
@@ -35,43 +38,94 @@ function json(data, status = 200) {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
       "Pragma": "no-cache",
-      "Expires": "0",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, X-Admin-Password"
+      "Access-Control-Allow-Headers":
+        "Content-Type, X-Admin-Password"
     }
   });
 }
 
 async function readProducts(env) {
-  const value = await env.PRODUCTS.get("products", "json");
+  try {
+    const value = await env.PRODUCTS.get("products", "json");
 
-  if (Array.isArray(value)) {
-    return value;
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    await env.PRODUCTS.put(
+      "products",
+      JSON.stringify(DEFAULT_PRODUCTS)
+    );
+
+    return DEFAULT_PRODUCTS;
+  } catch (error) {
+    return DEFAULT_PRODUCTS;
   }
-
-  await env.PRODUCTS.put(
-    "products",
-    JSON.stringify(DEFAULT_PRODUCTS)
-  );
-
-  return DEFAULT_PRODUCTS;
 }
 
-function validPassword(request, env, body) {
-  const header = request.headers.get("X-Admin-Password") || "";
-  const bodyPassword = body?.password || "";
+function validPassword(request, env, body = {}) {
+  const headerPassword =
+    request.headers.get("X-Admin-Password") || "";
+
+  const bodyPassword = body.password || "";
 
   return Boolean(
     env.ADMIN_PASSWORD &&
-    (header === env.ADMIN_PASSWORD ||
-     bodyPassword === env.ADMIN_PASSWORD)
+    (
+      headerPassword === env.ADMIN_PASSWORD ||
+      bodyPassword === env.ADMIN_PASSWORD
+    )
   );
+}
+
+async function sendTelegramOrder(env, text) {
+  if (!env.BOT_TOKEN || !env.ADMIN_CHAT_ID) {
+    return {
+      ok: false,
+      reason: "telegram_not_configured"
+    };
+  }
+
+  try {
+    const response = await fetch(
+      `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: env.ADMIN_CHAT_ID,
+          text: text
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!result.ok) {
+      return {
+        ok: false,
+        reason: "telegram_rejected",
+        telegramError: result.description || ""
+      };
+    }
+
+    return {
+      ok: true
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: "telegram_request_failed"
+    };
+  }
 }
 
 export default {
   async fetch(request, env) {
-
     const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
@@ -79,12 +133,30 @@ export default {
     }
 
     /*
+     * БЕЗОПАСНАЯ ПРОВЕРКА TELEGRAM
+     *
+     * Показывает только наличие переменных и их длину.
+     * Сам BOT_TOKEN никогда не показывается.
+     */
+    if (url.pathname === "/api/debug-telegram") {
+      return json({
+        ok: true,
+        botToken: Boolean(env.BOT_TOKEN),
+        adminChatId: Boolean(env.ADMIN_CHAT_ID),
+        botTokenLength: env.BOT_TOKEN
+          ? env.BOT_TOKEN.length
+          : 0,
+        adminChatIdLength: env.ADMIN_CHAT_ID
+          ? env.ADMIN_CHAT_ID.length
+          : 0
+      });
+    }
+
+    /*
      * ПРОВЕРКА KV
      */
     if (url.pathname === "/api/test-kv") {
-
       try {
-
         await env.PRODUCTS.put(
           "test",
           "работает"
@@ -98,21 +170,19 @@ export default {
           kv: true,
           value
         });
-
       } catch (error) {
-
         return json({
           ok: false,
+          kv: false,
           error: error.message
         }, 500);
       }
     }
 
     /*
-     * ТОВАРЫ
+     * API ТОВАРОВ
      */
     if (url.pathname === "/api/products") {
-
       let body = {};
 
       if (request.method === "POST") {
@@ -132,10 +202,9 @@ export default {
         "list";
 
       /*
-       * ВХОД
+       * Вход в админку
        */
       if (action === "login") {
-
         if (!validPassword(request, env, body)) {
           return json({
             ok: false,
@@ -149,10 +218,9 @@ export default {
       }
 
       /*
-       * СПИСОК
+       * Получить товары
        */
       if (action === "list") {
-
         const products =
           await readProducts(env);
 
@@ -163,10 +231,9 @@ export default {
       }
 
       /*
-       * СОХРАНЕНИЕ
+       * Сохранить товары
        */
       if (action === "save") {
-
         if (!validPassword(request, env, body)) {
           return json({
             ok: false,
@@ -181,12 +248,9 @@ export default {
           }, 400);
         }
 
-        const data =
-          JSON.stringify(body.products);
-
         await env.PRODUCTS.put(
           "products",
-          data
+          JSON.stringify(body.products)
         );
 
         const check =
@@ -202,7 +266,7 @@ export default {
       }
 
       /*
-       * ВЫХОД
+       * Выход из админки
        */
       if (action === "logout") {
         return json({
@@ -217,7 +281,7 @@ export default {
     }
 
     /*
-     * ЗАКАЗ
+     * СОЗДАНИЕ ЗАКАЗА
      */
     if (
       (
@@ -226,9 +290,7 @@ export default {
       ) &&
       request.method === "POST"
     ) {
-
       try {
-
         const body =
           await request.json();
 
@@ -251,39 +313,75 @@ export default {
         ) {
           return json({
             хорошо: false,
-            ошибка: "Заполните обязательные поля."
+            ошибка:
+              "Заполните обязательные поля."
           }, 400);
         }
 
+        /*
+         * Проверяем Telegram
+         */
         if (
           !env.BOT_TOKEN ||
           !env.ADMIN_CHAT_ID
         ) {
           return json({
             хорошо: false,
-            ошибка: "Telegram ещё не настроен."
+            ошибка:
+              "Telegram ещё не настроен."
           }, 500);
         }
 
+        /*
+         * Формируем список товаров
+         */
         const lines =
-          предметы.map(item =>
-            `• ${item.имя} × ${item.количество} — ${Number(
-              item.цена * item.количество
-            ).toLocaleString("ru-RU")} ₽`
-          ).join("\n");
+          предметы
+            .map(item => {
+              const quantity =
+                Number(item.количество || 0);
 
-        const telegram =
-          telegramUser?.имя_пользователя
-            ? `@${telegramUser.имя_пользователя}`
-            : telegramUser?.имя ||
-              "не указан";
+              const price =
+                Number(item.цена || 0);
 
+              const sum =
+                price * quantity;
+
+              return (
+                `• ${item.имя} × ${quantity} — ` +
+                `${sum.toLocaleString("ru-RU")} ₽`
+              );
+            })
+            .join("\n");
+
+        /*
+         * Telegram пользователя
+         */
+        let telegram =
+          "не указан";
+
+        if (
+          telegramUser &&
+          telegramUser.имя_пользователя
+        ) {
+          telegram =
+            `@${telegramUser.имя_пользователя}`;
+        } else if (
+          telegramUser &&
+          telegramUser.имя
+        ) {
+          telegram =
+            telegramUser.имя;
+        }
+
+        /*
+         * Сообщение администратору
+         */
         const text =
           `🛍 НОВЫЙ ЗАКАЗ SEOULDROP\n\n` +
           `${lines}\n\n` +
-          `💰 Итого: ${Number(
-            общий || 0
-          ).toLocaleString("ru-RU")} ₽\n\n` +
+          `💰 Итого: ` +
+          `${Number(общий || 0).toLocaleString("ru-RU")} ₽\n\n` +
           `👤 Имя: ${имя}\n` +
           `📞 Телефон: ${телефон}\n` +
           `📍 Адрес: ${адрес}` +
@@ -294,28 +392,31 @@ export default {
           ) +
           `\n\n👤 Telegram: ${telegram}`;
 
-        const response =
-          await fetch(
-            `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                chat_id: env.ADMIN_CHAT_ID,
-                text
-              })
-            }
+        /*
+         * Отправляем в Telegram
+         */
+        const telegramResult =
+          await sendTelegramOrder(
+            env,
+            text
           );
 
-        const result =
-          await response.json();
+        if (!telegramResult.ok) {
+          if (
+            telegramResult.reason ===
+            "telegram_not_configured"
+          ) {
+            return json({
+              хорошо: false,
+              ошибка:
+                "Telegram ещё не настроен."
+            }, 500);
+          }
 
-        if (!result.ok) {
           return json({
             хорошо: false,
-            ошибка: "Telegram не принял сообщение."
+            ошибка:
+              "Telegram не принял сообщение."
           }, 502);
         }
 
@@ -324,10 +425,10 @@ export default {
         });
 
       } catch (error) {
-
         return json({
           хорошо: false,
-          ошибка: "Ошибка сервера."
+          ошибка:
+            "Ошибка сервера."
         }, 500);
       }
     }
@@ -336,18 +437,52 @@ export default {
      * АДМИНКА
      */
     if (url.pathname === "/admin") {
+      if (
+        env.ASSETS &&
+        typeof env.ASSETS.fetch === "function"
+      ) {
+        return env.ASSETS.fetch(
+          new Request(
+            new URL(
+              "/admin.html",
+              request.url
+            ),
+            request
+          )
+        );
+      }
 
-      return env.ASSETS.fetch(
-        new Request(
-          new URL(
-            "/admin.html",
-            request.url
-          ),
-          request
-        )
+      return new Response(
+        "ASSETS binding не подключен.",
+        {
+          status: 500,
+          headers: {
+            "Content-Type":
+              "text/plain; charset=utf-8"
+          }
+        }
       );
     }
 
-    return env.ASSETS.fetch(request);
+    /*
+     * СТАТИЧЕСКИЕ ФАЙЛЫ
+     */
+    if (
+      env.ASSETS &&
+      typeof env.ASSETS.fetch === "function"
+    ) {
+      return env.ASSETS.fetch(request);
+    }
+
+    return new Response(
+      "SEOULDROP Worker работает, но ASSETS binding не подключен.",
+      {
+        status: 500,
+        headers: {
+          "Content-Type":
+            "text/plain; charset=utf-8"
+        }
+      }
+    );
   }
 };
