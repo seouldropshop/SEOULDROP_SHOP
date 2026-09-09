@@ -388,7 +388,48 @@ export default {
     ) {
       return json({});
     }
+/* =====================================================
+   ПРОВЕРКА WEBHOOK
+   ===================================================== */
 
+if (
+  url.pathname ===
+  "/api/webhook-info"
+) {
+
+  try {
+
+    const response =
+      await fetch(
+        `https://api.telegram.org/bot${env.BOT_TOKEN}/getWebhookInfo`
+      );
+
+    const result =
+      await response.json();
+
+    if (!result.ok) {
+      return json({
+        ok: false,
+        error: result.description || "Telegram error"
+      });
+    }
+
+    return json({
+      ok: true,
+      url: result.result.url,
+      pending: result.result.pending_update_count,
+      lastError: result.result.last_error_message || null,
+      lastErrorDate: result.result.last_error_date || null
+    });
+
+  } catch (error) {
+
+    return json({
+      ok: false,
+      error: error.message
+    }, 500);
+  }
+}
 
     /* =====================================================
        ПРОВЕРКА TELEGRAM
