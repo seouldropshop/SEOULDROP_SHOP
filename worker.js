@@ -354,22 +354,24 @@ if (
     const update =
       await request.json();
 
-    /*
-     * Отправляем приветствие каждому
-     * пользователю, который написал боту.
-     */
+    /* Сохраняем последнее сообщение для проверки */
+
+    await env.PRODUCTS.put(
+      "last_telegram_update",
+      JSON.stringify(update)
+    );
+
+    /* Отвечаем пользователю */
+
     if (
       update.message &&
       update.message.chat &&
       update.message.chat.id
     ) {
 
-      const chatId =
-        update.message.chat.id;
-
       await sendTelegramGreeting(
         env,
-        chatId
+        update.message.chat.id
       );
     }
 
@@ -380,11 +382,11 @@ if (
   } catch (error) {
 
     return json({
-      ok: false
+      ok: false,
+      error: error.message
     }, 400);
   }
 }
-
     /* =====================================================
        OPTIONS
        ===================================================== */
