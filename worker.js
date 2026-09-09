@@ -439,16 +439,55 @@ if (
   "/api/test-greeting"
 ) {
 
-  await sendTelegramGreeting(
-    env,
-    ADMIN_CHAT_ID
-  );
+  try {
 
-  return json({
-    ok: true,
-    message:
-      "Тестовое приветствие отправлено."
-  });
+    const response =
+      await fetch(
+        `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            chat_id:
+              ADMIN_CHAT_ID,
+
+            text:
+              "🧪 ТЕСТ SEOULDROP\n\n" +
+              "Если ты видишь это сообщение — Telegram работает."
+          })
+        }
+      );
+
+    const result =
+      await response.json();
+
+    return json({
+      telegramHttpStatus:
+        response.status,
+
+      telegramOk:
+        result.ok,
+
+      telegramDescription:
+        result.description || null,
+
+      telegramErrorCode:
+        result.error_code || null
+    });
+
+  } catch (error) {
+
+    return json({
+      ok: false,
+      error:
+        error.message
+    }, 500);
+  }
 }
     /* =====================================================
        ПРОВЕРКА TELEGRAM
