@@ -341,43 +341,49 @@ export default {
 
 
     /* =====================================================
-       TELEGRAM WEBHOOK
-       ===================================================== */
+   TELEGRAM WEBHOOK
+   ===================================================== */
 
+if (
+  request.method === "POST" &&
+  url.pathname === "/telegram/webhook"
+) {
+
+  try {
+
+    const update =
+      await request.json();
+
+    /*
+     * Отправляем приветствие каждому
+     * пользователю, который написал боту.
+     */
     if (
-      request.method === "POST" &&
-      url.pathname ===
-        "/telegram/webhook"
+      update.message &&
+      update.message.chat &&
+      update.message.chat.id
     ) {
 
-      try {
+      const chatId =
+        update.message.chat.id;
 
-        const update =
-          await request.json();
-
-        if (
-          update.message &&
-          update.message.chat
-        ) {
-
-          await sendTelegramGreeting(
-            env,
-            update.message.chat.id
-          );
-        }
-
-        return json({
-          ok: true
-        });
-
-      } catch (error) {
-
-        return json({
-          ok: false
-        }, 400);
-      }
+      await sendTelegramGreeting(
+        env,
+        chatId
+      );
     }
 
+    return json({
+      ok: true
+    });
+
+  } catch (error) {
+
+    return json({
+      ok: false
+    }, 400);
+  }
+}
 
     /* =====================================================
        OPTIONS
