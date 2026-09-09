@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEOULDROP | Админка</title>
+<style>
+:root{--bg:#050308;--panel:#0e0912;--panel2:#160d1b;--pink:#ff4fb3;--violet:#a76cff;--text:#fff7fc;--muted:#bcaabd;--line:rgba(255,111,194,.18)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 15% 5%,rgba(255,79,179,.14),transparent 28%),radial-gradient(circle at 90% 20%,rgba(167,108,255,.14),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif}
+.wrap{max-width:800px;margin:auto;padding:22px 14px 50px}.brand{font-weight:900;letter-spacing:.12em;font-size:20px;margin-bottom:4px}.muted{color:var(--muted)}
+.panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:18px;margin-top:16px}
+.input,select,textarea{width:100%;background:#0b0610;color:#fff;border:1px solid var(--line);border-radius:13px;padding:12px;font:inherit;margin-top:6px}
+select option{background:#0b0610;color:#fff}.btn{border:0;border-radius:13px;padding:12px 16px;background:linear-gradient(90deg,var(--pink),var(--violet));color:white;font-weight:800;cursor:pointer}.btn.secondary{background:var(--panel);border:1px solid var(--line)}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between}.products{display:grid;gap:12px}
+.product{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;background:#0b0610;border:1px solid var(--line);border-radius:16px;padding:10px}
+.product>img{width:70px;height:70px;object-fit:contain;border-radius:10px;background:#050308}.actions{display:flex;gap:8px;flex-wrap:wrap}.login{max-width:430px;margin:12vh auto}.hidden{display:none}.formgrid{display:grid;gap:10px}
+.status{margin-top:5px;font-size:14px}.stock-note,.photo-note{margin-top:5px;font-size:13px;color:var(--muted)}
+.photo-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.photo-item{position:relative;width:92px;height:92px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#050308}
+.photo-item img{width:100%;height:100%;object-fit:cover}.photo-remove{position:absolute;right:4px;top:4px;width:26px;height:26px;border:0;border-radius:50%;background:rgba(0,0,0,.75);color:#fff;font-size:17px;cursor:pointer}
+.photo-main{position:absolute;left:4px;bottom:4px;padding:3px 6px;border-radius:7px;background:rgba(0,0,0,.7);font-size:11px}
+#photoInput{display:none}.upload-label{display:inline-block;margin-top:6px;text-align:center}
+@media(max-width:620px){.product{grid-template-columns:58px 1fr}.product>img{width:58px;height:58px}.product .actions{grid-column:1/-1}.row{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand">SEOULDROP</div>
+<div class="muted">Админка каталога</div>
+
+<section id="login" class="panel login">
+<h2>🔐 Вход</h2>
+<input class="input" id="password" type="password" placeholder="Пароль администратора">
+<button class="btn" style="width:100%;margin-top:12px" onclick="login()">Войти</button>
+<div id="loginError" class="muted" style="margin-top:10px"></div>
+</section>
+
+<main id="app" class="hidden">
+<div class="row" style="margin-top:18px">
+<h2 style="margin:0">Товары</h2>
+<button class="btn" onclick="newProduct()">＋ Добавить</button>
+</div>
+<div id="products" class="products" style="margin-top:12px"></div>
+<div class="row" style="margin-top:16px">
+<button class="btn" onclick="saveAll()">💾 Сохранить изменения</button>
+<button class="btn secondary" onclick="logout()">Выйти</button>
+</div>
+
+<section id="editor" class="panel hidden">
+<div class="row"><h2 id="editorTitle" style="margin:0">Товар</h2><button class="btn secondary" onclick="closeEditor()">✕</button></div>
+<div class="formgrid" style="margin-top:12px">
+
+<label>Название<input class="input" id="fName"></label>
+<label>Цена<input class="input" id="fPrice" type="number" min="0"></label>
+
+<label>Категория
+<select class="input" id="fCategory">
+<option value="albums">💿 Альбомы</option>
+<option value="vinyl">🎶 Винил</option>
+<option value="photocards">🃏 Карты</option>
+<option value="merch">🎁 Мерч</option>
+<option value="cosmetics">🧴 Косметика</option>
+<option value="sweets">🍪 Сладости</option>
+<option value="other">🌟 Другое</option>
+</select>
+</label>
+
+<label>Описание<textarea class="input" id="fDesc" rows="3"></textarea></label>
+
+<label>Статус товара
+<select class="input" id="fStatus" onchange="toggleStockField()">
+<option value="in_stock">🟢 В наличии</option>
+<option value="preorder">🟡 Под заказ</option>
+<option value="out_of_stock">🔴 Нет в наличии</option>
+</select>
+</label>
+
+<div id="stockBlock">
+<label>Количество в наличии<input class="input" id="fStock" type="number" min="0" step="1" value="0"></label>
+<div class="stock-note">Для «Под заказ» количество не ограничивается.</div>
+</div>
+
+<div>
+<strong>Фотографии товара</strong>
+<div class="photo-note">Можно выбрать сразу несколько фотографий. Они автоматически уменьшаются перед сохранением.</div>
+<label class="btn upload-label" for="photoInput">📷 Добавить фотографии</label>
+<input id="photoInput" type="file" accept="image/*" multiple>
+<div id="photoGrid" class="photo-grid"></div>
+</div>
+
+<button class="btn" onclick="applyEditor()">Готово</button>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+let products=[];
+let editing=null;
+let imagesData=[];
+let adminPassword="";
+
+async function api(action,body={}){
+ const response=await fetch("/api/products?action="+encodeURIComponent(action),{
+  method:"POST",
+  headers:{"Content-Type":"application/json","X-Admin-Password":adminPassword},
+  body:JSON.stringify({...body,action})
+ });
+ const data=await response.json().catch(()=>({error:"Ошибка ответа сервера"}));
+ if(!response.ok) throw new Error(data.error||"Ошибка");
+ return data;
+}
+
+async function login(){
+ const password=document.getElementById("password").value.trim();
+ if(!password){document.getElementById("loginError").textContent="Введите пароль";return}
+ try{
+  adminPassword=password;
+  const data=await api("login",{password});
+  if(!data.ok) throw new Error(data.error||"Ошибка входа");
+  await load();
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+ }catch(e){
+  adminPassword="";
+  document.getElementById("loginError").textContent=e.message;
+ }
+}
+
+async function load(){
+ const data=await api("list");
+ products=Array.isArray(data.products)?data.products:[];
+ render();
+}
+
+function getStatus(p){
+ if(p.status)return p.status;
+ return p.available===false?"out_of_stock":"in_stock";
+}
+function getStock(p){
+ const n=Number(p.stock);
+ return Number.isFinite(n)&&n>=0?Math.floor(n):0;
+}
+function statusText(p){
+ const s=getStatus(p);
+ return s==="preorder"?"🟡 Под заказ":s==="out_of_stock"?"🔴 Нет в наличии":"🟢 В наличии";
+}
+
+function firstImage(p){
+ return Array.isArray(p.images)&&p.images.length?p.images[0]:(p.image||"");
+}
+
+function render(){
+ const box=document.getElementById("products");
+ box.innerHTML="";
+ products.forEach((p,i)=>{
+  const el=document.createElement("div");
+  el.className="product";
+  const stock=getStatus(p)==="in_stock"?` · ${getStock(p)} шт.`:"";
+  const count=Array.isArray(p.images)&&p.images.length?p.images.length:(p.image?1:0);
+  el.innerHTML=`
+   <img src="${firstImage(p)}" onerror="this.style.visibility='hidden'">
+   <div>
+    <b>${esc(p.name)}</b>
+    <div class="muted">${Number(p.price||0).toLocaleString("ru-RU")} ₽</div>
+    <div class="status">${statusText(p)}${stock}</div>
+    <div class="muted" style="margin-top:4px">📷 ${count} фото</div>
+   </div>
+   <div class="actions">
+    <button class="btn secondary" onclick="edit(${i})">Изменить</button>
+    <button class="btn secondary" onclick="removeProduct(${i})">Удалить</button>
+   </div>`;
+  box.appendChild(el);
+ });
+}
+
+function esc(v){
+ return String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function normalizeImages(p){
+ if(Array.isArray(p.images)&&p.images.length)return p.images.filter(Boolean);
+ return p.image?[p.image]:[];
+}
+
+function newProduct(){
+ editing=null;
+ imagesData=[];
+ document.getElementById("editorTitle").textContent="Новый товар";
+ fill({name:"",price:0,category:"albums",description:"",status:"in_stock",stock:0,image:null,images:[]});
+ document.getElementById("editor").classList.remove("hidden");
+ toggleStockField();
+}
+
+function edit(i){
+ editing=i;
+ imagesData=normalizeImages(products[i]);
+ document.getElementById("editorTitle").textContent="Изменить товар";
+ fill(products[i]);
+ document.getElementById("editor").classList.remove("hidden");
+ toggleStockField();
+}
+
+function fill(p){
+ document.getElementById("fName").value=p.name||"";
+ document.getElementById("fPrice").value=p.price||0;
+ document.getElementById("fCategory").value=p.category||"albums";
+ document.getElementById("fDesc").value=p.description||"";
+ document.getElementById("fStatus").value=getStatus(p);
+ document.getElementById("fStock").value=getStock(p);
+ document.getElementById("photoInput").value="";
+ renderPhotoGrid();
+}
+
+function toggleStockField(){
+ const stockBlock=document.getElementById("stockBlock");
+ stockBlock.style.display=document.getElementById("fStatus").value==="in_stock"?"block":"none";
+}
+
+function renderPhotoGrid(){
+ const grid=document.getElementById("photoGrid");
+ grid.innerHTML="";
+ imagesData.forEach((src,i)=>{
+  const item=document.createElement("div");
+  item.className="photo-item";
+  item.innerHTML=`<img src="${src}" alt=""><button class="photo-remove" onclick="removePhoto(${i})">×</button>${i===0?'<span class="photo-main">Главное</span>':''}`;
+  grid.appendChild(item);
+ });
+}
+
+function removePhoto(i){
+ imagesData.splice(i,1);
+ renderPhotoGrid();
+}
+
+document.getElementById("photoInput").addEventListener("change",async function(){
+ const files=Array.from(this.files||[]);
+ if(!files.length)return;
+ try{
+  const converted=await Promise.all(files.map(file=>compressImage(file)));
+  imagesData.push(...converted.filter(Boolean));
+  renderPhotoGrid();
+ }catch(e){alert("Не удалось обработать фотографию: "+e.message)}
+ this.value="";
+});
+
+function compressImage(file){
+ return new Promise((resolve,reject)=>{
+  if(!file.type.startsWith("image/")){resolve(null);return}
+  const reader=new FileReader();
+  reader.onerror=()=>reject(new Error("Ошибка чтения файла"));
+  reader.onload=()=>{
+   const img=new Image();
+   img.onerror=()=>reject(new Error("Не удалось открыть изображение"));
+   img.onload=()=>{
+    const max=1400;
+    const scale=Math.min(1,max/Math.max(img.width,img.height));
+    const canvas=document.createElement("canvas");
+    canvas.width=Math.max(1,Math.round(img.width*scale));
+    canvas.height=Math.max(1,Math.round(img.height*scale));
+    const ctx=canvas.getContext("2d");
+    ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    resolve(canvas.toDataURL("image/jpeg",0.78));
+   };
+   img.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+ });
+}
+
+function closeEditor(){document.getElementById("editor").classList.add("hidden")}
+
+function applyEditor(){
+ const old=editing===null?null:products[editing];
+ const status=document.getElementById("fStatus").value;
+ let stock=Number(document.getElementById("fStock").value)||0;
+ if(status!=="in_stock")stock=0;
+ if(status==="in_stock"&&stock<1)stock=0;
+
+ const imgs=imagesData.filter(Boolean);
+ const product={
+  id:old?.id||"p_"+Date.now(),
+  name:document.getElementById("fName").value.trim()||"Без названия",
+  price:Number(document.getElementById("fPrice").value)||0,
+  category:document.getElementById("fCategory").value,
+  description:document.getElementById("fDesc").value.trim(),
+  status:status,
+  stock:Math.max(0,Math.floor(stock)),
+  available:status==="in_stock"&&stock>0,
+  images:imgs,
+  image:imgs[0]||null
+ };
+ if(status==="in_stock"&&product.stock===0){
+  product.status="out_of_stock";
+  product.available=false;
+ }
+ if(editing===null)products.push(product);else products[editing]=product;
+ render();closeEditor();
+}
+
+function removeProduct(i){
+ if(confirm("Удалить этот товар?")){products.splice(i,1);render()}
+}
+
+async function saveAll(){
+ try{
+  const data=await api("save",{products});
+  if(!data.ok)throw new Error(data.error||"Не удалось сохранить");
+  products=Array.isArray(data.products)?data.products:products;
+  render();
+  alert("Изменения сохранены 💜");
+ }catch(e){alert("Ошибка сохранения: "+e.message)}
+}
+
+function logout(){adminPassword="";location.reload()}
+</script>
+</body>
+</html>
