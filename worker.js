@@ -1,4 +1,5 @@
 const ADMIN_CHAT_ID = "8600388356";
+const CATALOG_URL = "https://t.me/seouldrop_shop_bot/seouldrop";
 
 const DEFAULT_PRODUCTS = [
   {
@@ -45,16 +46,117 @@ function json(data, status = 200) {
       "Pragma": "no-cache",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers":
-        "Content-Type, X-Admin-Password"
+      "Access-Control-Allow-Headers": "Content-Type, X-Admin-Password"
     }
   });
 }
 
+
+/* =========================================================
+   ПРИВЕТСТВИЕ TELEGRAM
+   ========================================================= */
+
+async function sendTelegramGreeting(env, chatId) {
+  if (!env.BOT_TOKEN) return;
+
+  try {
+    await fetch(
+      `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+
+          text:
+            "💜 Добро пожаловать в SEOULDROP! 🇰🇷\n\n" +
+            "Здесь ты найдёшь оригинальные K-POP альбомы, винил, карты, мерч, косметику и сладости из Кореи.\n\n" +
+            "🛍 Открывай наш каталог и выбирай любимые товары!",
+
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "🛍 ОТКРЫТЬ КАТАЛОГ",
+                  web_app: {
+                    url: CATALOG_URL
+                  }
+                }
+              ]
+            ]
+          }
+        })
+      }
+    );
+  } catch (error) {
+    // Не ломаем Worker, если Telegram временно недоступен.
+  }
+}
+
+
+/* =========================================================
+   АВТОМАТИЧЕСКАЯ НАСТРОЙКА WEBHOOK
+   ========================================================= */
+
+async function ensureTelegramWebhook(env, webhookUrl) {
+  if (!env.BOT_TOKEN || !env.PRODUCTS) return;
+
+  try {
+    const current =
+      await env.PRODUCTS.get(
+        "telegram_webhook_ready"
+      );
+
+    if (current === webhookUrl) {
+      return;
+    }
+
+    const response =
+      await fetch(
+        `https://api.telegram.org/bot${env.BOT_TOKEN}/setWebhook`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            url: webhookUrl,
+            allowed_updates: ["message"]
+          })
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (result.ok) {
+      await env.PRODUCTS.put(
+        "telegram_webhook_ready",
+        webhookUrl
+      );
+    }
+
+  } catch (error) {
+    // При следующем запросе попробуем снова.
+  }
+}
+
+
+/* =========================================================
+   ТОВАРЫ
+   ========================================================= */
+
 async function readProducts(env) {
   try {
     const value =
-      await env.PRODUCTS.get("products", "json");
+      await env.PRODUCTS.get(
+        "products",
+        "json"
+      );
 
     if (Array.isArray(value)) {
       return value;
@@ -72,9 +174,20 @@ async function readProducts(env) {
   }
 }
 
-function validPassword(request, env, body = {}) {
+
+/* =========================================================
+   ПРОВЕРКА ПАРОЛЯ АДМИНКИ
+   ========================================================= */
+
+function validPassword(
+  request,
+  env,
+  body = {}
+) {
   const headerPassword =
-    request.headers.get("X-Admin-Password") || "";
+    request.headers.get(
+      "X-Admin-Password"
+    ) || "";
 
   const bodyPassword =
     body.password || "";
@@ -82,11 +195,18 @@ function validPassword(request, env, body = {}) {
   return Boolean(
     env.ADMIN_PASSWORD &&
     (
-      headerPassword === env.ADMIN_PASSWORD ||
-      bodyPassword === env.ADMIN_PASSWORD
+      headerPassword ===
+        env.ADMIN_PASSWORD ||
+      bodyPassword ===
+        env.ADMIN_PASSWORD
     )
   );
 }
+
+
+/* =========================================================
+   СТАТУС ТОВАРА
+   ========================================================= */
 
 function getStatus(product) {
   if (product.status) {
@@ -98,8 +218,14 @@ function getStatus(product) {
     : "in_stock";
 }
 
+
+/* =========================================================
+   ОСТАТОК
+   ========================================================= */
+
 function getStock(product) {
-  const stock = Number(product.stock);
+  const stock =
+    Number(product.stock);
 
   if (
     !Number.isFinite(stock) ||
@@ -111,28 +237,44 @@ function getStock(product) {
   return Math.floor(stock);
 }
 
-async function sendTelegramOrder(env, text) {
+
+/* =========================================================
+   ОТПРАВКА ЗАКАЗА АДМИНИСТРАТОРУ
+   ========================================================= */
+
+async function sendTelegramOrder(
+  env,
+  text
+) {
   if (!env.BOT_TOKEN) {
     return {
       ok: false,
-      reason: "telegram_not_configured"
+      reason:
+        "telegram_not_configured"
     };
   }
 
   try {
-    const response = await fetch(
-      `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          chat_id: ADMIN_CHAT_ID,
-          text: text
-        })
-      }
-    );
+
+    const response =
+      await fetch(
+        `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            chat_id:
+              ADMIN_CHAT_ID,
+
+            text: text
+          })
+        }
+      );
 
     const result =
       await response.json();
@@ -140,7 +282,9 @@ async function sendTelegramOrder(env, text) {
     if (!result.ok) {
       return {
         ok: false,
-        reason: "telegram_rejected",
+        reason:
+          "telegram_rejected",
+
         telegramError:
           result.description || ""
       };
@@ -151,36 +295,112 @@ async function sendTelegramOrder(env, text) {
     };
 
   } catch (error) {
+
     return {
       ok: false,
-      reason: "telegram_request_failed"
+      reason:
+        "telegram_request_failed"
     };
   }
 }
 
+
+/* =========================================================
+   WORKER
+   ========================================================= */
+
 export default {
 
-  async fetch(request, env) {
+  async fetch(
+    request,
+    env,
+    ctx
+  ) {
 
     const url =
       new URL(request.url);
 
-    if (request.method === "OPTIONS") {
+
+    /* =====================================================
+       АВТОМАТИЧЕСКИ УСТАНАВЛИВАЕМ WEBHOOK
+       ===================================================== */
+
+    if (
+      request.method !== "POST" &&
+      url.pathname !==
+        "/telegram/webhook"
+    ) {
+
+      ctx.waitUntil(
+        ensureTelegramWebhook(
+          env,
+          `${url.origin}/telegram/webhook`
+        )
+      );
+    }
+
+
+    /* =====================================================
+       TELEGRAM WEBHOOK
+       ===================================================== */
+
+    if (
+      request.method === "POST" &&
+      url.pathname ===
+        "/telegram/webhook"
+    ) {
+
+      try {
+
+        const update =
+          await request.json();
+
+        if (
+          update.message &&
+          update.message.chat
+        ) {
+
+          await sendTelegramGreeting(
+            env,
+            update.message.chat.id
+          );
+        }
+
+        return json({
+          ok: true
+        });
+
+      } catch (error) {
+
+        return json({
+          ok: false
+        }, 400);
+      }
+    }
+
+
+    /* =====================================================
+       OPTIONS
+       ===================================================== */
+
+    if (
+      request.method === "OPTIONS"
+    ) {
       return json({});
     }
 
-    /*
-     * ПРОВЕРКА TELEGRAM
-     *
-     * Сам BOT_TOKEN никогда
-     * не показывается.
-     */
+
+    /* =====================================================
+       ПРОВЕРКА TELEGRAM
+       ===================================================== */
+
     if (
       url.pathname ===
       "/api/debug-telegram"
     ) {
 
       return json({
+
         ok: true,
 
         botToken:
@@ -199,9 +419,11 @@ export default {
       });
     }
 
-    /*
-     * ПРОВЕРКА KV
-     */
+
+    /* =====================================================
+       ПРОВЕРКА KV
+       ===================================================== */
+
     if (
       url.pathname ===
       "/api/test-kv"
@@ -228,16 +450,23 @@ export default {
       } catch (error) {
 
         return json({
+
           ok: false,
+
           kv: false,
-          error: error.message
+
+          error:
+            error.message
+
         }, 500);
       }
     }
 
-    /*
-     * API ТОВАРОВ
-     */
+
+    /* =====================================================
+       API ТОВАРОВ
+       ===================================================== */
+
     if (
       url.pathname ===
       "/api/products"
@@ -245,7 +474,9 @@ export default {
 
       let body = {};
 
-      if (request.method === "POST") {
+      if (
+        request.method === "POST"
+      ) {
 
         try {
 
@@ -255,22 +486,32 @@ export default {
         } catch {
 
           return json({
+
             ok: false,
+
             error:
               "Неверный JSON."
+
           }, 400);
         }
       }
 
+
       const action =
-        url.searchParams.get("action") ||
+        url.searchParams.get(
+          "action"
+        ) ||
         body.action ||
         "list";
 
-      /*
-       * LOGIN
-       */
-      if (action === "login") {
+
+      /* ===================================================
+         LOGIN
+         =================================================== */
+
+      if (
+        action === "login"
+      ) {
 
         if (
           !validPassword(
@@ -281,9 +522,12 @@ export default {
         ) {
 
           return json({
+
             ok: false,
+
             error:
               "Неверный пароль."
+
           }, 401);
         }
 
@@ -292,24 +536,36 @@ export default {
         });
       }
 
-      /*
-       * LIST
-       */
-      if (action === "list") {
+
+      /* ===================================================
+         LIST
+         =================================================== */
+
+      if (
+        action === "list"
+      ) {
 
         const products =
-          await readProducts(env);
+          await readProducts(
+            env
+          );
 
         return json({
+
           ok: true,
+
           products
         });
       }
 
-      /*
-       * SAVE
-       */
-      if (action === "save") {
+
+      /* ===================================================
+         SAVE
+         =================================================== */
+
+      if (
+        action === "save"
+      ) {
 
         if (
           !validPassword(
@@ -320,11 +576,15 @@ export default {
         ) {
 
           return json({
+
             ok: false,
+
             error:
               "Неверный пароль."
+
           }, 401);
         }
+
 
         if (
           !Array.isArray(
@@ -333,26 +593,27 @@ export default {
         ) {
 
           return json({
+
             ok: false,
+
             error:
               "Список товаров не передан."
+
           }, 400);
         }
 
-        /*
-         * Нормализуем остатки.
-         *
-         * Для preorder и
-         * out_of_stock остаток = 0.
-         */
+
         const products =
           body.products.map(
             product => {
 
               const status =
-                getStatus(product);
+                getStatus(
+                  product
+                );
 
               let stock = 0;
+
 
               if (
                 status ===
@@ -360,15 +621,19 @@ export default {
               ) {
 
                 stock =
-                  getStock(product);
+                  getStock(
+                    product
+                  );
               }
+
 
               let finalStatus =
                 status;
 
+
               if (
                 status ===
-                "in_stock" &&
+                  "in_stock" &&
                 stock === 0
               ) {
 
@@ -376,7 +641,9 @@ export default {
                   "out_of_stock";
               }
 
+
               return {
+
                 ...product,
 
                 status:
@@ -395,10 +662,14 @@ export default {
             }
           );
 
+
         await env.PRODUCTS.put(
           "products",
-          JSON.stringify(products)
+          JSON.stringify(
+            products
+          )
         );
+
 
         const check =
           await env.PRODUCTS.get(
@@ -406,39 +677,53 @@ export default {
             "json"
           );
 
+
         return json({
+
           ok: true,
-          products: check
+
+          products:
+            check
         });
       }
 
-      /*
-       * LOGOUT
-       */
-      if (action === "logout") {
+
+      /* ===================================================
+         LOGOUT
+         =================================================== */
+
+      if (
+        action === "logout"
+      ) {
 
         return json({
           ok: true
         });
       }
 
+
       return json({
+
         ok: false,
+
         error:
           "Неизвестная команда."
+
       }, 400);
     }
 
-    /*
-     * СОЗДАНИЕ ЗАКАЗА
-     */
+
+    /* =====================================================
+       СОЗДАНИЕ ЗАКАЗА
+       ===================================================== */
+
     if (
       (
         url.pathname ===
-        "/api/create-order" ||
+          "/api/create-order" ||
 
         url.pathname ===
-        "/.netlify/functions/create-order"
+          "/.netlify/functions/create-order"
       ) &&
       request.method === "POST"
     ) {
@@ -447,6 +732,7 @@ export default {
 
         const body =
           await request.json();
+
 
         const {
           имя,
@@ -458,9 +744,11 @@ export default {
           telegramUser
         } = body;
 
-        /*
-         * ОБЯЗАТЕЛЬНЫЕ ПОЛЯ
-         */
+
+        /* ================================================
+           ОБЯЗАТЕЛЬНЫЕ ПОЛЯ
+           ================================================ */
+
         if (
           !имя ||
           !телефон ||
@@ -472,34 +760,49 @@ export default {
         ) {
 
           return json({
+
             хорошо: false,
+
             ошибка:
               "Заполните обязательные поля."
+
           }, 400);
         }
 
-        /*
-         * TELEGRAM
-         */
-        if (!env.BOT_TOKEN) {
+
+        /* ================================================
+           TELEGRAM
+           ================================================ */
+
+        if (
+          !env.BOT_TOKEN
+        ) {
 
           return json({
+
             хорошо: false,
+
             ошибка:
               "Telegram ещё не настроен."
+
           }, 500);
         }
 
-        /*
-         * ЧИТАЕМ АКТУАЛЬНЫЕ ОСТАТКИ
-         */
-        const products =
-          await readProducts(env);
 
-        /*
-         * ПРОВЕРЯЕМ ВСЕ ТОВАРЫ
-         * ДО ОТПРАВКИ ЗАКАЗА
-         */
+        /* ================================================
+           АКТУАЛЬНЫЕ ТОВАРЫ
+           ================================================ */
+
+        const products =
+          await readProducts(
+            env
+          );
+
+
+        /* ================================================
+           ПРОВЕРЯЕМ ТОВАРЫ
+           ================================================ */
+
         for (
           const item of предметы
         ) {
@@ -511,35 +814,38 @@ export default {
                 String(item.id)
             );
 
-          /*
-           * Если по какой-то причине
-           * id не передан, ищем
-           * по названию.
-           */
+
           const found =
             product ||
             products.find(
               p =>
-                p.name === item.имя
+                p.name ===
+                item.имя
             );
+
 
           if (!found) {
 
             return json({
+
               хорошо: false,
+
               ошибка:
                 `Товар "${item.имя}" ` +
                 `больше недоступен.`
+
             }, 409);
           }
 
-          const status =
-            getStatus(found);
 
-          /*
-           * Под заказ можно покупать
-           * без ограничения.
-           */
+          const status =
+            getStatus(
+              found
+            );
+
+
+          /* Под заказ */
+
           if (
             status ===
             "preorder"
@@ -547,89 +853,117 @@ export default {
             continue;
           }
 
-          /*
-           * Нет в наличии
-           */
+
+          /* Нет в наличии */
+
           if (
             status ===
             "out_of_stock"
           ) {
 
             return json({
+
               хорошо: false,
+
               ошибка:
                 `Товар "${found.name}" ` +
                 `нет в наличии.`
+
             }, 409);
           }
 
-          /*
-           * В наличии
-           */
+
+          /* В наличии */
+
           const stock =
-            getStock(found);
+            getStock(
+              found
+            );
+
 
           const requested =
             Number(
-              item.количество || 0
+              item.количество ||
+              0
             );
+
 
           if (
             requested <= 0
           ) {
 
             return json({
+
               хорошо: false,
+
               ошибка:
                 "Неверное количество товара."
+
             }, 400);
           }
+
 
           if (
             requested > stock
           ) {
 
             return json({
+
               хорошо: false,
+
               ошибка:
                 `Товара "${found.name}" ` +
                 `осталось только ${stock} шт.`
+
             }, 409);
           }
         }
 
-        /*
-         * ФОРМИРУЕМ ЗАКАЗ
-         */
+
+        /* ================================================
+           ФОРМИРУЕМ ЗАКАЗ
+           ================================================ */
+
         const lines =
           предметы
-            .map(item => {
+            .map(
+              item => {
 
-              const quantity =
-                Number(
-                  item.количество || 0
+                const quantity =
+                  Number(
+                    item.количество ||
+                    0
+                  );
+
+
+                const price =
+                  Number(
+                    item.цена ||
+                    0
+                  );
+
+
+                const sum =
+                  price *
+                  quantity;
+
+
+                return (
+                  `• ${item.имя} × ${quantity} — ` +
+                  `${sum.toLocaleString("ru-RU")} ₽`
                 );
-
-              const price =
-                Number(
-                  item.цена || 0
-                );
-
-              const sum =
-                price * quantity;
-
-              return (
-                `• ${item.имя} × ${quantity} — ` +
-                `${sum.toLocaleString("ru-RU")} ₽`
-              );
-            })
+              }
+            )
             .join("\n");
 
-        /*
-         * TELEGRAM ПОЛЬЗОВАТЕЛЯ
-         */
+
+        /* ================================================
+           TELEGRAM ПОЛЬЗОВАТЕЛЯ
+           ================================================ */
+
         let telegram =
           "не указан";
+
 
         if (
           telegramUser &&
@@ -648,14 +982,18 @@ export default {
             telegramUser.имя;
         }
 
-        /*
-         * СООБЩЕНИЕ
-         */
+
+        /* ================================================
+           СООБЩЕНИЕ АДМИНИСТРАТОРУ
+           ================================================ */
+
         const text =
           `🛍 НОВЫЙ ЗАКАЗ SEOULDROP\n\n` +
           `${lines}\n\n` +
           `💰 Итого: ` +
-          `${Number(общий || 0).toLocaleString("ru-RU")} ₽\n\n` +
+          `${Number(
+            общий || 0
+          ).toLocaleString("ru-RU")} ₽\n\n` +
           `👤 Имя: ${имя}\n` +
           `📞 Телефон: ${телефон}\n` +
           `📍 Адрес: ${адрес}` +
@@ -666,32 +1004,37 @@ export default {
           ) +
           `\n\n👤 Telegram: ${telegram}`;
 
-        /*
-         * СНАЧАЛА ОТПРАВЛЯЕМ
-         * ЗАКАЗ В TELEGRAM
-         */
+
+        /* ================================================
+           ОТПРАВЛЯЕМ ЗАКАЗ
+           ================================================ */
+
         const telegramResult =
           await sendTelegramOrder(
             env,
             text
           );
 
+
         if (
           !telegramResult.ok
         ) {
 
           return json({
+
             хорошо: false,
+
             ошибка:
               "Telegram не принял сообщение."
+
           }, 502);
         }
 
-        /*
-         * TELEGRAM ПРИНЯЛ ЗАКАЗ.
-         *
-         * ТЕПЕРЬ УМЕНЬШАЕМ ОСТАТКИ.
-         */
+
+        /* ================================================
+           УМЕНЬШАЕМ ОСТАТКИ
+           ================================================ */
+
         for (
           const item of предметы
         ) {
@@ -704,19 +1047,24 @@ export default {
             ) ||
             products.find(
               p =>
-                p.name === item.имя
+                p.name ===
+                item.имя
             );
+
 
           if (!found) {
             continue;
           }
 
-          const status =
-            getStatus(found);
 
-          /*
-           * Под заказ не списываем.
-           */
+          const status =
+            getStatus(
+              found
+            );
+
+
+          /* Под заказ не списываем */
+
           if (
             status ===
             "preorder"
@@ -724,10 +1072,9 @@ export default {
             continue;
           }
 
-          /*
-           * Списываем только
-           * товары со склада.
-           */
+
+          /* Списываем склад */
+
           if (
             status ===
             "in_stock"
@@ -735,11 +1082,16 @@ export default {
 
             const quantity =
               Number(
-                item.количество || 0
+                item.количество ||
+                0
               );
 
+
             const oldStock =
-              getStock(found);
+              getStock(
+                found
+              );
+
 
             const newStock =
               Math.max(
@@ -748,14 +1100,11 @@ export default {
                 quantity
               );
 
+
             found.stock =
               newStock;
 
-            /*
-             * Если стало 0 —
-             * автоматически
-             * "Нет в наличии".
-             */
+
             if (
               newStock === 0
             ) {
@@ -777,34 +1126,46 @@ export default {
           }
         }
 
-        /*
-         * СОХРАНЯЕМ НОВЫЕ ОСТАТКИ
-         */
+
+        /* ================================================
+           СОХРАНЯЕМ ОСТАТКИ
+           ================================================ */
+
         await env.PRODUCTS.put(
           "products",
-          JSON.stringify(products)
+          JSON.stringify(
+            products
+          )
         );
 
-        /*
-         * УСПЕШНЫЙ ЗАКАЗ
-         */
+
+        /* ================================================
+           УСПЕШНЫЙ ЗАКАЗ
+           ================================================ */
+
         return json({
           хорошо: true
         });
 
+
       } catch (error) {
 
         return json({
+
           хорошо: false,
+
           ошибка:
             "Ошибка сервера."
+
         }, 500);
       }
     }
 
-    /*
-     * АДМИНКА
-     */
+
+    /* =====================================================
+       АДМИНКА
+       ===================================================== */
+
     if (
       url.pathname ===
       "/admin"
@@ -817,20 +1178,25 @@ export default {
       ) {
 
         return env.ASSETS.fetch(
+
           new Request(
+
             new URL(
               "/admin.html",
               request.url
             ),
+
             request
           )
         );
       }
 
+
       return new Response(
         "ASSETS binding не подключен.",
         {
           status: 500,
+
           headers: {
             "Content-Type":
               "text/plain; charset=utf-8"
@@ -839,9 +1205,11 @@ export default {
       );
     }
 
-    /*
-     * СТАТИЧЕСКИЕ ФАЙЛЫ
-     */
+
+    /* =====================================================
+       СТАТИЧЕСКИЕ ФАЙЛЫ
+       ===================================================== */
+
     if (
       env.ASSETS &&
       typeof env.ASSETS.fetch ===
@@ -853,11 +1221,15 @@ export default {
       );
     }
 
+
     return new Response(
+
       "SEOULDROP Worker работает, " +
       "но ASSETS binding не подключен.",
+
       {
         status: 500,
+
         headers: {
           "Content-Type":
             "text/plain; charset=utf-8"
