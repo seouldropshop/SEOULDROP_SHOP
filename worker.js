@@ -1,6 +1,5 @@
 const ADMIN_CHAT_ID = "8600388356";
-const CATALOG_URL = "https://t.me/seouldrop_shop_bot/seouldrop";
-
+const CATALOG_URL = "https://seouldrop-shop.outemnikova.workers.dev";
 const DEFAULT_PRODUCTS = [
   {
     id: "dynamite",
