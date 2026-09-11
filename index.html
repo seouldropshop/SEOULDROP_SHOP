@@ -3435,7 +3435,96 @@ changeGallery(-1);
 updateCartBadge();
 
 loadProducts();
+/* =========================
+   CART BUTTON FIX
+========================= */
 
+document.addEventListener(
+  'click',
+  function(event){
+
+    const button =
+      event.target.closest(
+        '#cartItems .qty button, #cartItems .remove'
+      );
+
+    if(!button){
+      return;
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const code =
+      button.getAttribute('onclick') || '';
+
+    let match;
+
+    /* + / − */
+
+    match =
+      code.match(
+        /changeQty\(\s*(.+?)\s*,\s*(-?\d+)\s*\)/s
+      );
+
+    if(match){
+
+      let id;
+
+      try{
+        id = JSON.parse(match[1].trim());
+      }catch(e){
+        id =
+          match[1]
+            .trim()
+            .replace(/^['"]|['"]$/g,'');
+      }
+
+      if(
+        typeof window.changeQty ===
+        'function'
+      ){
+        window.changeQty(
+          id,
+          Number(match[2])
+        );
+      }
+
+      return;
+    }
+
+    /* Удалить */
+
+    match =
+      code.match(
+        /removeFromCart\(\s*(.+?)\s*\)/s
+      );
+
+    if(match){
+
+      let id;
+
+      try{
+        id = JSON.parse(match[1].trim());
+      }catch(e){
+        id =
+          match[1]
+            .trim()
+            .replace(/^['"]|['"]$/g,'');
+      }
+
+      if(
+        typeof window.removeFromCart ===
+        'function'
+      ){
+        window.removeFromCart(id);
+      }
+
+    }
+
+  },
+  true
+);
 </script> 
 </body>
 </html>
