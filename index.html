@@ -2,10 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>SEOULDROP | K-POP SHOP</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -26,47 +23,23 @@
   --red:#ff637c;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  background:var(--bg);
-}
+html{background:var(--bg)}
 
 body{
   margin:0;
   min-height:100vh;
   background:
-    radial-gradient(
-      circle at 15% 5%,
-      rgba(255,79,179,.14),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(167,108,255,.14),
-      transparent 30%
-    ),
+    radial-gradient(circle at 15% 5%,rgba(255,79,179,.14),transparent 28%),
+    radial-gradient(circle at 90% 20%,rgba(167,108,255,.14),transparent 30%),
     var(--bg);
   color:var(--text);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-button,
-input{
-  font:inherit;
-}
-
-button{
-  -webkit-tap-highlight-color:transparent;
-}
+button,input,textarea{font:inherit}
+button{-webkit-tap-highlight-color:transparent}
 
 .app{
   width:100%;
@@ -101,9 +74,7 @@ button{
   background:#120914;
 }
 
-.brand-text{
-  min-width:0;
-}
+.brand-text{min-width:0}
 
 .brand-text b{
   display:block;
@@ -167,7 +138,6 @@ button{
   margin:0;
   font-size:28px;
   line-height:1.05;
-  max-width:430px;
 }
 
 .hero p{
@@ -179,14 +149,9 @@ button{
 }
 
 .cta{
-  background:
-    linear-gradient(
-      90deg,
-      var(--pink),
-      var(--violet)
-    );
+  background:linear-gradient(90deg,var(--pink),var(--violet));
   border:0;
-  color:white;
+  color:#fff;
   font-weight:800;
   border-radius:14px;
   padding:12px 18px;
@@ -196,9 +161,7 @@ button{
 
 /* SEARCH */
 
-.search{
-  margin-top:18px;
-}
+.search{margin-top:18px}
 
 .search-input{
   width:100%;
@@ -211,25 +174,16 @@ button{
   padding:0 15px;
 }
 
-.search-input::placeholder{
-  color:#8e7d8d;
-}
-
-.search-input:focus{
-  border-color:rgba(255,145,209,.55);
-}
+.search-input::placeholder{color:#8e7d8d}
 
 /* SECTIONS */
 
-.section{
-  margin-top:22px;
-}
+.section{margin-top:22px}
 
 .section-head{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
   margin-bottom:10px;
 }
 
@@ -253,9 +207,7 @@ button{
   scrollbar-width:none;
 }
 
-.categories::-webkit-scrollbar{
-  display:none;
-}
+.categories::-webkit-scrollbar{display:none}
 
 .cat{
   white-space:nowrap;
@@ -283,12 +235,7 @@ button{
 
 .card{
   position:relative;
-  background:
-    linear-gradient(
-      180deg,
-      var(--panel2),
-      var(--panel)
-    );
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
   border:1px solid var(--line);
   border-radius:19px;
   overflow:hidden;
@@ -302,11 +249,7 @@ button{
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(
-      circle,
-      rgba(255,79,179,.18),
-      transparent 52%
-    ),
+    radial-gradient(circle,rgba(255,79,179,.18),transparent 52%),
     #09050b;
   overflow:hidden;
 }
@@ -332,13 +275,8 @@ button{
   cursor:pointer;
 }
 
-.photo-arrow.left{
-  left:7px;
-}
-
-.photo-arrow.right{
-  right:7px;
-}
+.photo-arrow.left{left:7px}
+.photo-arrow.right{right:7px}
 
 .photo-dots{
   position:absolute;
@@ -358,13 +296,9 @@ button{
   background:rgba(255,255,255,.35);
 }
 
-.photo-dot.active{
-  background:#fff;
-}
+.photo-dot.active{background:#fff}
 
-.info{
-  padding:12px;
-}
+.info{padding:12px}
 
 .name{
   font-weight:750;
@@ -389,7 +323,6 @@ button{
   font-size:11px;
   line-height:1.4;
   margin-top:7px;
-
   display:-webkit-box;
   -webkit-box-orient:vertical;
   -webkit-line-clamp:2;
@@ -419,10 +352,6 @@ button{
   font-weight:700;
 }
 
-.add:active{
-  transform:scale(.98);
-}
-
 .add.disabled{
   opacity:.45;
   cursor:not-allowed;
@@ -433,19 +362,11 @@ button{
   font-size:11px;
 }
 
-.status.instock{
-  color:var(--green);
-}
+.status.instock{color:var(--green)}
+.status.preorder{color:var(--yellow)}
+.status.out{color:var(--red)}
 
-.status.preorder{
-  color:var(--yellow);
-}
-
-.status.out{
-  color:var(--red);
-}
-
-/* EMPTY / LOADING */
+/* MESSAGE */
 
 .message{
   border:1px solid var(--line);
@@ -457,9 +378,7 @@ button{
   line-height:1.5;
 }
 
-.message strong{
-  color:#fff;
-}
+.message strong{color:#fff}
 
 /* BOTTOM */
 
@@ -492,9 +411,7 @@ button{
   cursor:pointer;
 }
 
-.nav.active{
-  color:#fff;
-}
+.nav.active{color:#fff}
 
 .nav strong{
   display:block;
@@ -516,18 +433,20 @@ button{
 
 /* MODALS */
 
-.modal{
+.modal,
+.product-modal{
   position:fixed;
   inset:0;
   z-index:100;
   display:none;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(5px);
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(6px);
   align-items:flex-end;
   justify-content:center;
 }
 
-.modal.show{
+.modal.show,
+.product-modal.show{
   display:flex;
 }
 
@@ -536,12 +455,7 @@ button{
   max-width:760px;
   max-height:90vh;
   overflow:auto;
-  background:
-    linear-gradient(
-      180deg,
-      #170d1c,
-      #09050c
-    );
+  background:linear-gradient(180deg,#170d1c,#09050c);
   border-radius:24px 24px 0 0;
   border:1px solid var(--line);
   padding:18px;
@@ -571,68 +485,134 @@ button{
   cursor:pointer;
 }
 
-/* DESCRIPTION MODAL */
+/* FULL PRODUCT */
 
-.description-modal{
-  position:fixed;
-  inset:0;
-  z-index:110;
-  display:none;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(5px);
-  align-items:flex-end;
-  justify-content:center;
+.product-modal{
+  z-index:115;
 }
 
-.description-modal.show{
-  display:flex;
-}
-
-.description-sheet{
+.product-sheet{
   width:100%;
   max-width:760px;
-  max-height:80vh;
+  max-height:94vh;
   overflow:auto;
-  background:
-    linear-gradient(
-      180deg,
-      #170d1c,
-      #09050c
-    );
-  border-radius:24px 24px 0 0;
+  background:linear-gradient(180deg,#170d1c,#09050c);
+  border-radius:26px 26px 0 0;
   border:1px solid var(--line);
-  padding:18px;
+  padding:16px;
 }
 
-.description-head{
+.product-photo{
+  position:relative;
+  width:100%;
+  height:360px;
+  border-radius:20px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle,rgba(255,79,179,.18),transparent 55%),
+    #09050b;
+}
+
+.product-photo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:12px;
+}
+
+.product-photo-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  font-size:26px;
+  z-index:3;
+}
+
+.product-photo-arrow.left{left:10px}
+.product-photo-arrow.right{right:10px}
+
+.product-photo-dots{
+  position:absolute;
+  bottom:10px;
+  left:0;
+  right:0;
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
+  justify-content:center;
+  gap:5px;
 }
 
-.description-title{
-  font-size:18px;
-  font-weight:800;
+.product-photo-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
 }
 
-.description-close{
+.product-photo-dot.active{background:#fff}
+
+.product-info{
+  padding:16px 4px 4px;
+}
+
+.product-title{
+  font-size:23px;
+  line-height:1.25;
+  font-weight:850;
+}
+
+.product-category{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:6px;
+}
+
+.product-price{
+  font-size:25px;
+  font-weight:900;
+  margin-top:12px;
+}
+
+.product-status{
+  margin-top:7px;
+  font-size:13px;
+}
+
+.product-full-description{
+  margin-top:16px;
+  color:#e8dbe5;
+  font-size:14px;
+  line-height:1.65;
+  white-space:pre-wrap;
+}
+
+.product-add{
+  width:100%;
+  margin-top:18px;
+  border:0;
+  border-radius:15px;
+  padding:14px;
+  color:#fff;
+  background:linear-gradient(90deg,var(--pink),var(--violet));
+  font-size:15px;
+  font-weight:850;
+}
+
+.product-add:disabled{opacity:.45}
+
+.product-close{
+  width:100%;
+  margin-top:9px;
   border:1px solid var(--line);
   background:var(--panel);
   color:#fff;
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  font-size:22px;
-  cursor:pointer;
-}
-
-.description-text{
-  margin-top:15px;
-  color:#e8dbe5;
-  line-height:1.6;
-  white-space:pre-wrap;
-  font-size:14px;
+  border-radius:14px;
+  padding:12px;
 }
 
 /* GALLERY */
@@ -647,9 +627,7 @@ button{
   background:rgba(0,0,0,.94);
 }
 
-.gallery-modal.show{
-  display:flex;
-}
+.gallery-modal.show{display:flex}
 
 .gallery-inner{
   position:relative;
@@ -692,13 +670,8 @@ button{
   font-size:22px;
 }
 
-.gallery-arrow.left{
-  left:14px;
-}
-
-.gallery-arrow.right{
-  right:14px;
-}
+.gallery-arrow.left{left:14px}
+.gallery-arrow.right{right:14px}
 
 /* CART */
 
@@ -783,11 +756,9 @@ button{
   font-weight:800;
 }
 
-.checkout:disabled{
-  opacity:.45;
-}
+.checkout:disabled{opacity:.45}
 
-/* CHECKOUT */
+/* FORM */
 
 .form{
   display:flex;
@@ -826,8 +797,6 @@ button{
   margin-bottom:12px;
 }
 
-/* RESPONSIVE */
-
 @media(min-width:650px){
   .grid{
     grid-template-columns:repeat(3,minmax(0,1fr));
@@ -844,196 +813,292 @@ button{
 
 <div class="app">
 
-  <header class="header">
+<header class="header">
 
-    <div class="brand">
+<div class="brand">
 
-      <img
-        class="brand-logo"
-        src="https://raw.githubusercontent.com/seouldropshop/SEOULDROP_SHOP/main/logo.png"
-        alt="SEOULDROP"
-        onerror="this.style.display='none'"
-      >
+<img
+class="brand-logo"
+src="https://raw.githubusercontent.com/seouldropshop/SEOULDROP_SHOP/main/logo.png"
+alt="SEOULDROP"
+onerror="this.style.display='none'"
+>
 
-      <div class="brand-text">
-        <b>SEOULDROP</b>
-        <span>K-POP SHOP 🇰🇷</span>
-      </div>
+<div class="brand-text">
+<b>SEOULDROP</b>
+<span>K-POP SHOP 🇰🇷</span>
+</div>
 
-    </div>
+</div>
 
-    <button
-      class="cart-top"
-      type="button"
-      onclick="openCart()"
-    >
-      🛒
-      <span
-        id="cartBadge"
-        class="cart-badge"
-      >0</span>
-    </button>
+<button
+class="cart-top"
+type="button"
+onclick="openCart()"
+>
+🛒
+<span
+id="cartBadge"
+class="cart-badge"
+>0</span>
+</button>
 
-  </header>
-
-
-  <section class="hero">
-
-    <h1>
-      K-POP из Кореи<br>
-      с любовью 💜
-    </h1>
-
-    <p>
-      Оригинальные альбомы, винил, карты,
-      мерч, косметика и сладости из Кореи.
-    </p>
-
-    <button
-      class="cta"
-      type="button"
-      onclick="scrollToCatalog()"
-    >
-      🛍 Смотреть каталог
-    </button>
-
-  </section>
+</header>
 
 
-  <div class="search">
+<section class="hero">
 
-    <input
-      id="searchInput"
-      class="search-input"
-      type="search"
-      placeholder="🔎 Поиск товара..."
-      autocomplete="off"
-    >
+<h1>
+K-POP из Кореи<br>
+с любовью 💜
+</h1>
 
-  </div>
+<p>
+Оригинальные альбомы, винил, карты,
+мерч, косметика и сладости из Кореи.
+</p>
 
+<button
+class="cta"
+type="button"
+onclick="scrollToCatalog()"
+>
+🛍 Смотреть каталог
+</button>
 
-  <section
-    id="catalogSection"
-    class="section"
-  >
-
-    <div class="section-head">
-
-      <h2>Каталог</h2>
-
-      <div
-        id="productCount"
-        class="product-count"
-      >
-        Загрузка...
-      </div>
-
-    </div>
+</section>
 
 
-    <div
-      id="categories"
-      class="categories"
-    ></div>
+<div class="search">
 
-
-    <div
-      id="products"
-      class="grid"
-    >
-
-      <div class="message">
-        Загружаем каталог...
-      </div>
-
-    </div>
-
-  </section>
+<input
+id="searchInput"
+class="search-input"
+type="search"
+placeholder="🔎 Поиск товара..."
+autocomplete="off"
+>
 
 </div>
 
 
-<!-- BOTTOM NAV -->
+<section
+id="catalogSection"
+class="section"
+>
+
+<div class="section-head">
+
+<h2>Каталог</h2>
+
+<div
+id="productCount"
+class="product-count"
+>
+Загрузка...
+</div>
+
+</div>
+
+
+<div
+id="categories"
+class="categories"
+></div>
+
+
+<div
+id="products"
+class="grid"
+>
+
+<div class="message">
+Загружаем каталог...
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- BOTTOM -->
 
 <nav class="bottom">
 
-  <div class="bottom-inner">
+<div class="bottom-inner">
 
-    <button
-      id="navCatalog"
-      class="nav active"
-      onclick="scrollToCatalog()"
-    >
-      <strong>🏠</strong>
-      Каталог
-    </button>
+<button
+class="nav active"
+onclick="scrollToCatalog()"
+>
+<strong>🏠</strong>
+Каталог
+</button>
 
-    <button
-      class="nav"
-      onclick="openCart()"
-    >
-      <strong>
-        🛒
-        <span
-          id="navBadge"
-          class="badge"
-          style="display:none"
-        >0</span>
-      </strong>
-      Корзина
-    </button>
+<button
+class="nav"
+onclick="openCart()"
+>
+<strong>
+🛒
+<span
+id="navBadge"
+class="badge"
+style="display:none"
+>0</span>
+</strong>
+Корзина
+</button>
 
-    <button
-      class="nav"
-      onclick="showInfo()"
-    >
-      <strong>ℹ️</strong>
-      Информация
-    </button>
+<button
+class="nav"
+onclick="showInfo()"
+>
+<strong>ℹ️</strong>
+Информация
+</button>
 
-  </div>
+</div>
 
 </nav>
+
+
+<!-- FULL PRODUCT MODAL -->
+
+<div
+id="productModal"
+class="product-modal"
+onclick="
+if(event.target===this){
+closeProduct();
+}
+"
+>
+
+<div class="product-sheet">
+
+<div class="product-photo">
+
+<img
+id="productModalImage"
+src=""
+alt=""
+>
+
+<button
+id="productModalLeft"
+class="product-photo-arrow left"
+type="button"
+onclick="changeProductPhoto(-1)"
+>
+‹
+</button>
+
+<button
+id="productModalRight"
+class="product-photo-arrow right"
+type="button"
+onclick="changeProductPhoto(1)"
+>
+›
+</button>
+
+<div
+id="productModalDots"
+class="product-photo-dots"
+></div>
+
+</div>
+
+
+<div class="product-info">
+
+<div
+id="productModalTitle"
+class="product-title"
+></div>
+
+<div
+id="productModalCategory"
+class="product-category"
+></div>
+
+<div
+id="productModalPrice"
+class="product-price"
+></div>
+
+<div
+id="productModalStatus"
+class="product-status"
+></div>
+
+<div
+id="productModalDescription"
+class="product-full-description"
+></div>
+
+<button
+id="productModalAdd"
+class="product-add"
+type="button"
+>
+🛒 Добавить в корзину
+</button>
+
+<button
+class="product-close"
+type="button"
+onclick="closeProduct()"
+>
+Закрыть
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 
 <!-- DESCRIPTION -->
 
 <div
-  id="descriptionModal"
-  class="description-modal"
-  onclick="
-    if(event.target===this){
-      closeDescription();
-    }
-  "
+id="descriptionModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeDescription();
+}
+"
 >
 
-  <div class="description-sheet">
+<div class="sheet">
 
-    <div class="description-head">
+<div class="sheet-head">
 
-      <div
-        id="descriptionTitle"
-        class="description-title"
-      ></div>
+<div
+id="descriptionTitle"
+class="sheet-title"
+></div>
 
-      <button
-        class="description-close"
-        type="button"
-        onclick="closeDescription()"
-      >
-        ×
-      </button>
+<button
+class="close"
+onclick="closeDescription()"
+>
+×
+</button>
 
-    </div>
+</div>
 
-    <div
-      id="descriptionText"
-      class="description-text"
-    ></div>
+<div
+id="descriptionText"
+class="product-full-description"
+></div>
 
-  </div>
+</div>
 
 </div>
 
@@ -1041,44 +1106,41 @@ button{
 <!-- GALLERY -->
 
 <div
-  id="galleryModal"
-  class="gallery-modal"
+id="galleryModal"
+class="gallery-modal"
 >
 
-  <div class="gallery-inner">
+<div class="gallery-inner">
 
-    <button
-      class="gallery-close"
-      type="button"
-      onclick="closeGallery()"
-    >
-      ×
-    </button>
+<button
+class="gallery-close"
+onclick="closeGallery()"
+>
+×
+</button>
 
-    <button
-      class="gallery-arrow left"
-      type="button"
-      onclick="changeGallery(-1)"
-    >
-      ‹
-    </button>
+<button
+class="gallery-arrow left"
+onclick="changeGallery(-1)"
+>
+‹
+</button>
 
-    <img
-      id="galleryImage"
-      class="gallery-image"
-      src=""
-      alt=""
-    >
+<img
+id="galleryImage"
+class="gallery-image"
+src=""
+alt=""
+>
 
-    <button
-      class="gallery-arrow right"
-      type="button"
-      onclick="changeGallery(1)"
-    >
-      ›
-    </button>
+<button
+class="gallery-arrow right"
+onclick="changeGallery(1)"
+>
+›
+</button>
 
-  </div>
+</div>
 
 </div>
 
@@ -1086,43 +1148,42 @@ button{
 <!-- CART -->
 
 <div
-  id="cartModal"
-  class="modal"
-  onclick="
-    if(event.target===this){
-      closeCart();
-    }
-  "
+id="cartModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeCart();
+}
+"
 >
 
-  <div class="sheet">
+<div class="sheet">
 
-    <div class="sheet-head">
+<div class="sheet-head">
 
-      <div class="sheet-title">
-        🛒 Корзина
-      </div>
+<div class="sheet-title">
+🛒 Корзина
+</div>
 
-      <button
-        class="close"
-        type="button"
-        onclick="closeCart()"
-      >
-        ×
-      </button>
+<button
+class="close"
+onclick="closeCart()"
+>
+×
+</button>
 
-    </div>
+</div>
 
-    <div
-      id="cartItems"
-      class="cart-items"
-    ></div>
+<div
+id="cartItems"
+class="cart-items"
+></div>
 
-    <div
-      id="cartFooter"
-    ></div>
+<div
+id="cartFooter"
+></div>
 
-  </div>
+</div>
 
 </div>
 
@@ -1130,83 +1191,85 @@ button{
 <!-- CHECKOUT -->
 
 <div
-  id="checkoutModal"
-  class="modal"
-  onclick="
-    if(event.target===this){
-      closeCheckout();
-    }
-  "
+id="checkoutModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeCheckout();
+}
+"
 >
 
-  <div class="sheet">
+<div class="sheet">
 
-    <div class="sheet-head">
+<div class="sheet-head">
 
-      <div class="sheet-title">
-        📦 Оформление заказа
-      </div>
+<div class="sheet-title">
+📦 Оформление заказа
+</div>
 
-      <button
-        class="close"
-        type="button"
-        onclick="closeCheckout()"
-      >
-        ×
-      </button>
+<button
+class="close"
+onclick="closeCheckout()"
+>
+×
+</button>
 
-    </div>
+</div>
 
-    <div id="checkoutContent">
+<div id="checkoutContent">
 
-      <div class="form">
+<div class="form">
 
-        <div>
-          <label>Ваш Telegram</label>
-          <input
-            id="telegramUsername"
-            readonly
-          >
-        </div>
+<div>
+<label>Ваш Telegram</label>
 
-        <div>
-          <label>Имя</label>
-          <input
-            id="customerName"
-            placeholder="Как к вам обращаться?"
-          >
-        </div>
+<input
+id="telegramUsername"
+readonly
+>
+</div>
 
-        <div>
-          <label>Контакт для связи</label>
-          <input
-            id="customerContact"
-            placeholder="@username или телефон"
-          >
-        </div>
+<div>
+<label>Имя</label>
 
-        <div>
-          <label>Комментарий к заказу</label>
-          <textarea
-            id="customerComment"
-            placeholder="Например: нужен подарок / уточнить наличие"
-          ></textarea>
-        </div>
+<input
+id="customerName"
+placeholder="Как к вам обращаться?"
+>
+</div>
 
-        <button
-          id="sendOrderButton"
-          class="checkout"
-          type="button"
-          onclick="sendOrder()"
-        >
-          📩 Отправить заказ
-        </button>
+<div>
+<label>Контакт для связи</label>
 
-      </div>
+<input
+id="customerContact"
+placeholder="@username или телефон"
+>
+</div>
 
-    </div>
+<div>
+<label>Комментарий к заказу</label>
 
-  </div>
+<textarea
+id="customerComment"
+placeholder="Например: нужен подарок / уточнить наличие"
+></textarea>
+</div>
+
+<button
+id="sendOrderButton"
+class="checkout"
+onclick="sendOrder()"
+>
+📩 Отправить заказ
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -1214,113 +1277,100 @@ button{
 <!-- INFO -->
 
 <div
-  id="infoModal"
-  class="modal"
-  onclick="
-    if(event.target===this){
-      closeInfo();
-    }
-  "
+id="infoModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeInfo();
+}
+"
 >
 
-  <div class="sheet">
+<div class="sheet">
 
-    <div class="sheet-head">
+<div class="sheet-head">
 
-      <div class="sheet-title">
-        ℹ️ SEOULDROP
-      </div>
+<div class="sheet-title">
+ℹ️ SEOULDROP
+</div>
 
-      <button
-        class="close"
-        type="button"
-        onclick="closeInfo()"
-      >
-        ×
-      </button>
+<button
+class="close"
+onclick="closeInfo()"
+>
+×
+</button>
 
-    </div>
+</div>
 
-    <div
-      style="
-        color:#d8c8d5;
-        line-height:1.6;
-        font-size:14px;
-      "
-    >
+<div
+style="
+color:#d8c8d5;
+line-height:1.6;
+font-size:14px;
+"
+>
 
-      <p>
-        🇰🇷 SEOULDROP — магазин оригинальных
-        K-POP товаров из Кореи.
-      </p>
+<p>
+🇰🇷 SEOULDROP — магазин оригинальных
+K-POP товаров из Кореи.
+</p>
 
-      <p>
-        💿 Альбомы<br>
-        🎶 Винил<br>
-        🃏 Фотокарты<br>
-        🎁 Мерч<br>
-        🧴 Косметика<br>
-        🍪 Сладости
-      </p>
+<p>
+💿 Альбомы<br>
+🎶 Винил<br>
+🃏 Фотокарты<br>
+🎁 Мерч<br>
+🧴 Косметика<br>
+🍪 Сладости
+</p>
 
-      <p>
-        Все заказы оформляются через каталог.
-        После отправки заявки с вами свяжутся
-        для уточнения деталей.
-      </p>
+<p>
+Все заказы оформляются через каталог.
+После отправки заявки с вами свяжутся
+для уточнения деталей.
+</p>
 
-      <p>
-        💜 Спасибо, что выбираете SEOULDROP!
-      </p>
+<p>
+💜 Спасибо, что выбираете SEOULDROP!
+</p>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 </div>
 
 
 <script>
-/* =========================================================
-   SEOULDROP
-   ========================================================= */
 
 const API_URL =
-  'https://seouldrop-shop.outemnikova.workers.dev';
-
-const PRODUCTS_API =
-  API_URL +
-  '/api/products?action=list&_=' +
-  Date.now();
+'https://seouldrop-shop.outemnikova.workers.dev';
 
 const ORDER_API =
-  API_URL +
-  '/api/create-order';
+API_URL +
+'/api/create-order';
 
 
-/* =========================================================
-   TELEGRAM
-   ========================================================= */
+/* TELEGRAM */
 
 const tg =
-  window.Telegram &&
-  window.Telegram.WebApp
-    ? window.Telegram.WebApp
-    : null;
+window.Telegram &&
+window.Telegram.WebApp
+? window.Telegram.WebApp
+: null;
 
 if(tg){
 
-  try{
-    tg.ready();
-    tg.expand();
-  }catch(e){}
+try{
+tg.ready();
+tg.expand();
+}catch(e){}
 
 }
 
 
-/* =========================================================
-   STATE
-   ========================================================= */
+/* STATE */
 
 let products = [];
 
@@ -1334,2021 +1384,2090 @@ let currentGalleryImages = [];
 
 let currentGalleryIndex = 0;
 
+let currentProduct = null;
 
-/* =========================================================
-   CART STORAGE
-   ========================================================= */
+let currentProductImages = [];
+
+let currentProductImageIndex = 0;
+
+
+/* CART STORAGE */
 
 function loadCart(){
 
-  try{
+try{
 
-    const saved =
-      localStorage.getItem(
-        'seouldrop_cart'
-      );
+const saved =
+localStorage.getItem(
+'seouldrop_cart'
+);
 
-    const parsed =
-      saved
-        ? JSON.parse(saved)
-        : [];
+const parsed =
+saved
+? JSON.parse(saved)
+: [];
 
-    return Array.isArray(parsed)
-      ? parsed
-      : [];
+return Array.isArray(parsed)
+? parsed
+: [];
 
-  }catch(e){
+}catch(e){
 
-    return [];
+return [];
 
-  }
+}
 
 }
 
 
 function saveCart(){
 
-  try{
+try{
 
-    localStorage.setItem(
-      'seouldrop_cart',
-      JSON.stringify(cart)
-    );
+localStorage.setItem(
+'seouldrop_cart',
+JSON.stringify(cart)
+);
 
-  }catch(e){}
+}catch(e){}
 
-  updateCartBadge();
+updateCartBadge();
 
 }
 
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
+/* HELPERS */
 
 function escapeHtml(value){
 
-  return String(value ?? '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
+return String(value ?? '')
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
 
 }
 
 
 function formatPrice(value){
 
-  const number =
-    Number(value) || 0;
-
-  return new Intl.NumberFormat(
-    'ru-RU'
-  ).format(number) + ' ₽';
+return new Intl.NumberFormat(
+'ru-RU'
+).format(
+Number(value) || 0
+) + ' ₽';
 
 }
 
 
 function getImages(product){
 
-  let images = [];
+let images = [];
 
-  if(
-    Array.isArray(product.images)
-  ){
+if(Array.isArray(product.images)){
 
-    images =
-      product.images
-        .filter(Boolean)
-        .map(String);
+images =
+product.images
+.filter(Boolean)
+.map(String);
 
-  }
+}
 
-  if(
-    !images.length &&
-    product.image
-  ){
+if(
+!images.length &&
+product.image
+){
 
-    images = [
-      String(product.image)
-    ];
+images = [
+String(product.image)
+];
 
-  }
+}
 
-  return images;
+return images;
 
 }
 
 
 function getStock(product){
 
-  const stock =
-    Number(product.stock);
+const stock =
+Number(product.stock);
 
-  if(
-    product.preorder === true ||
-    product.preorder === 'true' ||
-    product.status === 'preorder'
-  ){
+if(
+product.preorder === true ||
+product.preorder === 'true' ||
+product.status === 'preorder'
+){
 
-    return {
-      type:'preorder',
-      count:null
-    };
+return {
+type:'preorder',
+count:null
+};
 
-  }
+}
 
-  if(
-    !Number.isFinite(stock) ||
-    stock <= 0
-  ){
+if(
+!Number.isFinite(stock) ||
+stock <= 0
+){
 
-    return {
-      type:'out',
-      count:0
-    };
+return {
+type:'out',
+count:0
+};
 
-  }
+}
 
-  return {
-    type:'instock',
-    count:stock
-  };
+return {
+type:'instock',
+count:stock
+};
 
 }
 
 
-/* =========================================================
-   LOAD PRODUCTS
-   ========================================================= */
+/* LOAD PRODUCTS */
 
 async function loadProducts(){
 
-  const container =
-    document.getElementById(
-      'products'
-    );
+const container =
+document.getElementById(
+'products'
+);
 
-  const count =
-    document.getElementById(
-      'productCount'
-    );
+const count =
+document.getElementById(
+'productCount'
+);
 
-  container.innerHTML =
-    '<div class="message">Загружаем каталог...</div>';
+container.innerHTML =
+'<div class="message">Загружаем каталог...</div>';
 
-  count.textContent =
-    'Загрузка...';
-
-
-  const controller =
-    new AbortController();
-
-  const timeout =
-    setTimeout(
-      () => controller.abort(),
-      8000
-    );
+count.textContent =
+'Загрузка...';
 
 
-  try{
+const controller =
+new AbortController();
 
-    const response =
-      await fetch(
-        API_URL +
-        '/api/products?action=list&_=' +
-        Date.now(),
-        {
-          method:'GET',
-          cache:'no-store',
-          signal:controller.signal
-        }
-      );
+const timeout =
+setTimeout(
+()=>controller.abort(),
+8000
+);
 
 
-    if(!response.ok){
+try{
 
-      throw new Error(
-        'HTTP ' +
-        response.status
-      );
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    if(
-      !data ||
-      !Array.isArray(data.products)
-    ){
-
-      throw new Error(
-        'Неверный ответ каталога'
-      );
-
-    }
+const response =
+await fetch(
+API_URL +
+'/api/products?action=list&_=' +
+Date.now(),
+{
+method:'GET',
+cache:'no-store',
+signal:controller.signal
+}
+);
 
 
-    products =
-      data.products;
+if(!response.ok){
 
-
-    buildCategories();
-
-    renderProducts();
-
-
-  }catch(error){
-
-    console.error(
-      'SEOULDROP catalog error:',
-      error
-    );
-
-
-    products = [];
-
-    count.textContent =
-      'Ошибка загрузки';
-
-
-    container.innerHTML = `
-      <div class="message">
-
-        <strong>
-          Не удалось загрузить каталог
-        </strong>
-
-        <br><br>
-
-        Проверь интернет-соединение
-        и попробуй открыть каталог ещё раз.
-
-        <br><br>
-
-        <button
-          class="cta"
-          type="button"
-          onclick="loadProducts()"
-        >
-          🔄 Повторить
-        </button>
-
-      </div>
-    `;
-
-  }finally{
-
-    clearTimeout(timeout);
-
-  }
+throw new Error(
+'HTTP ' +
+response.status
+);
 
 }
 
 
-/* =========================================================
-   CATEGORIES
-   ========================================================= */
+const data =
+await response.json();
+
+
+if(
+!data ||
+!Array.isArray(data.products)
+){
+
+throw new Error(
+'Неверный ответ каталога'
+);
+
+}
+
+
+products =
+data.products;
+
+buildCategories();
+
+renderProducts();
+
+
+}catch(error){
+
+console.error(
+'SEOULDROP catalog error:',
+error
+);
+
+products = [];
+
+count.textContent =
+'Ошибка загрузки';
+
+container.innerHTML = `
+
+<div class="message">
+
+<strong>
+Не удалось загрузить каталог
+</strong>
+
+<br><br>
+
+Проверь интернет-соединение
+и попробуй открыть каталог ещё раз.
+
+<br><br>
+
+<button
+class="cta"
+onclick="loadProducts()"
+>
+🔄 Повторить
+</button>
+
+</div>
+
+`;
+
+}finally{
+
+clearTimeout(timeout);
+
+}
+
+}
+
+
+/* CATEGORIES */
 
 const categoryList = [
 
-  'Все',
-
-  '💿 Альбомы',
-
-  '🎶 Винил',
-
-  '🃏 Карты',
-
-  '🎁 Мерч',
-
-  '🧴 Косметика',
-
-  '🍪 Сладости',
-
-  '🌟 Другое'
+'Все',
+'💿 Альбомы',
+'🎶 Винил',
+'🃏 Карты',
+'🎁 Мерч',
+'🧴 Косметика',
+'🍪 Сладости',
+'🌟 Другое'
 
 ];
 
 
 function getCategory(product){
 
-  return String(
-    product.category ||
-    '🌟 Другое'
-  ).trim();
+return String(
+product.category ||
+'🌟 Другое'
+).trim();
 
 }
 
 
 function buildCategories(){
 
-  const el =
-    document.getElementById(
-      'categories'
-    );
+const el =
+document.getElementById(
+'categories'
+);
 
-  const existing =
-    new Set(
-      products.map(
-        getCategory
-      )
-    );
+const existing =
+new Set(
+products.map(getCategory)
+);
 
-
-  const categories =
-    categoryList.filter(
-      category =>
-        category === 'Все' ||
-        existing.has(category)
-    );
+const categories =
+categoryList.filter(
+category =>
+category === 'Все' ||
+existing.has(category)
+);
 
 
-  for(const product of products){
+for(const product of products){
 
-    const category =
-      getCategory(product);
+const category =
+getCategory(product);
 
-    if(
-      category &&
-      !categories.includes(category)
-    ){
+if(
+category &&
+!categories.includes(category)
+){
 
-      categories.push(category);
+categories.push(category);
 
-    }
+}
 
-  }
+}
 
 
-  el.innerHTML =
-    categories.map(
-      category => `
-        <button
-          type="button"
-          class="cat ${
-            category === currentCategory
-              ? 'active'
-              : ''
-          }"
-          onclick="
-            selectCategory(
-              ${JSON.stringify(category)}
-            )
-          "
-        >
-          ${escapeHtml(category)}
-        </button>
-      `
-    ).join('');
+el.innerHTML =
+categories.map(
+category => `
+
+<button
+type="button"
+class="cat ${
+category === currentCategory
+? 'active'
+: ''
+}"
+onclick="selectCategory(${JSON.stringify(category)})"
+>
+${escapeHtml(category)}
+</button>
+
+`
+).join('');
 
 }
 
 
 function selectCategory(category){
 
-  currentCategory =
-    category;
+currentCategory =
+category;
 
-  buildCategories();
+buildCategories();
 
-  renderProducts();
+renderProducts();
 
 }
 
 
-/* =========================================================
-   FILTER
-   ========================================================= */
+/* FILTER */
 
 function filteredProducts(){
 
-  const query =
-    searchText
-      .trim()
-      .toLowerCase();
+const query =
+searchText
+.trim()
+.toLowerCase();
 
 
-  return products.filter(
-    product => {
+return products.filter(
+product => {
 
-      const category =
-        getCategory(product);
+const category =
+getCategory(product);
 
+if(
+currentCategory !== 'Все' &&
+category !== currentCategory
+){
 
-      const categoryOk =
-        currentCategory === 'Все' ||
-        category === currentCategory;
+return false;
 
+}
 
-      if(!categoryOk){
+if(!query){
 
-        return false;
+return true;
 
-      }
+}
 
+const text = [
 
-      if(!query){
+product.name,
+product.description,
+product.category,
+product.artist
 
-        return true;
+]
+.filter(Boolean)
+.join(' ')
+.toLowerCase();
 
-      }
+return text.includes(query);
 
-
-      const text = [
-
-        product.name,
-
-        product.description,
-
-        product.category,
-
-        product.artist
-
-      ]
-        .filter(Boolean)
-        .join(' ')
-        .toLowerCase();
-
-
-      return text.includes(query);
-
-    }
-  );
+}
+);
 
 }
 
 
-/* =========================================================
-   RENDER PRODUCTS
-   ========================================================= */
+/* RENDER */
 
 function renderProducts(){
 
-  const container =
-    document.getElementById(
-      'products'
-    );
+const container =
+document.getElementById(
+'products'
+);
 
-  const count =
-    document.getElementById(
-      'productCount'
-    );
+const count =
+document.getElementById(
+'productCount'
+);
 
-
-  const list =
-    filteredProducts();
-
-
-  count.textContent =
-    list.length +
-    (
-      list.length === 1
-        ? ' товар'
-        : ' товаров'
-    );
+const list =
+filteredProducts();
 
 
-  if(!list.length){
-
-    container.innerHTML = `
-      <div
-        class="message"
-        style="grid-column:1/-1"
-      >
-        <strong>
-          Ничего не найдено
-        </strong>
-
-        <br><br>
-
-        Попробуй изменить поиск
-        или выбрать другую категорию.
-      </div>
-    `;
-
-    return;
-
-  }
+count.textContent =
+list.length +
+(
+list.length === 1
+? ' товар'
+: ' товаров'
+);
 
 
-  container.innerHTML =
-    list
-      .map(
-        product =>
-          createProductCard(product)
-      )
-      .join('');
+if(!list.length){
 
+container.innerHTML = `
 
-  attachCardEvents();
+<div
+class="message"
+style="grid-column:1/-1"
+>
+
+<strong>
+Ничего не найдено
+</strong>
+
+<br><br>
+
+Попробуй изменить поиск
+или выбрать другую категорию.
+
+</div>
+
+`;
+
+return;
 
 }
 
 
-/* =========================================================
-   PRODUCT CARD
-   ========================================================= */
+container.innerHTML =
+list.map(
+product =>
+createProductCard(product)
+).join('');
+
+attachCardEvents();
+
+}
+
+
+/* PRODUCT CARD */
 
 function createProductCard(product){
 
-  const images =
-    getImages(product);
+const images =
+getImages(product);
 
-  const firstImage =
-    images[0] || '';
+const firstImage =
+images[0] || '';
 
+const stock =
+getStock(product);
 
-  const stock =
-    getStock(product);
+let statusHtml = '';
 
-
-  let statusHtml = '';
-
-  let addDisabled = false;
+let disabled = false;
 
 
-  if(stock.type === 'preorder'){
+if(stock.type === 'preorder'){
 
-    statusHtml = `
-      <div class="status preorder">
-        🟡 Под заказ
-      </div>
-    `;
+statusHtml = `
+<div class="status preorder">
+🟡 Под заказ
+</div>
+`;
 
-  }else if(stock.type === 'instock'){
+}else if(stock.type === 'instock'){
 
-    statusHtml = `
-      <div class="status instock">
-        🟢 В наличии · ${stock.count} шт.
-      </div>
-    `;
+statusHtml = `
+<div class="status instock">
+🟢 В наличии · ${stock.count} шт.
+</div>
+`;
 
-  }else{
+}else{
 
-    statusHtml = `
-      <div class="status out">
-        🔴 Нет в наличии
-      </div>
-    `;
+statusHtml = `
+<div class="status out">
+🔴 Нет в наличии
+</div>
+`;
 
-    addDisabled = true;
-
-  }
-
-
-  const dots =
-    images.length > 1
-      ? `
-        <div class="photo-dots">
-          ${images
-            .map(
-              (_,i) =>
-                `<span
-                  class="photo-dot ${
-                    i === 0
-                      ? 'active'
-                      : ''
-                  }"
-                ></span>`
-            )
-            .join('')}
-        </div>
-      `
-      : '';
-
-
-  const arrows =
-    images.length > 1
-      ? `
-        <button
-          type="button"
-          class="photo-arrow left"
-          data-photo-left="${escapeHtml(
-            String(product.id)
-          )}"
-        >
-          ‹
-        </button>
-
-        <button
-          type="button"
-          class="photo-arrow right"
-          data-photo-right="${escapeHtml(
-            String(product.id)
-          )}"
-        >
-          ›
-        </button>
-      `
-      : '';
-
-
-  return `
-    <article
-      class="card"
-      data-id="${escapeHtml(
-        String(product.id)
-      )}"
-    >
-
-      <div
-        class="pic"
-        data-gallery="${escapeHtml(
-          String(product.id)
-        )}"
-      >
-
-        ${
-          firstImage
-            ? `
-              <img
-                src="${escapeHtml(firstImage)}"
-                alt="${escapeHtml(
-                  product.name || 'Товар'
-                )}"
-                loading="lazy"
-              >
-            `
-            : `
-              <div
-                style="
-                  font-size:44px;
-                  opacity:.7;
-                "
-              >
-                🛍️
-              </div>
-            `
-        }
-
-        ${arrows}
-
-        ${dots}
-
-      </div>
-
-
-      <div class="info">
-
-        <div class="name">
-          ${escapeHtml(
-            product.name ||
-            'Без названия'
-          )}
-        </div>
-
-
-        <div class="meta">
-
-          ${
-            product.artist
-              ? escapeHtml(
-                  product.artist
-                )
-              : escapeHtml(
-                  getCategory(product)
-                )
-          }
-
-        </div>
-
-
-        <div class="price">
-          ${formatPrice(
-            product.price
-          )}
-        </div>
-
-
-        <div class="description">
-
-          ${escapeHtml(
-            String(
-              product.description ||
-              ''
-            ).trim() ||
-            'Описание товара пока не добавлено.'
-          )}
-
-        </div>
-
-
-        <button
-          type="button"
-          class="more-description"
-        >
-          Подробнее →
-        </button>
-
-
-        ${statusHtml}
-
-
-        <button
-          type="button"
-          class="add ${
-            addDisabled
-              ? 'disabled'
-              : ''
-          }"
-          ${
-            addDisabled
-              ? 'disabled'
-              : ''
-          }
-        >
-          ${
-            stock.type === 'preorder'
-              ? '🛒 Заказать'
-              : '🛒 В корзину'
-          }
-        </button>
-
-      </div>
-
-    </article>
-  `;
+disabled = true;
 
 }
 
 
-/* =========================================================
-   CARD EVENTS
-   ========================================================= */
+const arrows =
+images.length > 1
+? `
+
+<button
+class="photo-arrow left"
+type="button"
+>
+‹
+</button>
+
+<button
+class="photo-arrow right"
+type="button"
+>
+›
+</button>
+
+`
+: '';
+
+
+const dots =
+images.length > 1
+? `
+
+<div class="photo-dots">
+
+${images.map(
+(_,i)=>`
+<span
+class="photo-dot ${
+i===0 ? 'active' : ''
+}"
+></span>
+`
+).join('')}
+
+</div>
+
+`
+: '';
+
+
+return `
+
+<article
+class="card"
+data-id="${escapeHtml(String(product.id))}"
+>
+
+<div class="pic">
+
+${
+firstImage
+? `
+<img
+src="${escapeHtml(firstImage)}"
+alt="${escapeHtml(product.name || 'Товар')}"
+loading="lazy"
+>
+`
+: `
+<div
+style="
+font-size:44px;
+opacity:.7;
+"
+>
+🛍️
+</div>
+`
+}
+
+${arrows}
+
+${dots}
+
+</div>
+
+
+<div class="info">
+
+<div class="name">
+${escapeHtml(
+product.name ||
+'Без названия'
+)}
+</div>
+
+
+<div class="meta">
+${
+product.artist
+? escapeHtml(product.artist)
+: escapeHtml(getCategory(product))
+}
+</div>
+
+
+<div class="price">
+${formatPrice(product.price)}
+</div>
+
+
+<div class="description">
+${escapeHtml(
+String(
+product.description || ''
+).trim() ||
+'Описание товара пока не добавлено.'
+)}
+</div>
+
+
+<button
+type="button"
+class="more-description"
+>
+Подробнее →
+</button>
+
+
+${statusHtml}
+
+
+<button
+type="button"
+class="add ${
+disabled ? 'disabled' : ''
+}"
+${disabled ? 'disabled' : ''}
+>
+${
+stock.type === 'preorder'
+? '🛒 Заказать'
+: '🛒 В корзину'
+}
+</button>
+
+</div>
+
+</article>
+
+`;
+
+}
+
+
+/* CARD EVENTS */
 
 function attachCardEvents(){
 
-  document
-    .querySelectorAll('.card')
-    .forEach(card => {
+document
+.querySelectorAll('.card')
+.forEach(card=>{
 
-      const id =
-        card.dataset.id;
+const id =
+card.dataset.id;
 
+const product =
+products.find(
+item =>
+String(item.id) ===
+String(id)
+);
 
-      const product =
-        products.find(
-          item =>
-            String(item.id) ===
-            String(id)
-        );
+if(!product)return;
 
 
-      if(!product){
+const add =
+card.querySelector('.add');
 
-        return;
+if(add){
 
-      }
+add.addEventListener(
+'click',
+event=>{
 
+event.stopPropagation();
 
-      const photo =
-        card.querySelector('.pic');
+if(!add.disabled){
 
+addToCart(product);
 
-      if(photo){
+}
 
-        photo.addEventListener(
-          'click',
-          event => {
-
-            if(
-              event.target.closest(
-                '.photo-arrow'
-              )
-            ){
-
-              return;
-
-            }
-
-            event.stopPropagation();
-
-            openGallery(product);
-
-          }
-        );
-
-      }
-
-
-      const add =
-        card.querySelector('.add');
-
-
-      if(add){
-
-        add.addEventListener(
-          'click',
-          event => {
-
-            event.stopPropagation();
-
-            if(
-              add.disabled
-            ){
-
-              return;
-
-            }
-
-            addToCart(product);
-
-          }
-        );
-
-      }
-
-
-      const moreDescription =
-        card.querySelector(
-          '.more-description'
-        );
-
-
-      if(moreDescription){
-
-        moreDescription.addEventListener(
-          'click',
-          event => {
-
-            event.stopPropagation();
-
-            openDescription(
-              product
-            );
-
-          }
-        );
-
-      }
-
-
-      const left =
-        card.querySelector(
-          '.photo-arrow.left'
-        );
-
-
-      const right =
-        card.querySelector(
-          '.photo-arrow.right'
-        );
-
-
-      if(left){
-
-        left.addEventListener(
-          'click',
-          event => {
-
-            event.stopPropagation();
-
-            openGallery(
-              product,
-              -1
-            );
-
-          }
-        );
-
-      }
-
-
-      if(right){
-
-        right.addEventListener(
-          'click',
-          event => {
-
-            event.stopPropagation();
-
-            openGallery(
-              product,
-              1
-            );
-
-          }
-        );
-
-      }
-
-
-      card.addEventListener(
-        'click',
-        event => {
-
-          if(
-            event.target.closest(
-              '.add'
-            ) ||
-            event.target.closest(
-              '.more-description'
-            ) ||
-            event.target.closest(
-              '.photo-arrow'
-            ) ||
-            event.target.closest(
-              '.pic'
-            )
-          ){
-
-            return;
-
-          }
-
-          openDescription(
-            product
-          );
-
-        }
-      );
-
-    });
+}
+);
 
 }
 
 
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
+const more =
+card.querySelector(
+'.more-description'
+);
+
+if(more){
+
+more.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+openProduct(product);
+
+}
+);
+
+}
+
+
+const pic =
+card.querySelector('.pic');
+
+if(pic){
+
+pic.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+if(
+event.target.closest(
+'.photo-arrow'
+)
+)return;
+
+openGallery(product);
+
+}
+);
+
+}
+
+
+const left =
+card.querySelector(
+'.photo-arrow.left'
+);
+
+const right =
+card.querySelector(
+'.photo-arrow.right'
+);
+
+if(left){
+
+left.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+openGallery(
+product,
+-1
+);
+
+}
+);
+
+}
+
+
+if(right){
+
+right.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+openGallery(
+product,
+1
+);
+
+}
+);
+
+}
+
+
+card.addEventListener(
+'click',
+event=>{
+
+if(
+event.target.closest('.add') ||
+event.target.closest('.more-description') ||
+event.target.closest('.photo-arrow') ||
+event.target.closest('.pic')
+){
+
+return;
+
+}
+
+openProduct(product);
+
+}
+);
+
+});
+
+}
+
+
+/* FULL PRODUCT */
+
+function openProduct(product){
+
+currentProduct =
+product;
+
+currentProductImages =
+getImages(product);
+
+currentProductImageIndex =
+0;
+
+
+document.getElementById(
+'productModalTitle'
+).textContent =
+product.name ||
+'Товар';
+
+
+document.getElementById(
+'productModalCategory'
+).textContent =
+getCategory(product);
+
+
+document.getElementById(
+'productModalPrice'
+).textContent =
+formatPrice(product.price);
+
+
+document.getElementById(
+'productModalDescription'
+).textContent =
+String(
+product.description || ''
+).trim() ||
+'Описание товара пока не добавлено.';
+
+
+updateProductModalStatus();
+
+updateProductModalPhoto();
+
+
+const button =
+document.getElementById(
+'productModalAdd'
+);
+
+button.textContent =
+'🛒 Добавить в корзину';
+
+button.onclick =
+()=>{
+
+if(!currentProduct)return;
+
+const stock =
+getStock(currentProduct);
+
+if(stock.type === 'out')return;
+
+addToCart(currentProduct);
+
+button.textContent =
+'✓ Добавлено в корзину';
+
+setTimeout(
+()=>{
+if(currentProduct){
+button.textContent =
+'🛒 Добавить в корзину';
+}
+},
+1200
+);
+
+};
+
+
+document
+.getElementById(
+'productModal'
+)
+.classList.add('show');
+
+}
+
+
+function updateProductModalStatus(){
+
+if(!currentProduct)return;
+
+const stock =
+getStock(currentProduct);
+
+const status =
+document.getElementById(
+'productModalStatus'
+);
+
+const button =
+document.getElementById(
+'productModalAdd'
+);
+
+
+if(stock.type === 'preorder'){
+
+status.textContent =
+'🟡 Под заказ';
+
+status.style.color =
+'var(--yellow)';
+
+button.disabled =
+false;
+
+}
+else if(stock.type === 'instock'){
+
+status.textContent =
+'🟢 В наличии · ' +
+stock.count +
+' шт.';
+
+status.style.color =
+'var(--green)';
+
+button.disabled =
+false;
+
+}
+else{
+
+status.textContent =
+'🔴 Нет в наличии';
+
+status.style.color =
+'var(--red)';
+
+button.disabled =
+true;
+
+button.textContent =
+'Нет в наличии';
+
+}
+
+}
+
+
+function updateProductModalPhoto(){
+
+const image =
+document.getElementById(
+'productModalImage'
+);
+
+const dots =
+document.getElementById(
+'productModalDots'
+);
+
+const left =
+document.getElementById(
+'productModalLeft'
+);
+
+const right =
+document.getElementById(
+'productModalRight'
+);
+
+
+if(!currentProductImages.length){
+
+image.style.display =
+'none';
+
+left.style.display =
+'none';
+
+right.style.display =
+'none';
+
+dots.innerHTML =
+'';
+
+return;
+
+}
+
+
+image.style.display =
+'block';
+
+image.src =
+currentProductImages[
+currentProductImageIndex
+];
+
+
+if(
+currentProductImages.length <= 1
+){
+
+left.style.display =
+'none';
+
+right.style.display =
+'none';
+
+dots.innerHTML =
+'';
+
+return;
+
+}
+
+
+left.style.display =
+'block';
+
+right.style.display =
+'block';
+
+
+dots.innerHTML =
+currentProductImages.map(
+(_,index)=>`
+
+<span
+class="
+product-photo-dot
+${
+index === currentProductImageIndex
+? 'active'
+: ''
+}
+"
+></span>
+
+`
+).join('');
+
+}
+
+
+function changeProductPhoto(direction){
+
+if(
+currentProductImages.length <= 1
+){
+
+return;
+
+}
+
+
+currentProductImageIndex =
+(
+currentProductImageIndex +
+direction +
+currentProductImages.length
+) %
+currentProductImages.length;
+
+
+updateProductModalPhoto();
+
+}
+
+
+function closeProduct(){
+
+document
+.getElementById(
+'productModal'
+)
+.classList.remove(
+'show'
+);
+
+currentProduct =
+null;
+
+}
+
+
+/* DESCRIPTION */
 
 function openDescription(product){
 
-  const modal =
-    document.getElementById(
-      'descriptionModal'
-    );
+document.getElementById(
+'descriptionTitle'
+).textContent =
+product.name ||
+'Товар';
 
-  const title =
-    document.getElementById(
-      'descriptionTitle'
-    );
+document.getElementById(
+'descriptionText'
+).textContent =
+String(
+product.description || ''
+).trim() ||
+'Описание товара пока не добавлено.';
 
-  const text =
-    document.getElementById(
-      'descriptionText'
-    );
-
-
-  title.textContent =
-    product.name ||
-    'Товар';
-
-
-  text.textContent =
-    String(
-      product.description ||
-      ''
-    ).trim() ||
-    'Описание товара пока не добавлено.';
-
-
-  modal.classList.add(
-    'show'
-  );
+document
+.getElementById(
+'descriptionModal'
+)
+.classList.add('show');
 
 }
 
 
 function closeDescription(){
 
-  document
-    .getElementById(
-      'descriptionModal'
-    )
-    .classList.remove(
-      'show'
-    );
+document
+.getElementById(
+'descriptionModal'
+)
+.classList.remove('show');
 
 }
 
 
-/* =========================================================
-   GALLERY
-   ========================================================= */
+/* GALLERY */
 
 function openGallery(
-  product,
-  direction = 0
+product,
+direction=0
 ){
 
-  currentGalleryImages =
-    getImages(product);
+currentGalleryImages =
+getImages(product);
 
+if(!currentGalleryImages.length){
 
-  if(
-    !currentGalleryImages.length
-  ){
+return;
 
-    return;
+}
 
-  }
+currentGalleryIndex =
+direction > 0
+? 1 % currentGalleryImages.length
+: direction < 0
+? currentGalleryImages.length - 1
+: 0;
 
+updateGallery();
 
-  currentGalleryIndex =
-    direction > 0
-      ? 1 % currentGalleryImages.length
-      : direction < 0
-        ? (
-            currentGalleryImages.length - 1
-          )
-        : 0;
-
-
-  updateGallery();
-
-
-  document
-    .getElementById(
-      'galleryModal'
-    )
-    .classList.add(
-      'show'
-    );
+document
+.getElementById(
+'galleryModal'
+)
+.classList.add('show');
 
 }
 
 
 function updateGallery(){
 
-  const image =
-    document.getElementById(
-      'galleryImage'
-    );
-
-
-  image.src =
-    currentGalleryImages[
-      currentGalleryIndex
-    ] || '';
+document
+.getElementById(
+'galleryImage'
+)
+.src =
+currentGalleryImages[
+currentGalleryIndex
+] || '';
 
 }
 
 
 function changeGallery(direction){
 
-  if(
-    currentGalleryImages.length <= 1
-  ){
+if(
+currentGalleryImages.length <= 1
+)return;
 
-    return;
+currentGalleryIndex =
+(
+currentGalleryIndex +
+direction +
+currentGalleryImages.length
+) %
+currentGalleryImages.length;
 
-  }
-
-
-  currentGalleryIndex =
-    (
-      currentGalleryIndex +
-      direction +
-      currentGalleryImages.length
-    ) %
-    currentGalleryImages.length;
-
-
-  updateGallery();
+updateGallery();
 
 }
 
 
 function closeGallery(){
 
-  document
-    .getElementById(
-      'galleryModal'
-    )
-    .classList.remove(
-      'show'
-    );
+document
+.getElementById(
+'galleryModal'
+)
+.classList.remove('show');
 
 }
 
 
-/* =========================================================
-   CART
-   ========================================================= */
+/* CART */
 
 function addToCart(product){
 
-  const existing =
-    cart.find(
-      item =>
-        String(item.id) ===
-        String(product.id)
-    );
+const existing =
+cart.find(
+item =>
+String(item.id) ===
+String(product.id)
+);
+
+const stock =
+getStock(product);
+
+if(stock.type === 'out')return;
 
 
-  const stock =
-    getStock(product);
+if(existing){
+
+if(
+stock.type === 'instock' &&
+existing.qty >= stock.count
+){
+
+alert(
+'Больше этого товара сейчас нет в наличии.'
+);
+
+return;
+
+}
+
+existing.qty += 1;
+
+}else{
+
+cart.push({
+id:product.id,
+qty:1
+});
+
+}
 
 
-  if(
-    stock.type === 'out'
-  ){
-
-    return;
-
-  }
-
-
-  if(existing){
-
-    if(
-      stock.type === 'instock' &&
-      existing.qty >= stock.count
-    ){
-
-      alert(
-        'Больше этого товара сейчас нет в наличии.'
-      );
-
-      return;
-
-    }
-
-
-    existing.qty += 1;
-
-  }else{
-
-    cart.push({
-      id:product.id,
-      qty:1
-    });
-
-  }
-
-
-  saveCart();
-
-  updateCartBadge();
+saveCart();
 
 }
 
 
 function getCartDetailed(){
 
-  return cart
-    .map(item => {
+return cart
+.map(item=>{
 
-      const product =
-        products.find(
-          product =>
-            String(product.id) ===
-            String(item.id)
-        );
+const product =
+products.find(
+p =>
+String(p.id) ===
+String(item.id)
+);
 
+if(!product)return null;
 
-      if(!product){
+return {
+product,
+qty:Number(item.qty)||1
+};
 
-        return null;
-
-      }
-
-
-      return {
-        product,
-        qty:Number(item.qty) || 1
-      };
-
-    })
-    .filter(Boolean);
+})
+.filter(Boolean);
 
 }
 
 
 function changeQty(
-  productId,
-  delta
+productId,
+delta
 ){
 
-  const item =
-    cart.find(
-      item =>
-        String(item.id) ===
-        String(productId)
-    );
+const item =
+cart.find(
+item =>
+String(item.id) ===
+String(productId)
+);
 
+const product =
+products.find(
+p =>
+String(p.id) ===
+String(productId)
+);
 
-  const product =
-    products.find(
-      product =>
-        String(product.id) ===
-        String(productId)
-    );
+if(!item || !product)return;
 
+const stock =
+getStock(product);
 
-  if(
-    !item ||
-    !product
-  ){
+let next =
+Number(item.qty) +
+delta;
 
-    return;
+if(next < 1)next=1;
 
-  }
+if(
+stock.type === 'instock' &&
+next > stock.count
+){
 
+next=stock.count;
 
-  const stock =
-    getStock(product);
+}
 
+item.qty=next;
 
-  let next =
-    Number(item.qty) +
-    delta;
+saveCart();
 
-
-  if(next < 1){
-
-    next = 1;
-
-  }
-
-
-  if(
-    stock.type === 'instock' &&
-    next > stock.count
-  ){
-
-    next =
-      stock.count;
-
-  }
-
-
-  item.qty =
-    next;
-
-
-  saveCart();
-
-  renderCart();
+renderCart();
 
 }
 
 
 function removeFromCart(productId){
 
-  cart =
-    cart.filter(
-      item =>
-        String(item.id) !==
-        String(productId)
-    );
+cart =
+cart.filter(
+item =>
+String(item.id) !==
+String(productId)
+);
 
+saveCart();
 
-  saveCart();
-
-  renderCart();
+renderCart();
 
 }
 
 
 function cartTotal(){
 
-  return getCartDetailed()
-    .reduce(
-      (sum,item) =>
-        sum +
-        (
-          Number(
-            item.product.price
-          ) || 0
-        ) *
-        item.qty,
-      0
-    );
+return getCartDetailed()
+.reduce(
+(sum,item)=>
+sum +
+(
+Number(item.product.price)||0
+) *
+item.qty,
+0
+);
 
 }
 
 
 function cartCount(){
 
-  return cart.reduce(
-    (sum,item) =>
-      sum +
-      (
-        Number(item.qty) || 0
-      ),
-    0
-  );
+return cart.reduce(
+(sum,item)=>
+sum +
+(Number(item.qty)||0),
+0
+);
 
 }
 
 
 function updateCartBadge(){
 
-  const count =
-    cartCount();
+const count =
+cartCount();
+
+const top =
+document.getElementById(
+'cartBadge'
+);
+
+const nav =
+document.getElementById(
+'navBadge'
+);
 
 
-  const top =
-    document.getElementById(
-      'cartBadge'
-    );
+if(count>0){
 
-  const nav =
-    document.getElementById(
-      'navBadge'
-    );
+top.style.display =
+'flex';
 
+top.textContent =
+count;
 
-  if(count > 0){
+nav.style.display =
+'inline-flex';
 
-    top.style.display =
-      'flex';
+nav.textContent =
+count;
 
-    top.textContent =
-      count;
+}else{
 
-    nav.style.display =
-      'inline-flex';
+top.style.display =
+'none';
 
-    nav.textContent =
-      count;
+nav.style.display =
+'none';
 
-  }else{
-
-    top.style.display =
-      'none';
-
-    nav.style.display =
-      'none';
-
-  }
+}
 
 }
 
 
-/* =========================================================
-   RENDER CART
-   ========================================================= */
+/* RENDER CART */
 
 function renderCart(){
 
-  const container =
-    document.getElementById(
-      'cartItems'
-    );
+const container =
+document.getElementById(
+'cartItems'
+);
 
-  const footer =
-    document.getElementById(
-      'cartFooter'
-    );
+const footer =
+document.getElementById(
+'cartFooter'
+);
 
-
-  const detailed =
-    getCartDetailed();
-
-
-  if(!detailed.length){
-
-    container.innerHTML = `
-      <div class="message">
-        🛒 Корзина пока пустая.
-        <br><br>
-        Добавь товары из каталога.
-      </div>
-    `;
-
-    footer.innerHTML =
-      '';
-
-    return;
-
-  }
+const detailed =
+getCartDetailed();
 
 
-  container.innerHTML =
-    detailed
-      .map(
-        item => {
+if(!detailed.length){
 
-          const images =
-            getImages(
-              item.product
-            );
+container.innerHTML = `
 
-          const image =
-            images[0] || '';
+<div class="message">
 
+🛒 Корзина пока пустая.
 
-          return `
-            <div class="cart-item">
+<br><br>
 
-              ${
-                image
-                  ? `
-                    <img
-                      class="cart-thumb"
-                      src="${escapeHtml(
-                        image
-                      )}"
-                      alt=""
-                    >
-                  `
-                  : `
-                    <div
-                      class="cart-thumb"
-                      style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        font-size:26px;
-                      "
-                    >
-                      🛍️
-                    </div>
-                  `
-              }
+Добавь товары из каталога.
+
+</div>
+
+`;
+
+footer.innerHTML='';
+
+return;
+
+}
 
 
-              <div>
+container.innerHTML =
+detailed.map(
+item=>{
 
-                <div class="cart-name">
-                  ${escapeHtml(
-                    item.product.name ||
-                    'Товар'
-                  )}
-                </div>
+const images =
+getImages(item.product);
 
-                <div class="cart-price">
-                  ${formatPrice(
-                    item.product.price
-                  )}
-                </div>
+const image =
+images[0] || '';
 
 
-                <div class="qty">
+return `
 
-                  <button
-                    type="button"
-                    onclick="
-                      changeQty(
-                        ${JSON.stringify(
-                          item.product.id
-                        )},
-                        -1
-                      )
-                    "
-                  >
-                    −
-                  </button>
+<div class="cart-item">
 
-                  <span>
-                    ${item.qty}
-                  </span>
-
-                  <button
-                    type="button"
-                    onclick="
-                      changeQty(
-                        ${JSON.stringify(
-                          item.product.id
-                        )},
-                        1
-                      )
-                    "
-                  >
-                    +
-                  </button>
-
-                </div>
+${
+image
+? `
+<img
+class="cart-thumb"
+src="${escapeHtml(image)}"
+alt=""
+>
+`
+: `
+<div
+class="cart-thumb"
+style="
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+"
+>
+🛍️
+</div>
+`
+}
 
 
-                <button
-                  class="remove"
-                  type="button"
-                  onclick="
-                    removeFromCart(
-                      ${JSON.stringify(
-                        item.product.id
-                      )}
-                    )
-                  "
-                >
-                  Удалить
-                </button>
+<div>
 
-              </div>
+<div class="cart-name">
+${escapeHtml(
+item.product.name ||
+'Товар'
+)}
+</div>
 
-
-              <strong>
-                ${formatPrice(
-                  (
-                    Number(
-                      item.product.price
-                    ) || 0
-                  ) *
-                  item.qty
-                )}
-              </strong>
-
-            </div>
-          `;
-
-        }
-      )
-      .join('');
+<div class="cart-price">
+${formatPrice(
+item.product.price
+)}
+</div>
 
 
-  footer.innerHTML = `
+<div class="qty">
 
-    <div class="cart-total">
+<button
+onclick="
+changeQty(
+${JSON.stringify(item.product.id)},
+-1
+)
+"
+>
+−
+</button>
 
-      <span>
-        Итого
-      </span>
+<span>
+${item.qty}
+</span>
 
-      <span>
-        ${formatPrice(
-          cartTotal()
-        )}
-      </span>
+<button
+onclick="
+changeQty(
+${JSON.stringify(item.product.id)},
+1
+)
+"
+>
++
+</button>
 
-    </div>
+</div>
 
 
-    <button
-      class="checkout"
-      type="button"
-      onclick="openCheckout()"
-    >
-      📦 Оформить заказ
-    </button>
+<button
+class="remove"
+onclick="
+removeFromCart(
+${JSON.stringify(item.product.id)}
+)
+"
+>
+Удалить
+</button>
 
-  `;
+</div>
+
+
+<strong>
+${formatPrice(
+(
+Number(item.product.price)||0
+) *
+item.qty
+)}
+</strong>
+
+</div>
+
+`;
+
+}
+).join('');
+
+
+footer.innerHTML = `
+
+<div class="cart-total">
+
+<span>Итого</span>
+
+<span>
+${formatPrice(cartTotal())}
+</span>
+
+</div>
+
+
+<button
+class="checkout"
+onclick="openCheckout()"
+>
+📦 Оформить заказ
+</button>
+
+`;
 
 }
 
 
 function openCart(){
 
-  renderCart();
+renderCart();
 
-  document
-    .getElementById(
-      'cartModal'
-    )
-    .classList.add(
-      'show'
-    );
+document
+.getElementById(
+'cartModal'
+)
+.classList.add('show');
 
 }
 
 
 function closeCart(){
 
-  document
-    .getElementById(
-      'cartModal'
-    )
-    .classList.remove(
-      'show'
-    );
+document
+.getElementById(
+'cartModal'
+)
+.classList.remove('show');
 
 }
 
 
-/* =========================================================
-   CHECKOUT
-   ========================================================= */
+/* CHECKOUT */
 
 function openCheckout(){
 
-  if(!cartCount()){
+if(!cartCount())return;
 
-    return;
+const username =
+tg &&
+tg.initDataUnsafe &&
+tg.initDataUnsafe.user
+? (
+tg.initDataUnsafe.user.username
+? '@'+
+tg.initDataUnsafe.user.username
+:
+(
+tg.initDataUnsafe.user.first_name ||
+'Пользователь'
+)
+)
+: '';
 
-  }
+document.getElementById(
+'telegramUsername'
+).value =
+username;
 
+closeCart();
 
-  const username =
-    tg &&
-    tg.initDataUnsafe &&
-    tg.initDataUnsafe.user
-      ? (
-          tg.initDataUnsafe.user.username
-            ? '@' +
-              tg.initDataUnsafe.user.username
-            : (
-                tg.initDataUnsafe.user.first_name ||
-                'Пользователь'
-              )
-        )
-      : '';
-
-
-  document
-    .getElementById(
-      'telegramUsername'
-    )
-    .value =
-      username;
-
-
-  closeCart();
-
-
-  document
-    .getElementById(
-      'checkoutModal'
-    )
-    .classList.add(
-      'show'
-    );
+document
+.getElementById(
+'checkoutModal'
+)
+.classList.add('show');
 
 }
 
 
 function closeCheckout(){
 
-  document
-    .getElementById(
-      'checkoutModal'
-    )
-    .classList.remove(
-      'show'
-    );
+document
+.getElementById(
+'checkoutModal'
+)
+.classList.remove('show');
 
 }
 
 
 async function sendOrder(){
 
-  const button =
-    document.getElementById(
-      'sendOrderButton'
-    );
+const button =
+document.getElementById(
+'sendOrderButton'
+);
 
+const name =
+document.getElementById(
+'customerName'
+).value.trim();
 
-  const name =
-    document
-      .getElementById(
-        'customerName'
-      )
-      .value
-      .trim();
+const contact =
+document.getElementById(
+'customerContact'
+).value.trim();
 
+const comment =
+document.getElementById(
+'customerComment'
+).value.trim();
 
-  const contact =
-    document
-      .getElementById(
-        'customerContact'
-      )
-      .value
-      .trim();
 
+if(!name){
 
-  const comment =
-    document
-      .getElementById(
-        'customerComment'
-      )
-      .value
-      .trim();
+alert('Укажи имя.');
 
+return;
 
-  if(!name){
+}
 
-    alert(
-      'Укажи имя.'
-    );
+if(!contact){
 
-    return;
+alert('Укажи контакт для связи.');
 
-  }
-
-
-  if(!contact){
-
-    alert(
-      'Укажи контакт для связи.'
-    );
-
-    return;
-
-  }
-
-
-  const items =
-    getCartDetailed()
-      .map(
-        item => ({
-          id:item.product.id,
-          qty:item.qty
-        })
-      );
-
-
-  if(!items.length){
-
-    alert(
-      'Корзина пустая.'
-    );
-
-    return;
-
-  }
-
-
-  button.disabled =
-    true;
-
-  button.textContent =
-    'Отправляем...';
-
-
-  try{
-
-    const response =
-      await fetch(
-        ORDER_API,
-        {
-          method:'POST',
-          headers:{
-            'Content-Type':
-              'application/json'
-          },
-          body:JSON.stringify({
-
-            items,
-
-            name,
-
-            contact,
-
-            comment,
-
-            telegramUsername:
-              document
-                .getElementById(
-                  'telegramUsername'
-                )
-                .value,
-
-            telegramUser:
-              tg &&
-              tg.initDataUnsafe
-                ? tg.initDataUnsafe.user
-                : null
-
-          })
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if(
-      !response.ok ||
-      !data.ok
-    ){
-
-      throw new Error(
-        data.error ||
-        'Не удалось отправить заказ'
-      );
-
-    }
-
-
-    cart = [];
-
-    saveCart();
-
-
-    document
-      .getElementById(
-        'checkoutContent'
-      )
-      .innerHTML = `
-
-        <div class="success">
-
-          <div class="success-icon">
-            💜
-          </div>
-
-          <h2>
-            Заказ отправлен!
-          </h2>
-
-          <p
-            style="
-              color:var(--muted);
-              line-height:1.5;
-            "
-          >
-            Спасибо за заказ в SEOULDROP.
-            Мы свяжемся с тобой для уточнения
-            деталей.
-          </p>
-
-          <button
-            class="checkout"
-            type="button"
-            onclick="closeCheckout()"
-          >
-            Вернуться в каталог
-          </button>
-
-        </div>
-
-      `;
-
-
-  }catch(error){
-
-    console.error(
-      'Order error:',
-      error
-    );
-
-
-    alert(
-      'Не удалось отправить заказ.\n\n' +
-      (
-        error.message ||
-        'Попробуй ещё раз.'
-      )
-    );
-
-
-  }finally{
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      '📩 Отправить заказ';
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   INFO
-   ========================================================= */
+const items =
+getCartDetailed()
+.map(
+item=>({
+id:item.product.id,
+qty:item.qty
+})
+);
+
+
+if(!items.length){
+
+alert('Корзина пустая.');
+
+return;
+
+}
+
+
+button.disabled=true;
+
+button.textContent=
+'Отправляем...';
+
+
+try{
+
+const response =
+await fetch(
+ORDER_API,
+{
+method:'POST',
+headers:{
+'Content-Type':
+'application/json'
+},
+body:JSON.stringify({
+
+items,
+name,
+contact,
+comment,
+
+telegramUsername:
+document.getElementById(
+'telegramUsername'
+).value,
+
+telegramUser:
+tg &&
+tg.initDataUnsafe
+? tg.initDataUnsafe.user
+: null
+
+})
+}
+);
+
+
+const data =
+await response.json();
+
+
+if(
+!response.ok ||
+!data.ok
+){
+
+throw new Error(
+data.error ||
+'Не удалось отправить заказ'
+);
+
+}
+
+
+cart=[];
+
+saveCart();
+
+
+document.getElementById(
+'checkoutContent'
+).innerHTML = `
+
+<div class="success">
+
+<div class="success-icon">
+💜
+</div>
+
+<h2>
+Заказ отправлен!
+</h2>
+
+<p
+style="
+color:var(--muted);
+line-height:1.5;
+"
+>
+Спасибо за заказ в SEOULDROP.
+Мы свяжемся с тобой для уточнения
+деталей.
+</p>
+
+<button
+class="checkout"
+onclick="closeCheckout()"
+>
+Вернуться в каталог
+</button>
+
+</div>
+
+`;
+
+
+}catch(error){
+
+console.error(
+'Order error:',
+error
+);
+
+alert(
+'Не удалось отправить заказ.\n\n' +
+(
+error.message ||
+'Попробуй ещё раз.'
+)
+);
+
+}finally{
+
+button.disabled=false;
+
+button.textContent=
+'📩 Отправить заказ';
+
+}
+
+}
+
+
+/* INFO */
 
 function showInfo(){
 
-  document
-    .getElementById(
-      'infoModal'
-    )
-    .classList.add(
-      'show'
-    );
+document
+.getElementById(
+'infoModal'
+)
+.classList.add('show');
 
 }
 
 
 function closeInfo(){
 
-  document
-    .getElementById(
-      'infoModal'
-    )
-    .classList.remove(
-      'show'
-    );
+document
+.getElementById(
+'infoModal'
+)
+.classList.remove('show');
 
 }
 
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
+/* NAVIGATION */
 
 function scrollToCatalog(){
 
-  document
-    .getElementById(
-      'catalogSection'
-    )
-    .scrollIntoView({
-      behavior:'smooth',
-      block:'start'
-    });
+document
+.getElementById(
+'catalogSection'
+)
+.scrollIntoView({
+behavior:'smooth',
+block:'start'
+});
 
 }
 
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
+/* SEARCH */
 
 document
-  .getElementById(
-    'searchInput'
-  )
-  .addEventListener(
-    'input',
-    event => {
+.getElementById(
+'searchInput'
+)
+.addEventListener(
+'input',
+event=>{
 
-      searchText =
-        event.target.value || '';
+searchText =
+event.target.value || '';
 
-      renderProducts();
+renderProducts();
 
-    }
-  );
-
-
-/* =========================================================
-   ESCAPE
-   ========================================================= */
-
-document.addEventListener(
-  'keydown',
-  event => {
-
-    if(event.key !== 'Escape'){
-
-      return;
-
-    }
-
-
-    closeDescription();
-    closeGallery();
-    closeCart();
-    closeCheckout();
-    closeInfo();
-
-  }
+}
 );
 
 
-/* =========================================================
-   SWIPE GALLERY
-   ========================================================= */
+/* ESC */
 
-let touchStartX = 0;
+document.addEventListener(
+'keydown',
+event=>{
+
+if(event.key !== 'Escape')return;
+
+closeProduct();
+closeDescription();
+closeGallery();
+closeCart();
+closeCheckout();
+closeInfo();
+
+}
+);
+
+
+/* SWIPE PRODUCT */
+
+let productTouchStartX=0;
 
 document
-  .getElementById(
-    'galleryModal'
-  )
-  .addEventListener(
-    'touchstart',
-    event => {
+.getElementById(
+'productModal'
+)
+.addEventListener(
+'touchstart',
+event=>{
 
-      touchStartX =
-        event.touches[0].clientX;
+productTouchStartX =
+event.touches[0].clientX;
 
-    },
-    {passive:true}
-  );
+},
+{passive:true}
+);
 
 
 document
-  .getElementById(
-    'galleryModal'
-  )
-  .addEventListener(
-    'touchend',
-    event => {
+.getElementById(
+'productModal'
+)
+.addEventListener(
+'touchend',
+event=>{
 
-      const endX =
-        event.changedTouches[0].clientX;
+const endX =
+event.changedTouches[0].clientX;
 
-      const diff =
-        endX - touchStartX;
+const diff =
+endX-productTouchStartX;
 
+if(Math.abs(diff)<40)return;
 
-      if(Math.abs(diff) < 40){
+if(diff<0){
 
-        return;
+changeProductPhoto(1);
 
-      }
+}else{
 
+changeProductPhoto(-1);
 
-      if(diff < 0){
+}
 
-        changeGallery(1);
-
-      }else{
-
-        changeGallery(-1);
-
-      }
-
-    },
-    {passive:true}
-  );
+},
+{passive:true}
+);
 
 
-/* =========================================================
-   START
-   ========================================================= */
+/* SWIPE GALLERY */
+
+let touchStartX=0;
+
+document
+.getElementById(
+'galleryModal'
+)
+.addEventListener(
+'touchstart',
+event=>{
+
+touchStartX =
+event.touches[0].clientX;
+
+},
+{passive:true}
+);
+
+
+document
+.getElementById(
+'galleryModal'
+)
+.addEventListener(
+'touchend',
+event=>{
+
+const endX =
+event.changedTouches[0].clientX;
+
+const diff =
+endX-touchStartX;
+
+if(Math.abs(diff)<40)return;
+
+if(diff<0){
+
+changeGallery(1);
+
+}else{
+
+changeGallery(-1);
+
+}
+
+},
+{passive:true}
+);
+
+
+/* START */
 
 updateCartBadge();
 
