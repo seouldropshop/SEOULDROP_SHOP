@@ -4,224 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SEOULDROP | Админка</title>
-
 <style>
-:root{
- --bg:#050308;
- --panel:#0e0912;
- --panel2:#160d1b;
- --pink:#ff4fb3;
- --violet:#a76cff;
- --text:#fff7fc;
- --muted:#bcaabd;
- --line:rgba(255,111,194,.18)
-}
-
+:root{--bg:#050308;--panel:#0e0912;--panel2:#160d1b;--pink:#ff4fb3;--violet:#a76cff;--text:#fff7fc;--muted:#bcaabd;--line:rgba(255,111,194,.18)}
 *{box-sizing:border-box}
-
-body{
- margin:0;
- background:
- radial-gradient(circle at 15% 5%,rgba(255,79,179,.14),transparent 28%),
- radial-gradient(circle at 90% 20%,rgba(167,108,255,.14),transparent 30%),
- var(--bg);
- color:var(--text);
- font-family:Inter,system-ui,-apple-system,sans-serif
-}
-
-.wrap{
- max-width:800px;
- margin:auto;
- padding:22px 14px 50px
-}
-
-.brand{
- font-weight:900;
- letter-spacing:.12em;
- font-size:20px;
- margin-bottom:4px
-}
-
-.muted{color:var(--muted)}
-
-.panel{
- background:linear-gradient(180deg,var(--panel2),var(--panel));
- border:1px solid var(--line);
- border-radius:22px;
- padding:18px;
- margin-top:16px
-}
-
-.input,select,textarea{
- width:100%;
- background:#0b0610;
- color:#fff;
- border:1px solid var(--line);
- border-radius:13px;
- padding:12px;
- font:inherit;
- margin-top:6px
-}
-
-select option{
- background:#0b0610;
- color:#fff
-}
-
-.btn{
- border:0;
- border-radius:13px;
- padding:12px 16px;
- background:linear-gradient(90deg,var(--pink),var(--violet));
- color:white;
- font-weight:800;
- cursor:pointer
-}
-
-.btn:disabled{
- opacity:.6;
- cursor:wait
-}
-
-.btn.secondary{
- background:var(--panel);
- border:1px solid var(--line)
-}
-
-.row{
- display:flex;
- gap:8px;
- align-items:center;
- justify-content:space-between
-}
-
-.products{
- display:grid;
- gap:12px
-}
-
-.product{
- display:grid;
- grid-template-columns:70px 1fr auto;
- gap:12px;
- align-items:center;
- background:#0b0610;
- border:1px solid var(--line);
- border-radius:16px;
- padding:10px
-}
-
-.product>img{
- width:70px;
- height:70px;
- object-fit:contain;
- border-radius:10px;
- background:#050308
-}
-
-.actions{
- display:flex;
- gap:8px;
- flex-wrap:wrap
-}
-
-.login{
- max-width:430px;
- margin:12vh auto
-}
-
-.hidden{display:none}
-
-.formgrid{
- display:grid;
- gap:10px
-}
-
-.status{
- margin-top:5px;
- font-size:14px
-}
-
-.stock-note,
-.photo-note{
- margin-top:5px;
- font-size:13px;
- color:var(--muted)
-}
-
-.photo-grid{
- display:flex;
- gap:8px;
- flex-wrap:wrap;
- margin-top:10px
-}
-
-.photo-item{
- position:relative;
- width:92px;
- height:92px;
- border:1px solid var(--line);
- border-radius:12px;
- overflow:hidden;
- background:#050308
-}
-
-.photo-item img{
- width:100%;
- height:100%;
- object-fit:cover
-}
-
-.photo-remove{
- position:absolute;
- right:4px;
- top:4px;
- width:26px;
- height:26px;
- border:0;
- border-radius:50%;
- background:rgba(0,0,0,.75);
- color:#fff;
- font-size:17px;
- cursor:pointer
-}
-
-.photo-main{
- position:absolute;
- left:4px;
- bottom:4px;
- padding:3px 6px;
- border-radius:7px;
- background:rgba(0,0,0,.7);
- font-size:11px
-}
-
-#photoInput{display:none}
-
-.upload-label{
- display:inline-block;
- margin-top:6px;
- text-align:center
-}
-
-@media(max-width:620px){
- .product{
-  grid-template-columns:58px 1fr
- }
-
- .product>img{
-  width:58px;
-  height:58px
- }
-
- .product .actions{
-  grid-column:1/-1
- }
-
- .row{
-  align-items:flex-start
- }
-}
+body{margin:0;background:radial-gradient(circle at 15% 5%,rgba(255,79,179,.14),transparent 28%),radial-gradient(circle at 90% 20%,rgba(167,108,255,.14),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif}
+.wrap{max-width:800px;margin:auto;padding:22px 14px 50px}.brand{font-weight:900;letter-spacing:.12em;font-size:20px;margin-bottom:4px}.muted{color:var(--muted)}
+.panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:18px;margin-top:16px}
+.input,select,textarea{width:100%;background:#0b0610;color:#fff;border:1px solid var(--line);border-radius:13px;padding:12px;font:inherit;margin-top:6px}
+select option{background:#0b0610;color:#fff}.btn{border:0;border-radius:13px;padding:12px 16px;background:linear-gradient(90deg,var(--pink),var(--violet));color:white;font-weight:800;cursor:pointer}.btn.secondary{background:var(--panel);border:1px solid var(--line)}
+.btn:disabled{opacity:.6;cursor:wait}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between}.products{display:grid;gap:12px}
+.product{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;background:#0b0610;border:1px solid var(--line);border-radius:16px;padding:10px}
+.product>img{width:70px;height:70px;object-fit:contain;border-radius:10px;background:#050308}.actions{display:flex;gap:8px;flex-wrap:wrap}.login{max-width:430px;margin:12vh auto}.hidden{display:none}.formgrid{display:grid;gap:10px}
+.status{margin-top:5px;font-size:14px}.stock-note,.photo-note{margin-top:5px;font-size:13px;color:var(--muted)}
+.photo-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.photo-item{position:relative;width:92px;height:92px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#050308}
+.photo-item img{width:100%;height:100%;object-fit:cover}.photo-remove{position:absolute;right:4px;top:4px;width:26px;height:26px;border:0;border-radius:50%;background:rgba(0,0,0,.75);color:#fff;font-size:17px;cursor:pointer}
+.photo-main{position:absolute;left:4px;bottom:4px;padding:3px 6px;border-radius:7px;background:rgba(0,0,0,.7);font-size:11px}
+#photoInput{display:none}.upload-label{display:inline-block;margin-top:6px;text-align:center}
+@media(max-width:620px){.product{grid-template-columns:58px 1fr}.product>img{width:58px;height:58px}.product .actions{grid-column:1/-1}.row{align-items:flex-start}}
 </style>
 </head>
 
@@ -241,7 +41,6 @@ select option{
  id="password"
  type="password"
  placeholder="Пароль администратора"
- autocomplete="current-password"
 >
 
 <button
@@ -260,17 +59,11 @@ select option{
 
 </section>
 
-
 <main id="app" class="hidden">
 
-<div
- class="row"
- style="margin-top:18px"
->
+<div class="row" style="margin-top:18px">
 
-<h2 style="margin:0">
-Товары
-</h2>
+<h2 style="margin:0">Товары</h2>
 
 <button
  class="btn"
@@ -281,25 +74,16 @@ select option{
 
 </div>
 
-
 <div
  id="products"
  class="products"
  style="margin-top:12px"
 ></div>
 
-
 <div
  class="row"
- style="margin-top:16px"
+ style="margin-top:16px;justify-content:flex-end"
 >
-
-<button
- class="btn"
- onclick="saveAll()"
->
-💾 Сохранить изменения
-</button>
 
 <button
  class="btn secondary"
@@ -309,7 +93,6 @@ select option{
 </button>
 
 </div>
-
 
 <section
  id="editor"
@@ -334,7 +117,6 @@ select option{
 
 </div>
 
-
 <div
  class="formgrid"
  style="margin-top:12px"
@@ -342,15 +124,16 @@ select option{
 
 <label>
 Название
+
 <input
  class="input"
  id="fName"
 >
 </label>
 
-
 <label>
 Цена
+
 <input
  class="input"
  id="fPrice"
@@ -358,7 +141,6 @@ select option{
  min="0"
 >
 </label>
-
 
 <label>
 Категория
@@ -400,7 +182,6 @@ select option{
 
 </label>
 
-
 <label>
 Описание
 
@@ -411,7 +192,6 @@ select option{
 ></textarea>
 
 </label>
-
 
 <label>
 Статус товара
@@ -438,7 +218,6 @@ select option{
 
 </label>
 
-
 <div id="stockBlock">
 
 <label>
@@ -460,7 +239,6 @@ select option{
 </div>
 
 </div>
-
 
 <div>
 
@@ -494,12 +272,12 @@ select option{
 
 </div>
 
-
 <button
  class="btn"
+ id="saveProductButton"
  onclick="applyEditor()"
 >
-Готово
+💾 Сохранить товар
 </button>
 
 </div>
@@ -510,7 +288,6 @@ select option{
 
 </div>
 
-
 <script>
 
 let products = [];
@@ -519,11 +296,9 @@ let imagesData = [];
 let adminPassword = "";
 
 
-/* =====================================================
-   API
-   ===================================================== */
+/* API */
 
-async function api(action, body = {}){
+async function api(action, body = {}) {
 
  const response = await fetch(
   "/api/products?action=" +
@@ -538,34 +313,27 @@ async function api(action, body = {}){
 
    body:JSON.stringify({
     ...body,
-    action:action
+    action
    })
   }
  );
 
  const data =
-  await response
-   .json()
-   .catch(
-    () => ({
-     error:"Ошибка ответа сервера"
-    })
-   );
+  await response.json()
+  .catch(() => ({
+   error:"Ошибка ответа сервера"
+  }));
 
- if(!response.ok){
+ if(!response.ok)
   throw new Error(
-   data.error ||
-   ("Ошибка HTTP " + response.status)
+   data.error || "Ошибка"
   );
- }
 
  return data;
 }
 
 
-/* =====================================================
-   ВХОД
-   ===================================================== */
+/* LOGIN */
 
 async function login(){
 
@@ -575,51 +343,48 @@ async function login(){
    .value
    .trim();
 
- const error =
-  document.getElementById("loginError");
+ const errorBox =
+  document.getElementById(
+   "loginError"
+  );
 
  const button =
   document.querySelector(
-   'button[onclick="login()"]'
+   "#login button.btn"
   );
-
 
  if(!password){
 
-  error.textContent =
+  errorBox.textContent =
    "Введите пароль";
 
   return;
  }
 
-
  if(button){
 
   button.disabled = true;
+
   button.textContent =
    "⏳ Проверяю...";
 
  }
 
-
- error.textContent = "";
-
+ errorBox.textContent = "";
 
  try{
 
-  adminPassword = password;
-
+  adminPassword =
+   password;
 
   const controller =
    new AbortController();
-
 
   const timer =
    setTimeout(
     () => controller.abort(),
     10000
    );
-
 
   const response =
    await fetch(
@@ -632,90 +397,61 @@ async function login(){
        "application/json",
 
       "X-Admin-Password":
-       password
+       adminPassword
      },
 
      body:JSON.stringify({
       action:"login",
-      password:password
+      password
      }),
 
-     signal:controller.signal
+     signal:
+      controller.signal
     }
    );
 
-
   clearTimeout(timer);
-
 
   const data =
    await response
     .json()
-    .catch(
-     () => ({})
-    );
+    .catch(() => ({
+     error:
+      "Ошибка ответа сервера"
+    }));
 
-
-  if(!response.ok){
-
-   throw new Error(
-    data.error ||
-    ("Ошибка HTTP " +
-     response.status)
-   );
-
-  }
-
-
-  if(!data.ok){
+  if(
+   !response.ok ||
+   !data.ok
+  ){
 
    throw new Error(
     data.error ||
-    "Неверный пароль"
+    "Ошибка входа"
    );
 
   }
-
-
-  if(button){
-
-   button.textContent =
-    "⏳ Загружаю каталог...";
-
-  }
-
 
   await load();
 
-
   document
    .getElementById("login")
-   .classList.add("hidden");
-
+   .classList
+   .add("hidden");
 
   document
    .getElementById("app")
-   .classList.remove("hidden");
-
+   .classList
+   .remove("hidden");
 
  }catch(e){
 
   adminPassword = "";
 
-
-  if(e.name === "AbortError"){
-
-   error.textContent =
-    "Сервер не отвечает. Попробуйте ещё раз.";
-
-  }else{
-
-   error.textContent =
-    e.message ||
-    "Ошибка входа";
-
-  }
-
+  errorBox.textContent =
+   e.name === "AbortError"
+    ? "Сервер не отвечает. Попробуйте ещё раз."
+    : e.message;
 
  }finally{
 
@@ -733,9 +469,7 @@ async function login(){
 }
 
 
-/* =====================================================
-   ЗАГРУЗКА
-   ===================================================== */
+/* LOAD */
 
 async function load(){
 
@@ -752,9 +486,7 @@ async function load(){
 }
 
 
-/* =====================================================
-   СТАТУС
-   ===================================================== */
+/* STATUS */
 
 function getStatus(p){
 
@@ -768,18 +500,22 @@ function getStatus(p){
 }
 
 
+/* STOCK */
+
 function getStock(p){
 
  const n =
   Number(p.stock);
 
  return Number.isFinite(n) &&
-        n >= 0
-  ? Math.floor(n)
-  : 0;
+  n >= 0
+   ? Math.floor(n)
+   : 0;
 
 }
 
+
+/* STATUS TEXT */
 
 function statusText(p){
 
@@ -797,39 +533,19 @@ function statusText(p){
 }
 
 
-/* =====================================================
-   ФОТО
-   ===================================================== */
+/* FIRST IMAGE */
 
 function firstImage(p){
 
  return Array.isArray(p.images) &&
-        p.images.length
-  ? p.images[0]
-  : (p.image || "");
-
-}
-
-
-function normalizeImages(p){
-
- if(
-  Array.isArray(p.images) &&
   p.images.length
- ){
-  return p.images.filter(Boolean);
- }
-
- return p.image
-  ? [p.image]
-  : [];
+   ? p.images[0]
+   : (p.image || "");
 
 }
 
 
-/* =====================================================
-   ОТОБРАЖЕНИЕ ТОВАРОВ
-   ===================================================== */
+/* RENDER */
 
 function render(){
 
@@ -839,7 +555,6 @@ function render(){
   );
 
  box.innerHTML = "";
-
 
  products.forEach(
   (p,i) => {
@@ -852,19 +567,16 @@ function render(){
    el.className =
     "product";
 
-
    const stock =
     getStatus(p) === "in_stock"
      ? ` · ${getStock(p)} шт.`
      : "";
-
 
    const count =
     Array.isArray(p.images) &&
     p.images.length
      ? p.images.length
      : (p.image ? 1 : 0);
-
 
    el.innerHTML = `
 
@@ -880,13 +592,13 @@ function render(){
      </b>
 
      <div class="muted">
-      ${Number(p.price || 0)
-        .toLocaleString("ru-RU")} ₽
+      ${Number(
+       p.price || 0
+      ).toLocaleString("ru-RU")} ₽
      </div>
 
      <div class="status">
-      ${statusText(p)}
-      ${stock}
+      ${statusText(p)}${stock}
      </div>
 
      <div
@@ -915,8 +627,8 @@ function render(){
      </button>
 
     </div>
-   `;
 
+   `;
 
    box.appendChild(el);
 
@@ -925,6 +637,8 @@ function render(){
 
 }
 
+
+/* ESCAPE */
 
 function esc(v){
 
@@ -943,16 +657,30 @@ function esc(v){
 }
 
 
-/* =====================================================
-   НОВЫЙ ТОВАР
-   ===================================================== */
+/* NORMALIZE IMAGES */
+
+function normalizeImages(p){
+
+ if(
+  Array.isArray(p.images) &&
+  p.images.length
+ )
+  return p.images.filter(Boolean);
+
+ return p.image
+  ? [p.image]
+  : [];
+
+}
+
+
+/* NEW PRODUCT */
 
 function newProduct(){
 
  editing = null;
 
  imagesData = [];
-
 
  document
   .getElementById(
@@ -961,32 +689,36 @@ function newProduct(){
   .textContent =
    "Новый товар";
 
-
  fill({
+
   name:"",
   price:0,
-  category:"albums",
-  description:"",
-  status:"in_stock",
-  stock:0,
-  image:null,
-  images:[]
- });
 
+  category:"albums",
+
+  description:"",
+
+  status:"in_stock",
+
+  stock:0,
+
+  image:null,
+
+  images:[]
+
+ });
 
  document
   .getElementById("editor")
-  .classList.remove("hidden");
-
+  .classList
+  .remove("hidden");
 
  toggleStockField();
 
 }
 
 
-/* =====================================================
-   РЕДАКТИРОВАНИЕ
-   ===================================================== */
+/* EDIT */
 
 function edit(i){
 
@@ -997,7 +729,6 @@ function edit(i){
    products[i]
   );
 
-
  document
   .getElementById(
    "editorTitle"
@@ -1005,23 +736,21 @@ function edit(i){
   .textContent =
    "Изменить товар";
 
-
- fill(products[i]);
-
+ fill(
+  products[i]
+ );
 
  document
   .getElementById("editor")
-  .classList.remove("hidden");
-
+  .classList
+  .remove("hidden");
 
  toggleStockField();
 
 }
 
 
-/* =====================================================
-   ЗАПОЛНЕНИЕ
-   ===================================================== */
+/* FILL */
 
 function fill(p){
 
@@ -1030,51 +759,41 @@ function fill(p){
   .value =
    p.name || "";
 
-
  document
   .getElementById("fPrice")
   .value =
    p.price || 0;
-
 
  document
   .getElementById("fCategory")
   .value =
    p.category || "albums";
 
-
  document
   .getElementById("fDesc")
   .value =
    p.description || "";
-
 
  document
   .getElementById("fStatus")
   .value =
    getStatus(p);
 
-
  document
   .getElementById("fStock")
   .value =
    getStock(p);
 
-
  document
   .getElementById("photoInput")
-  .value =
-   "";
-
+  .value = "";
 
  renderPhotoGrid();
 
 }
 
 
-/* =====================================================
-   ОСТАТОК
-   ===================================================== */
+/* STOCK FIELD */
 
 function toggleStockField(){
 
@@ -1083,20 +802,17 @@ function toggleStockField(){
    "stockBlock"
   );
 
-
  stockBlock.style.display =
   document
    .getElementById("fStatus")
    .value === "in_stock"
-   ? "block"
-   : "none";
+    ? "block"
+    : "none";
 
 }
 
 
-/* =====================================================
-   ФОТОГРАФИИ
-   ===================================================== */
+/* PHOTO GRID */
 
 function renderPhotoGrid(){
 
@@ -1106,7 +822,6 @@ function renderPhotoGrid(){
   );
 
  grid.innerHTML = "";
-
 
  imagesData.forEach(
   (src,i) => {
@@ -1118,7 +833,6 @@ function renderPhotoGrid(){
 
    item.className =
     "photo-item";
-
 
    item.innerHTML = `
 
@@ -1142,7 +856,6 @@ function renderPhotoGrid(){
 
    `;
 
-
    grid.appendChild(item);
 
   }
@@ -1151,17 +864,26 @@ function renderPhotoGrid(){
 }
 
 
+/* REMOVE PHOTO */
+
 function removePhoto(i){
 
- imagesData.splice(i,1);
+ imagesData.splice(
+  i,
+  1
+ );
 
  renderPhotoGrid();
 
 }
 
 
+/* ADD PHOTOS */
+
 document
- .getElementById("photoInput")
+ .getElementById(
+  "photoInput"
+ )
  .addEventListener(
   "change",
   async function(){
@@ -1171,10 +893,8 @@ document
      this.files || []
     );
 
-
    if(!files.length)
     return;
-
 
    try{
 
@@ -1186,14 +906,13 @@ document
       )
      );
 
-
     imagesData.push(
-     ...converted.filter(Boolean)
+     ...converted.filter(
+      Boolean
+     )
     );
 
-
     renderPhotoGrid();
-
 
    }catch(e){
 
@@ -1204,12 +923,13 @@ document
 
    }
 
-
    this.value = "";
 
   }
  );
 
+
+/* COMPRESS IMAGE */
 
 function compressImage(file){
 
@@ -1223,14 +943,12 @@ function compressImage(file){
    ){
 
     resolve(null);
+
     return;
-
    }
-
 
    const reader =
     new FileReader();
-
 
    reader.onerror =
     () =>
@@ -1240,12 +958,10 @@ function compressImage(file){
       )
      );
 
-
    reader.onload = () => {
 
     const img =
      new Image();
-
 
     img.onerror =
      () =>
@@ -1255,11 +971,9 @@ function compressImage(file){
        )
       );
 
-
     img.onload = () => {
 
      const max = 1400;
-
 
      const scale =
       Math.min(
@@ -1271,12 +985,10 @@ function compressImage(file){
        )
       );
 
-
      const canvas =
       document.createElement(
        "canvas"
       );
-
 
      canvas.width =
       Math.max(
@@ -1286,7 +998,6 @@ function compressImage(file){
        )
       );
 
-
      canvas.height =
       Math.max(
        1,
@@ -1295,12 +1006,10 @@ function compressImage(file){
        )
       );
 
-
      const ctx =
       canvas.getContext(
        "2d"
       );
-
 
      ctx.drawImage(
       img,
@@ -1309,7 +1018,6 @@ function compressImage(file){
       canvas.width,
       canvas.height
      );
-
 
      resolve(
       canvas.toDataURL(
@@ -1320,47 +1028,47 @@ function compressImage(file){
 
     };
 
-
     img.src =
      reader.result;
 
    };
 
-
-   reader.readAsDataURL(file);
+   reader.readAsDataURL(
+    file
+   );
 
   }
  );
 
+
 }
 
 
-/* =====================================================
-   РЕДАКТОР
-   ===================================================== */
+/* CLOSE EDITOR */
 
 function closeEditor(){
 
  document
   .getElementById("editor")
-  .classList.add("hidden");
+  .classList
+  .add("hidden");
 
 }
 
 
-function applyEditor(){
+/* SAVE ONE PRODUCT */
+
+async function applyEditor(){
 
  const old =
   editing === null
    ? null
    : products[editing];
 
-
  const status =
   document
    .getElementById("fStatus")
    .value;
-
 
  let stock =
   Number(
@@ -1369,19 +1077,17 @@ function applyEditor(){
     .value
   ) || 0;
 
-
  if(status !== "in_stock")
   stock = 0;
 
-
- if(status === "in_stock" &&
-    stock < 1)
-  stock = 0;
-
+ stock =
+  Math.max(
+   0,
+   Math.floor(stock)
+  );
 
  const imgs =
   imagesData.filter(Boolean);
-
 
  const product = {
 
@@ -1414,24 +1120,25 @@ function applyEditor(){
     .value
     .trim(),
 
-  status:status,
+  status:
+   status,
 
   stock:
-   Math.max(
-    0,
-    Math.floor(stock)
-   ),
+   stock,
 
   available:
-   status === "in_stock" &&
-   stock > 0,
+   status !== "out_of_stock",
 
-  images:imgs,
+  images:
+   imgs,
 
   image:
    imgs[0] || null
+
  };
 
+
+ /* В НАЛИЧИИ, НО 0 ШТ. */
 
  if(
   status === "in_stock" &&
@@ -1447,25 +1154,165 @@ function applyEditor(){
  }
 
 
- if(editing === null)
-  products.push(product);
- else
-  products[editing] =
-   product;
+ /* ПОД ЗАКАЗ */
+
+ if(
+  status === "preorder"
+ ){
+
+  product.stock = 0;
+
+  product.available = true;
+
+ }
 
 
- render();
+ /* НЕТ В НАЛИЧИИ */
 
- closeEditor();
+ if(
+  product.status ===
+   "out_of_stock"
+ ){
+
+  product.stock = 0;
+
+  product.available =
+   false;
+
+ }
+
+
+ const button =
+  document.getElementById(
+   "saveProductButton"
+  );
+
+ if(button){
+
+  button.disabled = true;
+
+  button.textContent =
+   "⏳ Сохраняю...";
+
+ }
+
+
+ try{
+
+  /*
+   * ВАЖНО:
+   * сохраняется ТОЛЬКО ЭТОТ ТОВАР.
+   * Весь каталог НЕ отправляется.
+   */
+
+  await saveProductOne(
+   product
+  );
+
+
+  if(editing === null){
+
+   products.push(
+    product
+   );
+
+  }else{
+
+   products[editing] =
+    product;
+
+  }
+
+
+  render();
+
+  closeEditor();
+
+  alert(
+   "Товар сохранён 💜"
+  );
+
+
+ }catch(e){
+
+  alert(
+   "Ошибка сохранения: " +
+   e.message
+  );
+
+
+ }finally{
+
+  if(button){
+
+   button.disabled =
+    false;
+
+   button.textContent =
+    "💾 Сохранить товар";
+
+  }
+
+ }
 
 }
 
 
-/* =====================================================
-   СОХРАНЕНИЕ ОДНОГО ТОВАРА
-   ===================================================== */
+/* DELETE PRODUCT */
 
-async function saveProductOne(product){
+async function removeProduct(i){
+
+ if(
+  !confirm(
+   "Удалить этот товар?"
+  )
+ )
+  return;
+
+ const product =
+  products[i];
+
+ try{
+
+  if(
+   product &&
+   product.id
+  ){
+
+   await deleteProductOne(
+    product.id
+   );
+
+  }
+
+  products.splice(
+   i,
+   1
+  );
+
+  render();
+
+  alert(
+   "Товар удалён 💜"
+  );
+
+ }catch(e){
+
+  alert(
+   "Ошибка удаления: " +
+   e.message
+  );
+
+ }
+
+}
+
+
+/* SAVE ONE */
+
+async function saveProductOne(
+ product
+){
 
  const response =
   await fetch(
@@ -1482,12 +1329,14 @@ async function saveProductOne(product){
     },
 
     body:JSON.stringify({
+
      action:"save-one",
-     product:product
+
+     product
+
     })
    }
   );
-
 
  const data =
   await response
@@ -1498,7 +1347,6 @@ async function saveProductOne(product){
       "Ошибка ответа сервера"
     })
    );
-
 
  if(
   !response.ok ||
@@ -1512,17 +1360,16 @@ async function saveProductOne(product){
 
  }
 
-
  return data;
 
 }
 
 
-/* =====================================================
-   УДАЛЕНИЕ ОДНОГО ТОВАРА
-   ===================================================== */
+/* DELETE ONE */
 
-async function deleteProductOne(id){
+async function deleteProductOne(
+ id
+){
 
  const response =
   await fetch(
@@ -1539,12 +1386,14 @@ async function deleteProductOne(id){
     },
 
     body:JSON.stringify({
+
      action:"delete-one",
-     id:id
+
+     id
+
     })
    }
   );
-
 
  const data =
   await response
@@ -1555,7 +1404,6 @@ async function deleteProductOne(id){
       "Ошибка ответа сервера"
     })
    );
-
 
  if(
   !response.ok ||
@@ -1569,160 +1417,12 @@ async function deleteProductOne(id){
 
  }
 
-
  return data;
 
 }
 
 
-/* =====================================================
-   УДАЛЕНИЕ
-   ===================================================== */
-
-async function removeProduct(i){
-
- if(
-  !confirm(
-   "Удалить этот товар?"
-  )
- )
-  return;
-
-
- const product =
-  products[i];
-
-
- try{
-
-  if(
-   product &&
-   product.id
-  ){
-
-   await deleteProductOne(
-    product.id
-   );
-
-  }
-
-
-  products.splice(i,1);
-
-  render();
-
-
-  alert(
-   "Товар удалён 💜"
-  );
-
-
- }catch(e){
-
-  alert(
-   "Ошибка удаления: " +
-   e.message
-  );
-
- }
-
-}
-
-
-/* =====================================================
-   СОХРАНЕНИЕ ВСЕГО КАТАЛОГА
-   ===================================================== */
-
-async function saveAll(){
-
- const button =
-  document.querySelector(
-   'button[onclick="saveAll()"]'
-  );
-
-
- const original =
-  button
-   ? button.textContent
-   : "💾 Сохранить изменения";
-
-
- if(button){
-
-  button.disabled = true;
-
-  button.textContent =
-   "⏳ Сохранение...";
-
- }
-
-
- try{
-
-  if(!products.length){
-
-   alert(
-    "Каталог пуст."
-   );
-
-   return;
-
-  }
-
-
-  for(
-   let i = 0;
-   i < products.length;
-   i++
-  ){
-
-   if(button){
-
-    button.textContent =
-     `⏳ Сохранение ${i + 1}/${products.length}...`;
-
-   }
-
-
-   await saveProductOne(
-    products[i]
-   );
-
-  }
-
-
-  alert(
-   "Изменения сохранены 💜"
-  );
-
-
- }catch(e){
-
-  alert(
-   "Ошибка сохранения: " +
-   e.message
-  );
-
-
- }finally{
-
-  if(button){
-
-   button.disabled = false;
-
-   button.textContent =
-    original;
-
-  }
-
- }
-
-}
-
-
-/* =====================================================
-   ВЫХОД
-   ===================================================== */
+/* LOGOUT */
 
 function logout(){
 
