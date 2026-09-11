@@ -25,7 +25,9 @@
 
 *{box-sizing:border-box}
 
-html{background:var(--bg)}
+html{
+  background:var(--bg);
+}
 
 body{
   margin:0;
@@ -38,14 +40,21 @@ body{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-button,input,textarea{font:inherit}
-button{-webkit-tap-highlight-color:transparent}
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  -webkit-tap-highlight-color:transparent;
+}
 
 .app{
   width:100%;
   max-width:760px;
   margin:0 auto;
-  padding:16px 14px 105px;
+  padding:16px 14px 100px;
 }
 
 .header{
@@ -72,7 +81,9 @@ button{-webkit-tap-highlight-color:transparent}
   background:#120914;
 }
 
-.brand-text{min-width:0}
+.brand-text{
+  min-width:0;
+}
 
 .brand-text b{
   display:block;
@@ -88,12 +99,7 @@ button{-webkit-tap-highlight-color:transparent}
   margin-top:2px;
 }
 
-.header-actions{
-  display:flex;
-  gap:8px;
-}
-
-.top-action{
+.cart-top{
   position:relative;
   border:1px solid var(--line);
   background:var(--panel);
@@ -105,12 +111,7 @@ button{-webkit-tap-highlight-color:transparent}
   font-size:20px;
 }
 
-.top-action.active{
-  border-color:rgba(255,145,209,.65);
-  background:rgba(255,79,179,.15);
-}
-
-.action-badge{
+.cart-badge{
   position:absolute;
   right:-4px;
   top:-5px;
@@ -281,8 +282,13 @@ button{-webkit-tap-highlight-color:transparent}
   cursor:pointer;
 }
 
-.photo-arrow.left{left:7px}
-.photo-arrow.right{right:7px}
+.photo-arrow.left{
+  left:7px;
+}
+
+.photo-arrow.right{
+  right:7px;
+}
 
 .photo-dots{
   position:absolute;
@@ -304,30 +310,6 @@ button{-webkit-tap-highlight-color:transparent}
 
 .photo-dot.active{
   background:#fff;
-}
-
-.favorite-button{
-  position:absolute;
-  top:9px;
-  right:9px;
-  z-index:8;
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(5,3,8,.72);
-  backdrop-filter:blur(8px);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-  cursor:pointer;
-}
-
-.favorite-button.active{
-  background:rgba(255,79,179,.22);
-  border-color:rgba(255,145,209,.6);
 }
 
 .info{
@@ -396,9 +378,17 @@ button{-webkit-tap-highlight-color:transparent}
   font-size:11px;
 }
 
-.status.instock{color:var(--green)}
-.status.preorder{color:var(--yellow)}
-.status.out{color:var(--red)}
+.status.instock{
+  color:var(--green);
+}
+
+.status.preorder{
+  color:var(--yellow);
+}
+
+.status.out{
+  color:var(--red);
+}
 
 .message{
   border:1px solid var(--line);
@@ -420,8 +410,8 @@ button{-webkit-tap-highlight-color:transparent}
   right:0;
   bottom:0;
   z-index:50;
-  padding:8px 10px;
-  background:rgba(5,3,8,.9);
+  padding:10px 14px;
+  background:rgba(5,3,8,.88);
   backdrop-filter:blur(14px);
   border-top:1px solid var(--line);
 }
@@ -430,18 +420,17 @@ button{-webkit-tap-highlight-color:transparent}
   max-width:760px;
   margin:auto;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:4px;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
 }
 
 .nav{
   border:0;
   background:transparent;
   color:var(--muted);
-  padding:6px 3px;
-  font-size:10px;
+  padding:8px 4px;
+  font-size:11px;
   cursor:pointer;
-  position:relative;
 }
 
 .nav.active{
@@ -450,20 +439,20 @@ button{-webkit-tap-highlight-color:transparent}
 
 .nav strong{
   display:block;
-  font-size:18px;
+  font-size:19px;
   margin-bottom:2px;
 }
 
 .badge{
   display:inline-flex;
-  min-width:17px;
-  height:17px;
+  min-width:18px;
+  height:18px;
   border-radius:9px;
   align-items:center;
   justify-content:center;
   background:var(--pink);
-  font-size:9px;
-  margin-left:2px;
+  font-size:10px;
+  margin-left:3px;
 }
 
 .modal,
@@ -565,8 +554,13 @@ button{-webkit-tap-highlight-color:transparent}
   z-index:3;
 }
 
-.product-photo-arrow.left{left:10px}
-.product-photo-arrow.right{right:10px}
+.product-photo-arrow.left{
+  left:10px;
+}
+
+.product-photo-arrow.right{
+  right:10px;
+}
 
 .product-photo-dots{
   position:absolute;
@@ -624,15 +618,9 @@ button{-webkit-tap-highlight-color:transparent}
   white-space:pre-wrap;
 }
 
-.product-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-top:18px;
-}
-
 .product-add{
   width:100%;
+  margin-top:18px;
   border:0;
   border-radius:15px;
   padding:14px;
@@ -640,17 +628,6 @@ button{-webkit-tap-highlight-color:transparent}
   background:linear-gradient(90deg,var(--pink),var(--violet));
   font-size:15px;
   font-weight:850;
-}
-
-.product-favorite{
-  width:100%;
-  border:1px solid rgba(255,145,209,.35);
-  border-radius:15px;
-  padding:14px;
-  color:#fff;
-  background:rgba(255,79,179,.1);
-  font-size:15px;
-  font-weight:800;
 }
 
 .product-add:disabled{
@@ -722,8 +699,13 @@ button{-webkit-tap-highlight-color:transparent}
   font-size:22px;
 }
 
-.gallery-arrow.left{left:14px}
-.gallery-arrow.right{right:14px}
+.gallery-arrow.left{
+  left:14px;
+}
+
+.gallery-arrow.right{
+  right:14px;
+}
 
 .cart-items{
   display:flex;
@@ -810,73 +792,6 @@ button{-webkit-tap-highlight-color:transparent}
   opacity:.45;
 }
 
-.favorite-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.favorite-item{
-  display:grid;
-  grid-template-columns:72px 1fr auto;
-  gap:11px;
-  align-items:center;
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  background:rgba(255,255,255,.02);
-}
-
-.favorite-thumb{
-  width:72px;
-  height:72px;
-  border-radius:12px;
-  object-fit:cover;
-  background:#09050b;
-}
-
-.favorite-name{
-  font-size:13px;
-  font-weight:750;
-  line-height:1.35;
-}
-
-.favorite-price{
-  font-size:13px;
-  font-weight:800;
-  margin-top:5px;
-}
-
-.favorite-meta{
-  color:var(--muted);
-  font-size:10px;
-  margin-top:3px;
-}
-
-.favorite-buttons{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-}
-
-.favorite-cart-button{
-  border:1px solid rgba(255,145,209,.3);
-  background:rgba(255,79,179,.1);
-  color:#fff;
-  border-radius:9px;
-  padding:7px 8px;
-  font-size:10px;
-  white-space:nowrap;
-}
-
-.favorite-remove-button{
-  border:0;
-  background:none;
-  color:var(--red);
-  font-size:10px;
-  padding:5px;
-}
-
 .form{
   display:flex;
   flex-direction:column;
@@ -914,12 +829,6 @@ button{-webkit-tap-highlight-color:transparent}
   margin-bottom:12px;
 }
 
-.info-text{
-  color:#d8c8d5;
-  line-height:1.6;
-  font-size:14px;
-}
-
 @media(min-width:650px){
   .grid{
     grid-template-columns:repeat(3,minmax(0,1fr));
@@ -954,33 +863,17 @@ onerror="this.style.display='none'"
 
 </div>
 
-<div class="header-actions">
-
 <button
-class="top-action"
-type="button"
-onclick="openFavorites()"
->
-❤️
-<span
-id="favoriteBadge"
-class="action-badge"
->0</span>
-</button>
-
-<button
-class="top-action"
+class="cart-top"
 type="button"
 onclick="openCart()"
 >
 🛒
 <span
 id="cartBadge"
-class="action-badge"
+class="cart-badge"
 >0</span>
 </button>
-
-</div>
 
 </header>
 
@@ -1070,21 +963,6 @@ onclick="scrollToCatalog()"
 
 <button
 class="nav"
-onclick="openFavorites()"
->
-<strong>
-❤️
-<span
-id="navFavoriteBadge"
-class="badge"
-style="display:none"
->0</span>
-</strong>
-Избранное
-</button>
-
-<button
-class="nav"
 onclick="openCart()"
 >
 <strong>
@@ -1115,11 +993,7 @@ onclick="showInfo()"
 <div
 id="productModal"
 class="product-modal"
-onclick="
-if(event.target===this){
-closeProduct();
-}
-"
+onclick="if(event.target===this){closeProduct();}"
 >
 
 <div class="product-sheet">
@@ -1184,8 +1058,6 @@ id="productModalDescription"
 class="product-full-description"
 ></div>
 
-<div class="product-actions">
-
 <button
 id="productModalAdd"
 class="product-add"
@@ -1193,16 +1065,6 @@ type="button"
 >
 🛒 Добавить в корзину
 </button>
-
-<button
-id="productModalFavorite"
-class="product-favorite"
-type="button"
->
-♡ В избранное
-</button>
-
-</div>
 
 <button
 class="product-close"
@@ -1213,45 +1075,6 @@ onclick="closeProduct()"
 </button>
 
 </div>
-
-</div>
-
-</div>
-
-<!-- DESCRIPTION MODAL -->
-
-<div
-id="descriptionModal"
-class="modal"
-onclick="
-if(event.target===this){
-closeDescription();
-}
-"
->
-
-<div class="sheet">
-
-<div class="sheet-head">
-
-<div
-id="descriptionTitle"
-class="sheet-title"
-></div>
-
-<button
-class="close"
-onclick="closeDescription()"
->
-×
-</button>
-
-</div>
-
-<div
-id="descriptionText"
-class="product-full-description"
-></div>
 
 </div>
 
@@ -1298,54 +1121,12 @@ onclick="changeGallery(1)"
 
 </div>
 
-<!-- FAVORITES -->
-
-<div
-id="favoritesModal"
-class="modal"
-onclick="
-if(event.target===this){
-closeFavorites();
-}
-"
->
-
-<div class="sheet">
-
-<div class="sheet-head">
-
-<div class="sheet-title">
-❤️ Избранное
-</div>
-
-<button
-class="close"
-onclick="closeFavorites()"
->
-×
-</button>
-
-</div>
-
-<div
-id="favoriteItems"
-class="favorite-list"
-></div>
-
-</div>
-
-</div>
-
 <!-- CART -->
 
 <div
 id="cartModal"
 class="modal"
-onclick="
-if(event.target===this){
-closeCart();
-}
-"
+onclick="if(event.target===this){closeCart();}"
 >
 
 <div class="sheet">
@@ -1383,11 +1164,7 @@ id="cartFooter"
 <div
 id="checkoutModal"
 class="modal"
-onclick="
-if(event.target===this){
-closeCheckout();
-}
-"
+onclick="if(event.target===this){closeCheckout();}"
 >
 
 <div class="sheet">
@@ -1476,11 +1253,7 @@ onclick="sendOrder()"
 <div
 id="infoModal"
 class="modal"
-onclick="
-if(event.target===this){
-closeInfo();
-}
-"
+onclick="if(event.target===this){closeInfo();}"
 >
 
 <div class="sheet">
@@ -1500,7 +1273,13 @@ onclick="closeInfo()"
 
 </div>
 
-<div class="info-text">
+<div
+style="
+color:#d8c8d5;
+line-height:1.6;
+font-size:14px;
+"
+>
 
 <p>
 🇰🇷 SEOULDROP — магазин оригинальных
@@ -1523,11 +1302,6 @@ K-POP товаров из Кореи.
 </p>
 
 <p>
-❤️ Добавляй понравившиеся товары
-в избранное, чтобы не потерять их.
-</p>
-
-<p>
 💜 Спасибо, что выбираете SEOULDROP!
 </p>
 
@@ -1543,8 +1317,7 @@ const API_URL =
 'https://seouldrop-shop.outemnikova.workers.dev';
 
 const ORDER_API =
-API_URL +
-'/api/create-order';
+API_URL + '/api/create-order';
 
 const tg =
 window.Telegram &&
@@ -1564,23 +1337,15 @@ tg.expand();
 }
 
 let products = [];
-
 let currentCategory = 'Все';
-
 let searchText = '';
-
 let cart = loadCart();
 
-let favorites = loadFavorites();
-
 let currentGalleryImages = [];
-
 let currentGalleryIndex = 0;
 
 let currentProduct = null;
-
 let currentProductImages = [];
-
 let currentProductImageIndex = 0;
 
 
@@ -1593,14 +1358,10 @@ function loadCart(){
 try{
 
 const saved =
-localStorage.getItem(
-'seouldrop_cart'
-);
+localStorage.getItem('seouldrop_cart');
 
 const parsed =
-saved
-? JSON.parse(saved)
-: [];
+saved ? JSON.parse(saved) : [];
 
 return Array.isArray(parsed)
 ? parsed
@@ -1613,6 +1374,7 @@ return [];
 }
 
 }
+
 
 function saveCart(){
 
@@ -1626,179 +1388,6 @@ JSON.stringify(cart)
 }catch(e){}
 
 updateCartBadge();
-
-}
-
-
-/* =========================
-   FAVORITES
-========================= */
-
-function loadFavorites(){
-
-try{
-
-const saved =
-localStorage.getItem(
-'seouldrop_favorites'
-);
-
-const parsed =
-saved
-? JSON.parse(saved)
-: [];
-
-return Array.isArray(parsed)
-? parsed
-: [];
-
-}catch(e){
-
-return [];
-
-}
-
-}
-
-function saveFavorites(){
-
-try{
-
-localStorage.setItem(
-'seouldrop_favorites',
-JSON.stringify(favorites)
-);
-
-}catch(e){}
-
-updateFavoriteBadge();
-
-}
-
-function isFavorite(productId){
-
-return favorites.some(
-id =>
-String(id) ===
-String(productId)
-);
-
-}
-
-function toggleFavorite(productId){
-
-const exists =
-isFavorite(productId);
-
-if(exists){
-
-favorites =
-favorites.filter(
-id =>
-String(id) !==
-String(productId)
-);
-
-}else{
-
-favorites.push(productId);
-
-}
-
-saveFavorites();
-
-renderProducts();
-
-if(
-document
-.getElementById('favoritesModal')
-.classList.contains('show')
-){
-
-renderFavorites();
-
-}
-
-updateProductFavoriteButton();
-
-}
-
-function updateProductFavoriteButton(){
-
-const button =
-document.getElementById(
-'productModalFavorite'
-);
-
-if(
-!button ||
-!currentProduct
-){
-
-return;
-
-}
-
-if(
-isFavorite(currentProduct.id)
-){
-
-button.textContent =
-'❤️ В избранном';
-
-button.classList.add('active');
-
-}else{
-
-button.textContent =
-'♡ В избранное';
-
-button.classList.remove('active');
-
-}
-
-}
-
-function updateFavoriteBadge(){
-
-const count =
-favorites.length;
-
-const top =
-document.getElementById(
-'favoriteBadge'
-);
-
-const nav =
-document.getElementById(
-'navFavoriteBadge'
-);
-
-if(!top || !nav)return;
-
-if(count>0){
-
-top.style.display =
-'flex';
-
-top.textContent =
-count;
-
-nav.style.display =
-'inline-flex';
-
-nav.textContent =
-count;
-
-}else{
-
-top.style.display =
-'none';
-
-nav.style.display =
-'none';
-
-}
 
 }
 
@@ -1818,23 +1407,21 @@ return String(value ?? '')
 
 }
 
+
 function formatPrice(value){
 
 return new Intl.NumberFormat(
 'ru-RU'
-).format(
-Number(value) || 0
-) + ' ₽';
+).format(Number(value) || 0) + ' ₽';
 
 }
+
 
 function getImages(product){
 
 let images = [];
 
-if(
-Array.isArray(product.images)
-){
+if(Array.isArray(product.images)){
 
 images =
 product.images
@@ -1843,10 +1430,7 @@ product.images
 
 }
 
-if(
-!images.length &&
-product.image
-){
+if(!images.length && product.image){
 
 images = [
 String(product.image)
@@ -1857,6 +1441,67 @@ String(product.image)
 return images;
 
 }
+
+
+/* =========================
+   РУССКИЕ КАТЕГОРИИ
+========================= */
+
+function getCategory(product){
+
+const raw =
+String(
+product.category || ''
+).trim();
+
+const map = {
+
+'other':'🌟 Другое',
+'другое':'🌟 Другое',
+
+'albums':'💿 Альбомы',
+'album':'💿 Альбомы',
+'альбом':'💿 Альбомы',
+'альбомы':'💿 Альбомы',
+
+'vinyl':'🎶 Винил',
+'винил':'🎶 Винил',
+
+'photocards':'🃏 Карты',
+'photocard':'🃏 Карты',
+'cards':'🃏 Карты',
+'card':'🃏 Карты',
+'карты':'🃏 Карты',
+'фотокарты':'🃏 Карты',
+
+'merch':'🎁 Мерч',
+'мерч':'🎁 Мерч',
+
+'cosmetics':'🧴 Косметика',
+'cosmetic':'🧴 Косметика',
+'косметика':'🧴 Косметика',
+
+'sweets':'🍪 Сладости',
+'sweet':'🍪 Сладости',
+'сладость':'🍪 Сладости',
+'сладости':'🍪 Сладости',
+
+'other products':'🌟 Другое'
+
+};
+
+return (
+map[raw.toLowerCase()]
+|| raw
+|| '🌟 Другое'
+);
+
+}
+
+
+/* =========================
+   STOCK
+========================= */
 
 function getStock(product){
 
@@ -1903,14 +1548,10 @@ count:stock
 async function loadProducts(){
 
 const container =
-document.getElementById(
-'products'
-);
+document.getElementById('products');
 
 const count =
-document.getElementById(
-'productCount'
-);
+document.getElementById('productCount');
 
 container.innerHTML =
 '<div class="message">Загружаем каталог...</div>';
@@ -2035,21 +1676,11 @@ const categoryList = [
 
 ];
 
-function getCategory(product){
-
-return String(
-product.category ||
-'🌟 Другое'
-).trim();
-
-}
 
 function buildCategories(){
 
 const el =
-document.getElementById(
-'categories'
-);
+document.getElementById('categories');
 
 const existing =
 new Set(
@@ -2059,13 +1690,11 @@ products.map(getCategory)
 const categories =
 categoryList.filter(
 category =>
-category === 'Все' ||
-existing.has(category)
+category === 'Все'
+|| existing.has(category)
 );
 
-for(
-const product of products
-){
+for(const product of products){
 
 const category =
 getCategory(product);
@@ -2102,6 +1731,7 @@ ${escapeHtml(category)}
 
 }
 
+
 function selectCategory(category){
 
 currentCategory =
@@ -2121,9 +1751,7 @@ renderProducts();
 function filteredProducts(){
 
 const query =
-searchText
-.trim()
-.toLowerCase();
+searchText.trim().toLowerCase();
 
 return products.filter(
 product => {
@@ -2132,8 +1760,8 @@ const category =
 getCategory(product);
 
 if(
-currentCategory !== 'Все' &&
-category !== currentCategory
+currentCategory !== 'Все'
+&& category !== currentCategory
 ){
 
 return false;
@@ -2167,20 +1795,16 @@ return text.includes(query);
 
 
 /* =========================
-   RENDER PRODUCTS
+   RENDER
 ========================= */
 
 function renderProducts(){
 
 const container =
-document.getElementById(
-'products'
-);
+document.getElementById('products');
 
 const count =
-document.getElementById(
-'productCount'
-);
+document.getElementById('productCount');
 
 const list =
 filteredProducts();
@@ -2246,37 +1870,36 @@ const stock =
 getStock(product);
 
 let statusHtml = '';
-
 let disabled = false;
 
-if(
-stock.type === 'preorder'
-){
+if(stock.type === 'preorder'){
 
 statusHtml = `
+
 <div class="status preorder">
 🟡 Под заказ
 </div>
+
 `;
 
-}
-else if(
-stock.type === 'instock'
-){
+}else if(stock.type === 'instock'){
 
 statusHtml = `
+
 <div class="status instock">
 🟢 В наличии · ${stock.count} шт.
 </div>
+
 `;
 
-}
-else{
+}else{
 
 statusHtml = `
+
 <div class="status out">
 🔴 Нет в наличии
 </div>
+
 `;
 
 disabled = true;
@@ -2327,9 +1950,6 @@ i===0 ? 'active' : ''
 `
 : '';
 
-const favorite =
-isFavorite(product.id);
-
 return `
 
 <article
@@ -2339,34 +1959,19 @@ data-id="${escapeHtml(String(product.id))}"
 
 <div class="pic">
 
-<button
-type="button"
-class="favorite-button ${
-favorite ? 'active' : ''
-}"
-title="${
-favorite
-? 'Удалить из избранного'
-: 'Добавить в избранное'
-}"
->
-${
-favorite
-? '❤️'
-: '♡'
-}
-</button>
-
 ${
 firstImage
 ? `
+
 <img
 src="${escapeHtml(firstImage)}"
 alt="${escapeHtml(product.name || 'Товар')}"
 loading="lazy"
 >
+
 `
 : `
+
 <div
 style="
 font-size:44px;
@@ -2375,6 +1980,7 @@ opacity:.7;
 >
 🛍️
 </div>
+
 `
 }
 
@@ -2394,11 +2000,13 @@ product.name ||
 </div>
 
 <div class="meta">
+
 ${
 product.artist
 ? escapeHtml(product.artist)
 : escapeHtml(getCategory(product))
 }
+
 </div>
 
 <div class="price">
@@ -2406,12 +2014,15 @@ ${formatPrice(product.price)}
 </div>
 
 <div class="description">
+
 ${escapeHtml(
 String(
 product.description || ''
-).trim() ||
+).trim()
+||
 'Описание товара пока не добавлено.'
 )}
+
 </div>
 
 <button
@@ -2468,32 +2079,6 @@ String(id)
 
 if(!product)return;
 
-
-/* FAVORITE */
-
-const favorite =
-card.querySelector(
-'.favorite-button'
-);
-
-if(favorite){
-
-favorite.addEventListener(
-'click',
-event=>{
-
-event.stopPropagation();
-
-toggleFavorite(product.id);
-
-}
-);
-
-}
-
-
-/* ADD */
-
 const add =
 card.querySelector('.add');
 
@@ -2516,9 +2101,6 @@ addToCart(product);
 
 }
 
-
-/* DESCRIPTION */
-
 const more =
 card.querySelector(
 '.more-description'
@@ -2539,9 +2121,6 @@ openProduct(product);
 
 }
 
-
-/* IMAGE */
-
 const pic =
 card.querySelector('.pic');
 
@@ -2551,18 +2130,13 @@ pic.addEventListener(
 'click',
 event=>{
 
+event.stopPropagation();
+
 if(
 event.target.closest(
 '.photo-arrow'
-) ||
-event.target.closest(
-'.favorite-button'
 )
-){
-
-return;
-
-}
+)return;
 
 openGallery(product);
 
@@ -2570,9 +2144,6 @@ openGallery(product);
 );
 
 }
-
-
-/* ARROWS */
 
 const left =
 card.querySelector(
@@ -2620,19 +2191,18 @@ product,
 
 }
 
-
-/* CARD */
-
 card.addEventListener(
 'click',
 event=>{
 
 if(
-event.target.closest('.add') ||
-event.target.closest('.more-description') ||
-event.target.closest('.photo-arrow') ||
-event.target.closest('.pic') ||
-event.target.closest('.favorite-button')
+event.target.closest('.add')
+||
+event.target.closest('.more-description')
+||
+event.target.closest('.photo-arrow')
+||
+event.target.closest('.pic')
 ){
 
 return;
@@ -2685,14 +2255,13 @@ document.getElementById(
 ).textContent =
 String(
 product.description || ''
-).trim() ||
+).trim()
+||
 'Описание товара пока не добавлено.';
 
 updateProductModalStatus();
 
 updateProductModalPhoto();
-
-updateProductFavoriteButton();
 
 const button =
 document.getElementById(
@@ -2733,19 +2302,6 @@ button.textContent =
 
 };
 
-document.getElementById(
-'productModalFavorite'
-).onclick =
-()=>{
-
-if(!currentProduct)return;
-
-toggleFavorite(
-currentProduct.id
-);
-
-};
-
 document
 .getElementById(
 'productModal'
@@ -2753,6 +2309,7 @@ document
 .classList.add('show');
 
 }
+
 
 function updateProductModalStatus(){
 
@@ -2771,9 +2328,7 @@ document.getElementById(
 'productModalAdd'
 );
 
-if(
-stock.type === 'preorder'
-){
+if(stock.type === 'preorder'){
 
 status.textContent =
 '🟡 Под заказ';
@@ -2784,10 +2339,7 @@ status.style.color =
 button.disabled =
 false;
 
-}
-else if(
-stock.type === 'instock'
-){
+}else if(stock.type === 'instock'){
 
 status.textContent =
 '🟢 В наличии · ' +
@@ -2800,8 +2352,7 @@ status.style.color =
 button.disabled =
 false;
 
-}
-else{
+}else{
 
 status.textContent =
 '🔴 Нет в наличии';
@@ -2818,6 +2369,7 @@ button.textContent =
 }
 
 }
+
 
 function updateProductModalPhoto(){
 
@@ -2841,9 +2393,7 @@ document.getElementById(
 'productModalRight'
 );
 
-if(
-!currentProductImages.length
-){
+if(!currentProductImages.length){
 
 image.style.display =
 'none';
@@ -2912,6 +2462,7 @@ index === currentProductImageIndex
 
 }
 
+
 function changeProductPhoto(direction){
 
 if(
@@ -2934,333 +2485,17 @@ updateProductModalPhoto();
 
 }
 
+
 function closeProduct(){
 
 document
 .getElementById(
 'productModal'
 )
-.classList.remove(
-'show'
-);
+.classList.remove('show');
 
 currentProduct =
 null;
-
-}
-
-
-/* =========================
-   FAVORITES MODAL
-========================= */
-
-function renderFavorites(){
-
-const container =
-document.getElementById(
-'favoriteItems'
-);
-
-const favoriteProducts =
-favorites
-.map(
-id =>
-products.find(
-product =>
-String(product.id) ===
-String(id)
-)
-)
-.filter(Boolean);
-
-if(!favoriteProducts.length){
-
-container.innerHTML = `
-
-<div class="message">
-
-<div style="font-size:42px;margin-bottom:10px;">
-♡
-</div>
-
-<strong>
-Избранное пока пустое
-</strong>
-
-<br><br>
-
-Нажимай ❤️ на понравившихся
-товарах, чтобы сохранить их здесь.
-
-</div>
-
-`;
-
-return;
-
-}
-
-container.innerHTML =
-favoriteProducts.map(
-product=>{
-
-const images =
-getImages(product);
-
-const image =
-images[0] || '';
-
-const stock =
-getStock(product);
-
-let canAdd =
-stock.type !== 'out';
-
-return `
-
-<div
-class="favorite-item"
->
-
-${
-image
-? `
-<img
-class="favorite-thumb"
-src="${escapeHtml(image)}"
-alt=""
->
-`
-: `
-<div
-class="favorite-thumb"
-style="
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-"
->
-🛍️
-</div>
-`
-}
-
-<div>
-
-<div class="favorite-name">
-${escapeHtml(
-product.name ||
-'Товар'
-)}
-</div>
-
-<div class="favorite-meta">
-${escapeHtml(
-getCategory(product)
-)}
-</div>
-
-<div class="favorite-price">
-${formatPrice(product.price)}
-</div>
-
-</div>
-
-<div class="favorite-buttons">
-
-<button
-class="favorite-cart-button"
-data-favorite-add="${escapeHtml(String(product.id))}"
-${canAdd ? '' : 'disabled'}
->
-${
-stock.type === 'preorder'
-? '🛒 Заказать'
-: stock.type === 'instock'
-? '🛒 В корзину'
-: 'Нет в наличии'
-}
-</button>
-
-<button
-class="favorite-remove-button"
-data-favorite-remove="${escapeHtml(String(product.id))}"
->
-Удалить
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-).join('');
-
-
-document
-.querySelectorAll(
-'[data-favorite-add]'
-)
-.forEach(button=>{
-
-button.addEventListener(
-'click',
-event=>{
-
-event.stopPropagation();
-
-const id =
-button.dataset.favoriteAdd;
-
-const product =
-products.find(
-item =>
-String(item.id) ===
-String(id)
-);
-
-if(product){
-
-addToCart(product);
-
-}
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll(
-'[data-favorite-remove]'
-)
-.forEach(button=>{
-
-button.addEventListener(
-'click',
-event=>{
-
-event.stopPropagation();
-
-toggleFavorite(
-button.dataset.favoriteRemove
-);
-
-}
-);
-
-});
-
-
-document
-.querySelectorAll(
-'.favorite-item'
-)
-.forEach(item=>{
-
-item.addEventListener(
-'click',
-event=>{
-
-if(
-event.target.closest(
-'button'
-)
-){
-
-return;
-
-}
-
-const id =
-item.querySelector(
-'[data-favorite-remove]'
-)?.dataset.favoriteRemove;
-
-const product =
-products.find(
-p =>
-String(p.id) ===
-String(id)
-);
-
-if(product){
-
-closeFavorites();
-
-openProduct(product);
-
-}
-
-}
-);
-
-});
-
-}
-
-function openFavorites(){
-
-renderFavorites();
-
-document
-.getElementById(
-'favoritesModal'
-)
-.classList.add('show');
-
-}
-
-function closeFavorites(){
-
-document
-.getElementById(
-'favoritesModal'
-)
-.classList.remove('show');
-
-}
-
-
-/* =========================
-   DESCRIPTION
-========================= */
-
-function openDescription(product){
-
-document.getElementById(
-'descriptionTitle'
-).textContent =
-product.name ||
-'Товар';
-
-document.getElementById(
-'descriptionText'
-).textContent =
-String(
-product.description || ''
-).trim() ||
-'Описание товара пока не добавлено.';
-
-document
-.getElementById(
-'descriptionModal'
-)
-.classList.add('show');
-
-}
-
-function closeDescription(){
-
-document
-.getElementById(
-'descriptionModal'
-)
-.classList.remove('show');
 
 }
 
@@ -3277,9 +2512,7 @@ direction=0
 currentGalleryImages =
 getImages(product);
 
-if(
-!currentGalleryImages.length
-){
+if(!currentGalleryImages.length){
 
 return;
 
@@ -3302,6 +2535,7 @@ document
 
 }
 
+
 function updateGallery(){
 
 document
@@ -3314,6 +2548,7 @@ currentGalleryIndex
 ] || '';
 
 }
+
 
 function changeGallery(direction){
 
@@ -3332,6 +2567,7 @@ currentGalleryImages.length;
 updateGallery();
 
 }
+
 
 function closeGallery(){
 
@@ -3360,15 +2596,13 @@ String(product.id)
 const stock =
 getStock(product);
 
-if(
-stock.type === 'out'
-)return;
+if(stock.type === 'out')return;
 
 if(existing){
 
 if(
-stock.type === 'instock' &&
-existing.qty >= stock.count
+stock.type === 'instock'
+&& existing.qty >= stock.count
 ){
 
 alert(
@@ -3394,6 +2628,7 @@ saveCart();
 
 }
 
+
 function getCartDetailed(){
 
 return cart
@@ -3417,6 +2652,7 @@ qty:Number(item.qty)||1
 .filter(Boolean);
 
 }
+
 
 function changeQty(
 productId,
@@ -3446,25 +2682,30 @@ let next =
 Number(item.qty) +
 delta;
 
-if(next < 1)
+if(next < 1){
+
 next=1;
 
+}
+
 if(
-stock.type === 'instock' &&
-next > stock.count
+stock.type === 'instock'
+&& next > stock.count
 ){
 
 next=stock.count;
 
 }
 
-item.qty=next;
+item.qty =
+next;
 
 saveCart();
 
 renderCart();
 
 }
+
 
 function removeFromCart(productId){
 
@@ -3481,6 +2722,7 @@ renderCart();
 
 }
 
+
 function cartTotal(){
 
 return getCartDetailed()
@@ -3496,6 +2738,7 @@ item.qty,
 
 }
 
+
 function cartCount(){
 
 return cart.reduce(
@@ -3506,6 +2749,7 @@ sum +
 );
 
 }
+
 
 function updateCartBadge(){
 
@@ -3522,12 +2766,7 @@ document.getElementById(
 'navBadge'
 );
 
-if(
-!top ||
-!nav
-)return;
-
-if(count>0){
+if(count > 0){
 
 top.style.display =
 'flex';
@@ -3589,7 +2828,8 @@ container.innerHTML = `
 
 `;
 
-footer.innerHTML='';
+footer.innerHTML =
+'';
 
 return;
 
@@ -3612,13 +2852,16 @@ return `
 ${
 image
 ? `
+
 <img
 class="cart-thumb"
 src="${escapeHtml(image)}"
 alt=""
 >
+
 `
 : `
+
 <div
 class="cart-thumb"
 style="
@@ -3630,22 +2873,27 @@ font-size:26px;
 >
 🛍️
 </div>
+
 `
 }
 
 <div>
 
 <div class="cart-name">
+
 ${escapeHtml(
 item.product.name ||
 'Товар'
 )}
+
 </div>
 
 <div class="cart-price">
+
 ${formatPrice(
 item.product.price
 )}
+
 </div>
 
 <div class="qty">
@@ -3692,12 +2940,14 @@ ${JSON.stringify(item.product.id)}
 </div>
 
 <strong>
+
 ${formatPrice(
 (
 Number(item.product.price)||0
 ) *
 item.qty
 )}
+
 </strong>
 
 </div>
@@ -3730,6 +2980,7 @@ onclick="openCheckout()"
 
 }
 
+
 function openCart(){
 
 renderCart();
@@ -3741,6 +2992,7 @@ document
 .classList.add('show');
 
 }
+
 
 function closeCart(){
 
@@ -3759,8 +3011,7 @@ document
 
 function openCheckout(){
 
-if(!cartCount())
-return;
+if(!cartCount())return;
 
 const username =
 tg &&
@@ -3768,10 +3019,9 @@ tg.initDataUnsafe &&
 tg.initDataUnsafe.user
 ? (
 tg.initDataUnsafe.user.username
-? '@'+
+? '@' +
 tg.initDataUnsafe.user.username
-:
-(
+: (
 tg.initDataUnsafe.user.first_name ||
 'Пользователь'
 )
@@ -3793,6 +3043,7 @@ document
 
 }
 
+
 function closeCheckout(){
 
 document
@@ -3802,6 +3053,7 @@ document
 .classList.remove('show');
 
 }
+
 
 async function sendOrder(){
 
@@ -3827,9 +3079,7 @@ document.getElementById(
 
 if(!name){
 
-alert(
-'Укажи имя.'
-);
+alert('Укажи имя.');
 
 return;
 
@@ -3837,9 +3087,7 @@ return;
 
 if(!contact){
 
-alert(
-'Укажи контакт для связи.'
-);
+alert('Укажи контакт для связи.');
 
 return;
 
@@ -3849,24 +3097,25 @@ const items =
 getCartDetailed()
 .map(
 item=>({
+
 id:item.product.id,
 qty:item.qty
+
 })
 );
 
 if(!items.length){
 
-alert(
-'Корзина пустая.'
-);
+alert('Корзина пустая.');
 
 return;
 
 }
 
-button.disabled=true;
+button.disabled =
+true;
 
-button.textContent=
+button.textContent =
 'Отправляем...';
 
 try{
@@ -3883,11 +3132,8 @@ headers:{
 body:JSON.stringify({
 
 items,
-
 name,
-
 contact,
-
 comment,
 
 telegramUsername:
@@ -3977,9 +3223,10 @@ error.message ||
 
 }finally{
 
-button.disabled=false;
+button.disabled =
+false;
 
-button.textContent=
+button.textContent =
 '📩 Отправить заказ';
 
 }
@@ -4001,6 +3248,7 @@ document
 
 }
 
+
 function closeInfo(){
 
 document
@@ -4013,7 +3261,7 @@ document
 
 
 /* =========================
-   SCROLL
+   NAVIGATION
 ========================= */
 
 function scrollToCatalog(){
@@ -4059,23 +3307,13 @@ document.addEventListener(
 'keydown',
 event=>{
 
-if(
-event.key !== 'Escape'
-)
+if(event.key !== 'Escape')
 return;
 
 closeProduct();
-
-closeDescription();
-
 closeGallery();
-
-closeFavorites();
-
 closeCart();
-
 closeCheckout();
-
 closeInfo();
 
 }
@@ -4086,7 +3324,7 @@ closeInfo();
    PRODUCT SWIPE
 ========================= */
 
-let productTouchStartX=0;
+let productTouchStartX = 0;
 
 document
 .getElementById(
@@ -4100,9 +3338,7 @@ productTouchStartX =
 event.touches[0].clientX;
 
 },
-{
-passive:true
-}
+{passive:true}
 );
 
 document
@@ -4117,14 +3353,13 @@ const endX =
 event.changedTouches[0].clientX;
 
 const diff =
-endX-productTouchStartX;
+endX -
+productTouchStartX;
 
-if(
-Math.abs(diff)<40
-)
+if(Math.abs(diff) < 40)
 return;
 
-if(diff<0){
+if(diff < 0){
 
 changeProductPhoto(1);
 
@@ -4135,9 +3370,7 @@ changeProductPhoto(-1);
 }
 
 },
-{
-passive:true
-}
+{passive:true}
 );
 
 
@@ -4145,7 +3378,7 @@ passive:true
    GALLERY SWIPE
 ========================= */
 
-let touchStartX=0;
+let touchStartX = 0;
 
 document
 .getElementById(
@@ -4159,9 +3392,7 @@ touchStartX =
 event.touches[0].clientX;
 
 },
-{
-passive:true
-}
+{passive:true}
 );
 
 document
@@ -4176,14 +3407,13 @@ const endX =
 event.changedTouches[0].clientX;
 
 const diff =
-endX-touchStartX;
+endX -
+touchStartX;
 
-if(
-Math.abs(diff)<40
-)
+if(Math.abs(diff) < 40)
 return;
 
-if(diff<0){
+if(diff < 0){
 
 changeGallery(1);
 
@@ -4194,9 +3424,7 @@ changeGallery(-1);
 }
 
 },
-{
-passive:true
-}
+{passive:true}
 );
 
 
@@ -4205,8 +3433,6 @@ passive:true
 ========================= */
 
 updateCartBadge();
-
-updateFavoriteBadge();
 
 loadProducts();
 
