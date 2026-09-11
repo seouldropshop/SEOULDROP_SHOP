@@ -230,98 +230,180 @@ button{-webkit-tap-highlight-color:transparent}
 .grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
+  gap:13px;
 }
 
 .card{
   position:relative;
-  background:linear-gradient(180deg,var(--panel2),var(--panel));
-  border:1px solid var(--line);
-  border-radius:19px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.055),
+      rgba(255,79,179,.045) 45%,
+      rgba(167,108,255,.035)
+    ),
+    var(--panel);
+  border:1px solid rgba(255,145,209,.18);
+  border-radius:22px;
   overflow:hidden;
   cursor:pointer;
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.25),
+    inset 0 1px 0 rgba(255,255,255,.035);
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
 }
+
+.card:active{
+  transform:scale(.985);
+}
+
+.card:hover{
+  border-color:rgba(255,145,209,.38);
+  box-shadow:
+    0 12px 38px rgba(0,0,0,.34),
+    0 0 24px rgba(255,79,179,.08);
+}
+
+/* PRODUCT PHOTO */
 
 .pic{
   position:relative;
-  height:180px;
+  height:205px;
   display:flex;
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(circle,rgba(255,79,179,.18),transparent 52%),
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(255,79,179,.18),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(167,108,255,.12),
+      transparent 40%
+    ),
     #09050b;
   overflow:hidden;
+}
+
+.pic:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      rgba(0,0,0,.18)
+    );
 }
 
 .pic img{
   width:100%;
   height:100%;
   object-fit:contain;
-  padding:10px;
+  padding:9px;
+  transition:transform .25s ease;
+  position:relative;
+  z-index:1;
 }
+
+.card:hover .pic img{
+  transform:scale(1.035);
+}
+
+/* PHOTO ARROWS */
 
 .photo-arrow{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  width:30px;
-  height:30px;
+  width:31px;
+  height:31px;
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(5,3,8,.68);
+  backdrop-filter:blur(8px);
   color:#fff;
-  z-index:3;
+  z-index:5;
   cursor:pointer;
+  font-size:20px;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.photo-arrow.left{left:7px}
-.photo-arrow.right{right:7px}
+.photo-arrow.left{left:8px}
+.photo-arrow.right{right:8px}
+
+/* PHOTO DOTS */
 
 .photo-dots{
   position:absolute;
-  bottom:7px;
+  bottom:8px;
   left:0;
   right:0;
   display:flex;
   justify-content:center;
-  gap:4px;
-  z-index:3;
+  gap:5px;
+  z-index:5;
 }
 
 .photo-dot{
-  width:5px;
-  height:5px;
+  width:6px;
+  height:6px;
   border-radius:50%;
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.38);
+  box-shadow:0 1px 4px rgba(0,0,0,.4);
 }
 
-.photo-dot.active{background:#fff}
+.photo-dot.active{
+  background:#fff;
+  transform:scale(1.15);
+}
 
-.info{padding:12px}
+/* PRODUCT INFO */
+
+.info{
+  padding:13px 13px 14px;
+}
 
 .name{
-  font-weight:750;
+  font-weight:800;
   font-size:14px;
   min-height:38px;
   line-height:1.35;
+  letter-spacing:-.01em;
 }
 
 .meta{
   color:var(--muted);
-  font-size:11px;
-  margin:4px 0 8px;
+  font-size:10px;
+  margin:5px 0 9px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .price{
-  font-size:17px;
-  font-weight:850;
+  display:inline-flex;
+  align-items:center;
+  font-size:19px;
+  font-weight:900;
+  letter-spacing:-.02em;
+  margin-bottom:2px;
 }
 
 .description{
   color:#cbb7c7;
   font-size:11px;
-  line-height:1.4;
+  line-height:1.45;
   margin-top:7px;
   display:-webkit-box;
   -webkit-box-orient:vertical;
@@ -337,34 +419,86 @@ button{-webkit-tap-highlight-color:transparent}
   background:none;
   color:var(--pink2);
   font-size:11px;
+  font-weight:700;
   cursor:pointer;
 }
+
+/* STOCK BADGE */
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  max-width:100%;
+  margin-top:8px;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:750;
+  line-height:1;
+  border:1px solid transparent;
+}
+
+.status.instock{
+  color:var(--green);
+  background:rgba(91,228,155,.08);
+  border-color:rgba(91,228,155,.16);
+}
+
+.status.preorder{
+  color:var(--yellow);
+  background:rgba(255,214,90,.08);
+  border-color:rgba(255,214,90,.16);
+}
+
+.status.out{
+  color:var(--red);
+  background:rgba(255,99,124,.08);
+  border-color:rgba(255,99,124,.16);
+}
+
+/* ADD TO CART */
 
 .add{
   width:100%;
-  margin-top:9px;
-  border:1px solid rgba(255,145,209,.32);
-  background:rgba(255,79,179,.1);
+  margin-top:10px;
+  border:1px solid rgba(255,145,209,.28);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,79,179,.17),
+      rgba(167,108,255,.11)
+    );
   color:#fff;
-  border-radius:12px;
-  padding:9px;
+  border-radius:13px;
+  padding:10px 9px;
   cursor:pointer;
-  font-weight:700;
+  font-weight:800;
+  font-size:12px;
+  transition:
+    background .18s ease,
+    transform .18s ease,
+    border-color .18s ease;
+}
+
+.add:active{
+  transform:scale(.98);
+}
+
+.add:not(.disabled):hover{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,79,179,.28),
+      rgba(167,108,255,.2)
+    );
+  border-color:rgba(255,145,209,.5);
 }
 
 .add.disabled{
-  opacity:.45;
+  opacity:.4;
   cursor:not-allowed;
 }
-
-.status{
-  margin-top:6px;
-  font-size:11px;
-}
-
-.status.instock{color:var(--green)}
-.status.preorder{color:var(--yellow)}
-.status.out{color:var(--red)}
 
 /* MESSAGE */
 
@@ -797,14 +931,50 @@ button{-webkit-tap-highlight-color:transparent}
   margin-bottom:12px;
 }
 
-@media(min-width:650px){
+/* MOBILE */
+
+@media(max-width:420px){
+
   .grid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
   }
 
   .pic{
-    height:190px;
+    height:185px;
   }
+
+  .info{
+    padding:11px;
+  }
+
+  .name{
+    font-size:13px;
+  }
+
+  .price{
+    font-size:17px;
+  }
+
+  .add{
+    padding:9px 7px;
+    font-size:11px;
+  }
+
+}
+
+/* TABLET / DESKTOP */
+
+@media(min-width:650px){
+
+  .grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+  }
+
+  .pic{
+    height:205px;
+  }
+
 }
 </style>
 </head>
