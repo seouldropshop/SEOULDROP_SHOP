@@ -19,7 +19,9 @@
   --line:rgba(255,111,194,.18);
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -45,6 +47,8 @@ button{
   padding:16px 14px 92px;
 }
 
+/* HEADER */
+
 .header{
   display:flex;
   align-items:center;
@@ -64,21 +68,15 @@ button{
   margin-top:2px;
 }
 
-.icon,
-.cat,
-.nav,
-.add,
-.qty button,
-.close{
+.icon{
   border:1px solid var(--line);
   background:var(--panel);
   color:#fff;
   border-radius:14px;
-}
-
-.icon{
   padding:10px 12px;
 }
+
+/* HERO */
 
 .hero{
   border:1px solid var(--line);
@@ -106,13 +104,19 @@ button{
 
 .cta,
 .submit{
-  background:linear-gradient(90deg,var(--pink),var(--violet));
+  background:linear-gradient(
+    90deg,
+    var(--pink),
+    var(--violet)
+  );
   border:0;
   color:#fff;
   font-weight:800;
   border-radius:14px;
   padding:12px 18px;
 }
+
+/* CATALOG */
 
 .section{
   margin-top:22px;
@@ -164,6 +168,10 @@ button{
 .cat{
   white-space:nowrap;
   padding:9px 13px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:#fff;
+  border-radius:14px;
 }
 
 .cat.active{
@@ -171,9 +179,14 @@ button{
   border-color:rgba(255,145,209,.55);
 }
 
+/* PRODUCTS */
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(
+    2,
+    minmax(0,1fr)
+  );
   gap:12px;
   margin-top:12px;
 }
@@ -233,13 +246,13 @@ button{
   margin:4px 0 7px;
 }
 
-/* ОПИСАНИЕ В КАРТОЧКЕ */
+/* DESCRIPTION */
 
 .description{
   color:#d8c5d5;
   font-size:12px;
   line-height:1.45;
-  margin:0 0 9px;
+  margin:0 0 3px;
   white-space:pre-wrap;
 
   display:-webkit-box;
@@ -247,6 +260,23 @@ button{
   -webkit-line-clamp:5;
   overflow:hidden;
 }
+
+.more-description{
+  display:block;
+  border:0;
+  background:none;
+  padding:0;
+  margin:2px 0 10px;
+  color:var(--pink);
+  font-size:12px;
+  font-weight:700;
+}
+
+.more-description:active{
+  opacity:.7;
+}
+
+/* PRICE */
 
 .price{
   font-size:17px;
@@ -271,12 +301,17 @@ button{
   color:#ff667f;
 }
 
+/* ADD */
+
 .add{
   width:100%;
   margin-top:9px;
   padding:9px;
+
+  border:1px solid var(--line);
   background:rgba(255,79,179,.1);
-  border-color:rgba(255,145,209,.32);
+  color:#fff;
+  border-radius:14px;
 }
 
 .add.preorder{
@@ -289,12 +324,7 @@ button{
   cursor:not-allowed;
 }
 
-.empty,
-.loading{
-  text-align:center;
-  color:var(--muted);
-  padding:30px 15px;
-}
+/* GALLERY DOTS */
 
 .gallery-dots{
   position:absolute;
@@ -319,21 +349,27 @@ button{
   background:#fff;
 }
 
+/* BOTTOM */
+
 .bottom{
   position:fixed;
   left:0;
   right:0;
   bottom:0;
   padding:10px 14px;
+
   background:rgba(5,3,8,.9);
   backdrop-filter:blur(14px);
+
   border-top:1px solid var(--line);
+
   z-index:20;
 }
 
 .bottom-inner{
   max-width:760px;
   margin:auto;
+
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
@@ -362,21 +398,30 @@ button{
   min-width:18px;
   height:18px;
   border-radius:9px;
+
   align-items:center;
   justify-content:center;
+
   background:var(--pink);
+
   font-size:10px;
   margin-left:3px;
 }
+
+/* MODALS */
 
 .overlay,
 .description-modal,
 .gallery-modal{
   display:none;
+
   position:fixed;
   inset:0;
+
   background:rgba(0,0,0,.78);
+
   z-index:50;
+
   align-items:flex-end;
   justify-content:center;
 }
@@ -392,9 +437,13 @@ button{
   width:min(760px,100%);
   max-height:92vh;
   overflow:auto;
+
   background:#0c0710;
+
   border:1px solid var(--line);
+
   border-radius:24px 24px 0 0;
+
   padding:18px 16px 28px;
 }
 
@@ -412,7 +461,15 @@ button{
 .close,
 .description-close{
   padding:8px 12px;
+
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:#fff;
+
+  border-radius:14px;
 }
+
+/* FULL DESCRIPTION */
 
 .description-modal{
   z-index:10000;
@@ -425,21 +482,30 @@ button{
 .description-title{
   font-size:20px;
   font-weight:850;
+  line-height:1.25;
 }
 
 .description-text{
   margin-top:16px;
+
   color:#d8c5d5;
+
   font-size:14px;
   line-height:1.6;
+
   white-space:pre-wrap;
 }
+
+/* CART */
 
 .cart-item{
   display:grid;
   grid-template-columns:1fr auto;
+
   gap:8px;
+
   padding:14px 0;
+
   border-bottom:1px solid var(--line);
 }
 
@@ -468,7 +534,12 @@ button{
 .qty button{
   width:32px;
   height:32px;
+
   border-radius:10px;
+
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:#fff;
 }
 
 .qty button:disabled{
@@ -478,19 +549,27 @@ button{
 
 .telegram-line{
   background:rgba(167,108,255,.10);
+
   border:1px solid var(--line);
+
   border-radius:12px;
+
   padding:12px;
+
   color:#fff;
+
   font-size:13px;
+
   margin-bottom:2px;
 }
 
 .total{
   display:flex;
   justify-content:space-between;
+
   font-size:18px;
   font-weight:850;
+
   padding:16px 0;
 }
 
@@ -502,11 +581,16 @@ button{
 .checkout input,
 .checkout textarea{
   width:100%;
+
   background:#09050b;
   color:#fff;
+
   border:1px solid var(--line);
+
   border-radius:12px;
+
   padding:12px;
+
   outline:none;
 }
 
@@ -526,7 +610,9 @@ button{
 
 .note{
   color:var(--muted);
+
   font-size:11px;
+
   line-height:1.4;
 }
 
@@ -535,55 +621,80 @@ button{
   padding:30px 10px;
 }
 
+/* GALLERY */
+
 .gallery-modal{
   z-index:9999;
+
   align-items:center;
+
   padding:20px;
 }
 
 .gallery-box{
   width:min(760px,100%);
+
   max-height:92vh;
+
   display:flex;
   flex-direction:column;
+
   gap:12px;
 }
 
 .gallery-main{
   width:100%;
   max-height:70vh;
+
   object-fit:contain;
+
   border-radius:16px;
 }
 
 .gallery-close{
   position:absolute;
+
   top:14px;
   right:16px;
+
   border:0;
+
   background:rgba(255,255,255,.12);
+
   color:#fff;
+
   border-radius:50%;
+
   width:42px;
   height:42px;
+
   font-size:24px;
 }
 
 .gallery-thumbs{
   display:flex;
+
   gap:8px;
+
   overflow-x:auto;
+
   padding:4px;
 }
 
 .gallery-thumb{
   width:64px;
   height:64px;
+
   padding:0;
+
   border:2px solid transparent;
+
   border-radius:10px;
+
   overflow:hidden;
+
   background:transparent;
+
   flex:0 0 auto;
 }
 
@@ -597,10 +708,13 @@ button{
   object-fit:cover;
 }
 
+/* DESKTOP */
+
 @media(min-width:650px){
 
   .grid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
   }
 
   .pic{
@@ -617,6 +731,7 @@ button{
     border-radius:24px;
   }
 }
+
 </style>
 </head>
 
@@ -627,17 +742,25 @@ button{
 <header class="header">
 
 <div class="brand">
+
 <b>SEOULDROP</b>
-<span>К-ПОП МАГАЗИН</span>
+
+<span>
+К-ПОП МАГАЗИН
+</span>
+
 </div>
 
 <button
 class="icon"
 onclick="loadProducts()">
+
 ↻
+
 </button>
 
 </header>
+
 
 <section class="hero">
 
@@ -659,10 +782,13 @@ document
 behavior:'smooth'
 })
 ">
+
 Смотреть каталог
+
 </button>
 
 </section>
+
 
 <section
 class="section"
@@ -677,10 +803,13 @@ id="catalog">
 <span
 class="muted"
 id="productCount">
+
 Загрузка...
+
 </span>
 
 </div>
+
 
 <div class="search-wrap">
 
@@ -693,48 +822,84 @@ autocomplete="off">
 
 </div>
 
+
 <div class="categories">
 
-<button class="cat active" data-category="all">
+<button
+class="cat active"
+data-category="all">
+
 Все
+
 </button>
 
-<button class="cat" data-category="albums">
+<button
+class="cat"
+data-category="albums">
+
 💿 Альбомы
+
 </button>
 
-<button class="cat" data-category="photocards">
+<button
+class="cat"
+data-category="photocards">
+
 🃏 Карты
+
 </button>
 
-<button class="cat" data-category="merch">
+<button
+class="cat"
+data-category="merch">
+
 🎁 Мерч
+
 </button>
 
-<button class="cat" data-category="cosmetics">
+<button
+class="cat"
+data-category="cosmetics">
+
 🧴 Косметика
+
 </button>
 
-<button class="cat" data-category="sweets">
+<button
+class="cat"
+data-category="sweets">
+
 🍪 Сладости
+
 </button>
 
-<button class="cat" data-category="vinyl">
+<button
+class="cat"
+data-category="vinyl">
+
 🎶 Винил
+
 </button>
 
-<button class="cat" data-category="other">
+<button
+class="cat"
+data-category="other">
+
 🌟 Другое
+
 </button>
 
 </div>
+
 
 <div
 id="products"
 class="grid">
 
 <div class="loading">
+
 Загружаем каталог...
+
 </div>
 
 </div>
@@ -742,6 +907,7 @@ class="grid">
 </section>
 
 </div>
+
 
 <nav class="bottom">
 
@@ -756,11 +922,14 @@ behavior:'smooth'
 })
 ">
 
-<strong>⌂</strong>
+<strong>
+⌂
+</strong>
 
 Главная
 
 </button>
+
 
 <button
 class="nav"
@@ -772,23 +941,31 @@ behavior:'smooth'
 })
 ">
 
-<strong>◈</strong>
+<strong>
+◈
+</strong>
 
 Каталог
 
 </button>
+
 
 <button
 class="nav"
 onclick="showCart()">
 
 <strong>
+
 🛒
+
 <span
 class="badge"
 id="navCount">
+
 0
+
 </span>
+
 </strong>
 
 Корзина
@@ -798,6 +975,9 @@ id="navCount">
 </div>
 
 </nav>
+
+
+<!-- CART -->
 
 <div
 class="overlay"
@@ -818,7 +998,9 @@ closeCart()
 <button
 class="close"
 onclick="closeCart()">
+
 ✕
+
 </button>
 
 </div>
@@ -828,6 +1010,9 @@ onclick="closeCart()">
 </div>
 
 </div>
+
+
+<!-- FULL DESCRIPTION -->
 
 <div
 id="descriptionModal"
@@ -847,9 +1032,11 @@ class="description-title">
 </div>
 
 <button
-class="description-close close"
+class="description-close"
 onclick="closeDescription()">
+
 ×
+
 </button>
 
 </div>
@@ -863,6 +1050,9 @@ class="description-text">
 
 </div>
 
+
+<!-- GALLERY -->
+
 <div
 id="galleryModal"
 class="gallery-modal"
@@ -874,7 +1064,9 @@ closeGallery()
 <button
 class="gallery-close"
 onclick="closeGallery()">
+
 ×
+
 </button>
 
 <div class="gallery-box">
@@ -894,11 +1086,15 @@ class="gallery-thumbs">
 
 </div>
 
+
 <script>
 
 let products=[];
+
 let cart={};
+
 let currentCategory='all';
+
 
 try{
 
@@ -914,6 +1110,9 @@ cart={};
 
 }
 
+
+/* TELEGRAM */
+
 function getTelegramUser(){
 
 return (
@@ -925,30 +1124,43 @@ window.Telegram.WebApp.initDataUnsafe.user
 
 }
 
+
 function getTelegramUsername(){
 
 const user=getTelegramUser();
 
-if(user && user.username){
+if(
+user &&
+user.username
+){
+
 return '@'+user.username;
+
 }
 
 return 'не указан';
 
 }
 
+
+/* SECURITY */
+
 function escapeHtml(value){
 
-return String(value??'').replace(
+return String(
+value??''
+).replace(
 /[&<>'"]/g,
 function(c){
 
 return {
+
 '&':'&amp;',
 '<':'&lt;',
 '>':'&gt;',
 "'":'&#39;',
 '"':'&quot;'
+
 }[c];
 
 }
@@ -956,72 +1168,118 @@ return {
 
 }
 
+
+/* STATUS */
+
 function getStatus(product){
 
 if(product.status){
+
 return product.status;
+
 }
 
 if(product.available===false){
+
 return 'out_of_stock';
+
 }
 
 return 'in_stock';
 
 }
 
+
 function getStock(product){
 
-const stock=Number(product.stock);
+const stock=
+Number(product.stock);
 
-if(!Number.isFinite(stock)||stock<0){
+if(
+!Number.isFinite(stock)||
+stock<0
+){
+
 return 0;
+
 }
 
 return Math.floor(stock);
 
 }
 
+
 function getStatusText(product){
 
-const status=getStatus(product);
+const status=
+getStatus(product);
 
-if(status==='preorder'){
+if(
+status==='preorder'
+){
+
 return '🟡 Под заказ';
+
 }
 
-if(status==='out_of_stock'){
+if(
+status==='out_of_stock'
+){
+
 return '🔴 Нет в наличии';
+
 }
 
-const stock=getStock(product);
+const stock=
+getStock(product);
 
 if(stock>0){
-return '🟢 В наличии · '+stock+' шт.';
+
+return '🟢 В наличии · '+
+stock+
+' шт.';
+
 }
 
 return '🔴 Нет в наличии';
 
 }
+
+
+/* CATEGORY */
 
 function categoryName(category){
 
 const names={
 
 albums:'Альбомы',
+
 photocards:'Карты',
+
 merch:'Мерч',
+
 cosmetics:'Косметика',
+
 sweets:'Сладости',
+
 vinyl:'Винил',
+
 other:'Другое',
+
 'Альбомы':'Альбомы'
 
 };
 
-return names[category]||category||'Товар';
+return (
+names[category]||
+category||
+'Товар'
+);
 
 }
+
+
+/* IMAGES */
 
 function getProductImages(product){
 
@@ -1040,25 +1298,34 @@ return product.image
 
 }
 
+
+/* LOAD */
+
 async function loadProducts(){
 
-const box=document.getElementById('products');
+const box=
+document.getElementById(
+'products'
+);
 
 box.innerHTML=
 '<div class="loading">'+
 'Загружаем каталог...'+
 '</div>';
 
-const controller=new AbortController();
+const controller=
+new AbortController();
 
-const timer=setTimeout(
+const timer=
+setTimeout(
 ()=>controller.abort(),
 5000
 );
 
 try{
 
-const response=await fetch(
+const response=
+await fetch(
 '/api/products?action=list&_='+
 Date.now(),
 {
@@ -1070,20 +1337,26 @@ signal:controller.signal
 clearTimeout(timer);
 
 if(!response.ok){
+
 throw new Error(
 'HTTP '+response.status
 );
+
 }
 
-const data=await response.json();
+const data=
+await response.json();
 
 if(
 data &&
 data.ok &&
-Array.isArray(data.products)
+Array.isArray(
+data.products
+)
 ){
 
-products=data.products;
+products=
+data.products;
 
 }else{
 
@@ -1107,8 +1380,13 @@ renderProducts();
 
 }
 
+
+/* GALLERY */
+
 let galleryImages=[];
+
 let galleryIndex=0;
+
 
 function openGallery(
 images,
@@ -1120,10 +1398,13 @@ Array.isArray(images)
 ?images.filter(Boolean)
 :[];
 
-if(!galleryImages.length)
+if(
+!galleryImages.length
+)
 return;
 
-galleryIndex=Math.max(
+galleryIndex=
+Math.max(
 0,
 Math.min(
 index,
@@ -1132,8 +1413,12 @@ galleryImages.length-1
 );
 
 document
-.getElementById('galleryModal')
-.classList.add('show');
+.getElementById(
+'galleryModal'
+)
+.classList.add(
+'show'
+);
 
 setGalleryImage(
 galleryIndex
@@ -1141,12 +1426,16 @@ galleryIndex
 
 }
 
+
 function setGalleryImage(index){
 
-if(!galleryImages.length)
+if(
+!galleryImages.length
+)
 return;
 
-galleryIndex=Math.max(
+galleryIndex=
+Math.max(
 0,
 Math.min(
 index,
@@ -1154,11 +1443,13 @@ galleryImages.length-1
 )
 );
 
-const main=document.getElementById(
+const main=
+document.getElementById(
 'galleryMainImage'
 );
 
-const thumbs=document.getElementById(
+const thumbs=
+document.getElementById(
 'galleryThumbs'
 );
 
@@ -1179,9 +1470,13 @@ galleryImages.map(
 
 <button
 class="gallery-thumb ${
-i===galleryIndex?'active':''
+i===galleryIndex
+?'active'
+:''
 }"
-onclick="setGalleryImage(${i})">
+onclick="
+setGalleryImage(${i})
+">
 
 <img
 src="${escapeHtml(src)}"
@@ -1196,17 +1491,25 @@ alt="">
 
 }
 
+
 function closeGallery(){
 
 document
-.getElementById('galleryModal')
+.getElementById(
+'galleryModal'
+)
 .classList.remove(
 'show'
 );
 
 }
 
-function openDescription(product){
+
+/* DESCRIPTION */
+
+function openDescription(
+product
+){
 
 const modal=
 document.getElementById(
@@ -1240,6 +1543,7 @@ modal.classList.add(
 
 }
 
+
 function closeDescription(){
 
 document
@@ -1252,23 +1556,31 @@ document
 
 }
 
+
+/* RENDER */
+
 function renderProducts(){
 
 const search=
 (
-document.getElementById(
+document
+.getElementById(
 'searchInput'
-).value||''
+)
+.value||
+''
 )
 .trim()
 .toLowerCase();
+
 
 const list=
 products.filter(
 product=>{
 
 const category=
-product.category||'';
+product.category||
+'';
 
 const categoryOk=
 currentCategory==='all'||
@@ -1278,16 +1590,25 @@ currentCategory==='albums'&&
 category==='Альбомы'
 );
 
-if(!categoryOk)
+if(!categoryOk){
+
 return false;
+
+}
+
 
 const haystack=[
 
 product.name,
+
 product.title,
+
 product.description,
+
 product.artist,
+
 product.group,
+
 product.category
 
 ]
@@ -1295,11 +1616,15 @@ product.category
 .join(' ')
 .toLowerCase();
 
-return !search||
-haystack.includes(search);
+
+return (
+!search||
+haystack.includes(search)
+);
 
 }
 );
+
 
 document.getElementById(
 'productCount'
@@ -1312,10 +1637,12 @@ products.length===1
 :'а'
 );
 
+
 const box=
 document.getElementById(
 'products'
 );
+
 
 if(!list.length){
 
@@ -1328,7 +1655,9 @@ return;
 
 }
 
+
 box.innerHTML='';
+
 
 list.forEach(
 product=>{
@@ -1346,8 +1675,12 @@ status==='in_stock'&&
 stock<=0
 );
 
+
 const images=
-getProductImages(product);
+getProductImages(
+product
+);
+
 
 const card=
 document.createElement(
@@ -1356,13 +1689,17 @@ document.createElement(
 
 card.className='card';
 
+
 let image='';
+
 
 if(images.length){
 
 image=
 '<img src="'+
-escapeHtml(images[0])+
+escapeHtml(
+images[0]
+)+
 '" alt="">';
 
 }else{
@@ -1374,34 +1711,714 @@ image=
 
 }
 
-let statusClass='green';
 
-if(status==='preorder'){
-statusClass='yellow';
+let statusClass=
+'green';
+
+
+if(
+status==='preorder'
+){
+
+statusClass=
+'yellow';
+
 }
+
 
 if(disabled){
-statusClass='red';
+
+statusClass=
+'red';
+
 }
+
 
 let buttonText='';
 
-if(status==='preorder'){
 
-buttonText='＋ Заказать';
+if(
+status==='preorder'
+){
 
-}else if(disabled){
+buttonText=
+'＋ Заказать';
 
-buttonText='Нет в наличии';
+}else if(
+disabled
+){
+
+buttonText=
+'Нет в наличии';
 
 }else{
 
-buttonText='＋ В корзину';
+buttonText=
+'＋ В корзину';
 
 }
 
-/* ВОТ ЗДЕСЬ ОПИСАНИЕ ВЫВОДИТСЯ ПРЯМО В КАРТОЧКЕ */
+
+/*
+=========================================
+КАРТОЧКА ТОВАРА
+ОПИСАНИЕ + КНОПКА ПОДРОБНЕЕ
+=========================================
+*/
 
 card.innerHTML=`
 
-<div class="pic
+<div class="pic">
+
+${image}
+
+${
+images.length>1
+?
+`
+
+<div class="gallery-dots">
+
+${
+images.map(
+(_,i)=>`
+
+<span
+class="gallery-dot ${
+i===0
+?'active'
+:''
+}">
+</span>
+
+`
+).join('')
+}
+
+</div>
+
+`
+:''
+}
+
+</div>
+
+
+<div class="info">
+
+
+<div class="name">
+
+${escapeHtml(
+product.name||
+'Товар'
+)}
+
+</div>
+
+
+<div class="meta">
+
+${escapeHtml(
+categoryName(
+product.category
+)
+)}
+
+</div>
+
+
+<div class="description">
+
+${escapeHtml(
+String(
+product.description||
+''
+).trim()||
+'Описание товара пока не добавлено.'
+)}
+
+</div>
+
+
+<button
+class="more-description"
+type="button">
+
+Подробнее →
+
+</button>
+
+
+<div class="price">
+
+${Number(
+product.price||0
+).toLocaleString(
+'ru-RU'
+)} ₽
+
+</div>
+
+
+<div class="status ${statusClass}">
+
+${getStatusText(
+product
+)}
+
+</div>
+
+
+<button
+class="add ${
+status==='preorder'
+?'preorder'
+:''
+} ${
+disabled
+?'disabled'
+:''
+}"
+${disabled?'disabled':''}>
+
+${buttonText}
+
+</button>
+
+
+</div>
+
+`;
+
+
+/* GALLERY */
+
+const galleryPic=
+card.querySelector(
+'.pic'
+);
+
+const galleryImg=
+card.querySelector(
+'.pic img'
+);
+
+const dots=[
+...card.querySelectorAll(
+'.gallery-dot'
+)
+];
+
+
+let currentImageIndex=0;
+
+
+if(
+galleryImg&&
+images.length>1
+){
+
+let startX=0;
+
+let startY=0;
+
+
+galleryPic.addEventListener(
+'touchstart',
+event=>{
+
+startX=
+event.touches[0]
+.clientX;
+
+startY=
+event.touches[0]
+.clientY;
+
+},
+{
+passive:true
+}
+);
+
+
+galleryPic.addEventListener(
+'touchend',
+event=>{
+
+const dx=
+event.changedTouches[0]
+.clientX-startX;
+
+const dy=
+event.changedTouches[0]
+.clientY-startY;
+
+
+if(
+Math.abs(dx)<45||
+Math.abs(dx)<
+Math.abs(dy)*1.2
+){
+
+return;
+
+}
+
+
+currentImageIndex=
+Math.max(
+0,
+Math.min(
+images.length-1,
+currentImageIndex+
+(
+dx<0
+?1
+:-1
+)
+)
+);
+
+
+galleryImg.src=
+images[
+currentImageIndex
+];
+
+
+dots.forEach(
+(dot,i)=>
+dot.classList.toggle(
+'active',
+i===
+currentImageIndex
+)
+);
+
+},
+{
+passive:true
+}
+);
+
+
+galleryPic.addEventListener(
+'click',
+()=>{
+
+openGallery(
+images,
+currentImageIndex
+);
+
+}
+);
+
+}
+
+
+/* ADD TO CART */
+
+const button=
+card.querySelector(
+'.add'
+);
+
+
+if(!disabled){
+
+button.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+addToCart(
+product.id
+);
+
+}
+);
+
+}
+
+
+/* MORE DESCRIPTION */
+
+const moreDescription=
+card.querySelector(
+'.more-description'
+);
+
+
+if(moreDescription){
+
+moreDescription.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+openDescription(
+product
+);
+
+}
+);
+
+}
+
+
+/* CLICK CARD */
+
+card.addEventListener(
+'click',
+event=>{
+
+if(
+event.target.closest(
+'.add'
+)
+){
+
+return;
+
+}
+
+if(
+event.target.closest(
+'.pic'
+)
+){
+
+return;
+
+}
+
+if(
+event.target.closest(
+'.more-description'
+)
+){
+
+return;
+
+}
+
+openDescription(
+product
+);
+
+}
+);
+
+
+box.appendChild(
+card
+);
+
+}
+);
+
+}
+
+
+/* CART */
+
+function saveCart(){
+
+localStorage.setItem(
+'seouldrop_cart',
+JSON.stringify(cart)
+);
+
+updateCount();
+
+}
+
+
+function updateCount(){
+
+const el=
+document.getElementById(
+'navCount'
+);
+
+el.textContent=
+Object.values(
+cart
+).reduce(
+(a,b)=>
+a+
+Number(b||0),
+0
+);
+
+}
+
+
+function addToCart(id){
+
+const product=
+products.find(
+item=>
+String(item.id)===
+String(id)
+);
+
+if(!product)
+return;
+
+
+const status=
+getStatus(product);
+
+
+if(
+status==='out_of_stock'
+)
+return;
+
+
+if(
+status==='preorder'
+){
+
+cart[id]=
+(cart[id]||0)+1;
+
+saveCart();
+
+return;
+
+}
+
+
+const stock=
+getStock(product);
+
+const current=
+Number(
+cart[id]||0
+);
+
+
+if(
+current>=stock
+){
+
+alert(
+'Больше этого товара '+
+'добавить нельзя.\n\n'+
+'В наличии: '+
+stock+
+' шт.'
+);
+
+return;
+
+}
+
+
+cart[id]=
+current+1;
+
+saveCart();
+
+}
+
+
+function changeQty(
+id,
+difference
+){
+
+const product=
+products.find(
+item=>
+String(item.id)===
+String(id)
+);
+
+if(!product)
+return;
+
+
+const current=
+Number(
+cart[id]||0
+);
+
+
+const newQuantity=
+current+difference;
+
+
+if(
+newQuantity<=0
+){
+
+delete cart[id];
+
+saveCart();
+
+renderCart();
+
+return;
+
+}
+
+
+if(
+getStatus(product)==='in_stock'&&
+newQuantity>getStock(product)
+){
+
+alert(
+'Нельзя добавить больше товара.\n\n'+
+'В наличии: '+
+getStock(product)+
+' шт.'
+);
+
+return;
+
+}
+
+
+cart[id]=
+newQuantity;
+
+saveCart();
+
+renderCart();
+
+}
+
+
+/* SHOW CART */
+
+function showCart(){
+
+renderCart();
+
+document
+.getElementById(
+'cartOverlay'
+)
+.classList.add(
+'open'
+);
+
+}
+
+
+function closeCart(){
+
+document
+.getElementById(
+'cartOverlay'
+)
+.classList.remove(
+'open'
+);
+
+}
+
+
+/* RENDER CART */
+
+function renderCart(){
+
+const box=
+document.getElementById(
+'cartContent'
+);
+
+
+const items=
+Object.entries(cart)
+.map(
+([id,quantity])=>({
+
+product:
+products.find(
+item=>
+String(item.id)===
+String(id)
+),
+
+quantity:
+Number(quantity)
+
+})
+)
+.filter(
+item=>item.product
+);
+
+
+if(
+!items.length
+){
+
+box.innerHTML=
+'<div class="empty">'+
+'Корзина пока пуста.<br>'+
+'Добавьте товары из каталога.'+
+'</div>';
+
+return;
+
+}
+
+
+const total=
+items.reduce(
+(sum,item)=>
+sum+
+Number(
+item.product.price||0
+)*
+item.quantity,
+0
+);
+
+
+let html='';
+
+
+items.forEach(
+item=>{
+
+const product=
+item.product;
+
+const limited=
+getStatus(product)==='in_stock';
+
+const plusDisabled=
+limited&&
+item.quantity>=
+getStock(product);
+
+
+html+=`
+
+<div class="cart-item">
+
+<div>
+
+<div class="cart-name">
+
+${escapeHtml(
+product.name
+)}
+
+</div>
+
+<div class="cart-price">
+
+${
