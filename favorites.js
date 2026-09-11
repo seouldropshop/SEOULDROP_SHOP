@@ -1,80 +1,52 @@
 (function () {
   'use strict';
 
-  const KEY = 'seouldrop_favorites_v1';
-  let favoriteIds = loadFavorites();
+  const STORAGE_KEY = 'seouldrop_favorites_v1';
 
-  function loadFavorites() {
+  function getFavorites() {
     try {
-      const data = JSON.parse(localStorage.getItem(KEY) || '[]');
-      return Array.isArray(data) ? data.map(String) : [];
+      const data = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || '[]'
+      );
+
+      return Array.isArray(data)
+        ? data.map(String)
+        : [];
     } catch (e) {
       return [];
     }
   }
 
-  function saveFavorites() {
-    localStorage.setItem(KEY, JSON.stringify(favoriteIds));
+  function saveFavorites(list) {
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(list)
+      );
+    } catch (e) {}
   }
 
   function isFavorite(id) {
-    return favoriteIds.includes(String(id));
-  }
-
-  function getProducts() {
-    return Array.isArray(window.products) ? window.products : [];
-  }
-
-  function getProduct(id) {
-    return getProducts().find(
-      p => String(p.id) === String(id)
-    );
-  }
-
-  function escapeText(value) {
-    if (typeof window.escapeHtml === 'function') {
-      return window.escapeHtml(String(value ?? ''));
-    }
-
-    return String(value ?? '').replace(/[&<>"']/g, function (m) {
-      return {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      }[m];
-    });
-  }
-
-  function getImage(product) {
-    if (
-      product &&
-      Array.isArray(product.images) &&
-      product.images.length
-    ) {
-      return product.images.find(Boolean) || '';
-    }
-
-    return product && product.image
-      ? product.image
-      : '';
+    return getFavorites().includes(String(id));
   }
 
   function toggleFavorite(id) {
     id = String(id);
 
-    if (isFavorite(id)) {
-      favoriteIds = favoriteIds.filter(
-        x => x !== id
-      );
+    let list = getFavorites();
+
+    if (list.includes(id)) {
+      list = list.filter(function (item) {
+        return item !== id;
+      });
     } else {
-      favoriteIds.push(id);
+      list.push(id);
     }
 
-    saveFavorites();
+    saveFavorites(list);
+
     updateHearts();
-    updateFavoriteButton();
+    updateFavoritesCount();
     renderFavorites();
   }
 
@@ -84,9 +56,13 @@
       .forEach(function (button) {
 
         const id = button.dataset.id;
+
+        if (!id) return;
+
         const active = isFavorite(id);
 
-        button.textContent = active ? '❤️' : '♡';
+        button.textContent =
+          active ? '❤️' : '♡';
 
         button.classList.toggle(
           'is-favorite',
@@ -102,17 +78,23 @@
       });
   }
 
-  function addHeartsToCards() {
+  function getCardId(card) {
+    return card.dataset.id || '';
+  }
+
+  function addHearts() {
     document
       .querySelectorAll('#products .card')
       .forEach(function (card) {
 
-        const id = card.dataset.id;
+        const id = getCardId(card);
 
         if (!id) return;
 
         if (
-          card.querySelector('.favorite-heart')
+          card.querySelector(
+            '.favorite-heart'
+          )
         ) {
           return;
         }
@@ -121,18 +103,25 @@
           document.createElement('button');
 
         button.type = 'button';
-        button.className = 'favorite-heart';
+
+        button.className =
+          'favorite-heart';
+
         button.dataset.id = id;
 
         button.textContent =
-          isFavorite(id) ? '❤️' : '♡';
+          isFavorite(id)
+            ? '❤️'
+            : '♡';
 
-        button.onclick = function (event) {
-          event.preventDefault();
-          event.stopPropagation();
+        button.onclick =
+          function (event) {
 
-          toggleFavorite(id);
-        };
+            event.preventDefault();
+            event.stopPropagation();
+
+            toggleFavorite(id);
+          };
 
         card.appendChild(button);
       });
@@ -140,14 +129,18 @@
     updateHearts();
   }
 
-  function createFavoritesNavigation() {
+  function createNavigation() {
     const nav =
-      document.querySelector('.bottom-inner');
+      document.querySelector(
+        '.bottom-inner'
+      );
 
     if (!nav) return;
 
     if (
-      nav.querySelector('.favorites-nav')
+      nav.querySelector(
+        '.favorites-nav'
+      )
     ) {
       return;
     }
@@ -156,24 +149,42 @@
       document.createElement('button');
 
     button.type = 'button';
+
     button.className =
       'nav favorites-nav';
 
     button.innerHTML =
-      '<strong>♡</strong> Избранное ' +
+      '<strong>♡</strong>' +
+      'Избранное ' +
       '<span class="favorites-count"></span>';
 
-    button.onclick = function () {
-      showFavorites();
-    };
+    button.onclick =
+      function () {
+        showFavorites();
+      };
 
     nav.appendChild(button);
 
     nav.style.gridTemplateColumns =
-      'repeat(4, 1fr)';
+      'repeat(4,1fr)';
   }
 
-  function createFavoritesSection() {
+  function updateFavoritesCount() {
+    const count =
+      document.querySelector(
+        '.favorites-count'
+      );
+
+    if (!count) return;
+
+    const total =
+      getFavorites().length;
+
+    count.textContent =
+      total ? total : '';
+  }
+
+  function createSection() {
     if (
       document.getElementById(
         'favoritesSection'
@@ -185,9 +196,14 @@
     const section =
       document.createElement('section');
 
-    section.id = 'favoritesSection';
-    section.className = 'section';
-    section.style.display = 'none';
+    section.id =
+      'favoritesSection';
+
+    section.className =
+      'section';
+
+    section.style.display =
+      'none';
 
     section.innerHTML = `
       <div class="section-head">
@@ -221,7 +237,7 @@
   }
 
   function renderFavorites() {
-    createFavoritesSection();
+    createSection();
 
     const grid =
       document.getElementById(
@@ -235,20 +251,34 @@
 
     if (!grid) return;
 
-    const list =
-      getProducts().filter(function (product) {
-        return isFavorite(product.id);
+    const favoriteIds =
+      getFavorites();
+
+    const cards =
+      Array.from(
+        document.querySelectorAll(
+          '#products .card'
+        )
+      );
+
+    const favoriteCards =
+      cards.filter(function (card) {
+        return favoriteIds.includes(
+          getCardId(card)
+        );
       });
 
     if (count) {
       count.textContent =
-        list.length +
-        (list.length === 1
-          ? ' товар'
-          : ' товаров');
+        favoriteCards.length +
+        (
+          favoriteCards.length === 1
+            ? ' товар'
+            : ' товаров'
+        );
     }
 
-    if (!list.length) {
+    if (!favoriteCards.length) {
 
       grid.innerHTML = `
         <div
@@ -265,177 +295,88 @@
       return;
     }
 
-    grid.innerHTML =
-      list.map(function (product) {
+    grid.innerHTML = '';
 
-        const image =
-          getImage(product);
+    favoriteCards.forEach(
+      function (originalCard) {
 
-        const price =
-          typeof window.formatPrice === 'function'
-            ? window.formatPrice(product.price)
-            : Number(
-                product.price || 0
-              ).toLocaleString(
-                'ru-RU'
-              ) + ' ₽';
+        const clone =
+          originalCard.cloneNode(true);
 
-        return `
-          <article
-            class="fav-card">
+        clone
+          .querySelectorAll(
+            '.favorite-heart'
+          )
+          .forEach(function (heart) {
 
-            <div
-              class="fav-photo"
-              data-action="open">
+            heart.onclick =
+              function (event) {
 
-              ${
-                image
-                  ? `<img
-                       src="${escapeText(image)}"
-                       alt="">`
-                  : '🛍️'
-              }
+                event.preventDefault();
+                event.stopPropagation();
 
-            </div>
-
-            <div class="fav-info">
-
-              <div
-                class="fav-name"
-                data-action="open">
-
-                ${escapeText(
-                  product.name ||
-                  'Товар'
-                )}
-
-              </div>
-
-              <div class="fav-price">
-                ${price}
-              </div>
-
-              <button
-                type="button"
-                class="fav-add">
-
-                🛒 В корзину
-
-              </button>
-
-              <button
-                type="button"
-                class="fav-remove">
-
-                ♡ Убрать
-
-              </button>
-
-            </div>
-
-          </article>
-        `;
-      }).join('');
-
-    const cards =
-      grid.querySelectorAll(
-        '.fav-card'
-      );
-
-    cards.forEach(function (card, index) {
-
-      const product = list[index];
-
-      const openElements =
-        card.querySelectorAll(
-          '[data-action="open"]'
-        );
-
-      openElements.forEach(
-        function (element) {
-
-          element.onclick =
-            function () {
-
-              if (
-                typeof window.openProduct ===
-                'function'
-              ) {
-                window.openProduct(
-                  product
+                toggleFavorite(
+                  originalCard.dataset.id
                 );
-              }
+              };
+          });
 
-            };
-        }
-      );
+        clone
+          .querySelectorAll(
+            'button'
+          )
+          .forEach(function (button) {
 
-      const add =
-        card.querySelector(
-          '.fav-add'
-        );
+            if (
+              button.classList.contains(
+                'favorite-heart'
+              )
+            ) {
+              return;
+            }
 
-      if (add) {
-        add.onclick = function () {
+            button.onclick =
+              function (event) {
 
-          if (
-            typeof window.addToCart ===
-            'function'
-          ) {
-            window.addToCart(
-              product
-            );
-          }
+                event.preventDefault();
+                event.stopPropagation();
 
-        };
-      }
+                const originalButton =
+                  originalCard.querySelector(
+                    '.' +
+                    button.className
+                      .split(' ')
+                      .join('.')
+                  );
 
-      const remove =
-        card.querySelector(
-          '.fav-remove'
-        );
+                if (originalButton) {
+                  originalButton.click();
+                }
+              };
+          });
 
-      if (remove) {
-        remove.onclick =
-          function () {
-            toggleFavorite(
-              product.id
-            );
+        clone.onclick =
+          function (event) {
+
+            if (
+              event.target.closest(
+                'button'
+              )
+            ) {
+              return;
+            }
+
+            originalCard.click();
           };
+
+        grid.appendChild(clone);
       }
-    });
-  }
-
-  function updateFavoriteButton() {
-
-    const count =
-      document.querySelector(
-        '.favorites-count'
-      );
-
-    if (count) {
-      count.textContent =
-        favoriteIds.length
-          ? ' ' + favoriteIds.length
-          : '';
-    }
-
-    const icon =
-      document.querySelector(
-        '.favorites-nav strong'
-      );
-
-    if (icon) {
-      icon.textContent =
-        favoriteIds.length
-          ? '❤️'
-          : '♡';
-    }
+    );
   }
 
   function showFavorites() {
+    createSection();
 
-    createFavoritesSection();
     renderFavorites();
 
     const catalog =
@@ -484,7 +425,6 @@
   }
 
   function showCatalog() {
-
     const catalog =
       document.getElementById(
         'catalogSection'
@@ -504,65 +444,51 @@
       catalog.style.display =
         'block';
     }
-
-    document
-      .querySelectorAll('.nav')
-      .forEach(function (item) {
-        item.classList.remove(
-          'active'
-        );
-      });
-
-    const catalogButton =
-      document.querySelector(
-        '.bottom-inner .nav'
-      );
-
-    if (catalogButton) {
-      catalogButton.classList.add(
-        'active'
-      );
-    }
   }
 
   function addStyles() {
+    if (
+      document.getElementById(
+        'favoritesStyles'
+      )
+    ) {
+      return;
+    }
 
     const style =
-      document.createElement(
-        'style'
-      );
+      document.createElement('style');
+
+    style.id =
+      'favoritesStyles';
 
     style.textContent = `
-
       .favorite-heart {
-        position: absolute;
-        top: 9px;
-        right: 9px;
-        z-index: 20;
+        position:absolute;
+        top:9px;
+        right:9px;
+        z-index:20;
 
-        width: 38px;
-        height: 38px;
+        width:38px;
+        height:38px;
 
-        border-radius: 50%;
-        border: 1px solid
+        border-radius:50%;
+        border:1px solid
           rgba(255,145,209,.35);
 
         background:
           rgba(5,3,8,.78);
 
-        color: #fff;
+        color:#fff;
 
-        font-size: 21px;
+        font-size:21px;
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
 
-        cursor: pointer;
+        cursor:pointer;
 
-        backdrop-filter: blur(6px);
-
-        padding: 0;
+        padding:0;
       }
 
       .favorite-heart.is-favorite {
@@ -572,111 +498,6 @@
         border-color:
           rgba(255,145,209,.65);
       }
-
-      .fav-card {
-        background:
-          linear-gradient(
-            180deg,
-            var(--panel2),
-            var(--panel)
-          );
-
-        border:
-          1px solid var(--line);
-
-        border-radius: 19px;
-
-        overflow: hidden;
-      }
-
-      .fav-photo {
-        height: 180px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        background:
-          radial-gradient(
-            circle,
-            rgba(255,79,179,.18),
-            transparent 52%
-          ),
-          #09050b;
-
-        cursor: pointer;
-      }
-
-      .fav-photo img {
-        width: 100%;
-        height: 100%;
-
-        object-fit: contain;
-
-        padding: 10px;
-      }
-
-      .fav-info {
-        padding: 12px;
-      }
-
-      .fav-name {
-        font-weight: 750;
-        font-size: 14px;
-
-        min-height: 38px;
-
-        line-height: 1.35;
-
-        cursor: pointer;
-      }
-
-      .fav-price {
-        font-size: 17px;
-        font-weight: 850;
-
-        margin-top: 4px;
-      }
-
-      .fav-add,
-      .fav-remove {
-        width: 100%;
-
-        margin-top: 9px;
-
-        border-radius: 12px;
-
-        padding: 9px;
-
-        cursor: pointer;
-
-        font-weight: 700;
-      }
-
-      .fav-add {
-        border:
-          1px solid
-          rgba(255,145,209,.32);
-
-        background:
-          rgba(255,79,179,.10);
-
-        color: #fff;
-      }
-
-      .fav-remove {
-        border:
-          1px solid var(--line);
-
-        background:
-          var(--panel);
-
-        color:
-          var(--muted);
-
-        font-size: 11px;
-      }
-
     `;
 
     document.head.appendChild(
@@ -685,53 +506,32 @@
   }
 
   function init() {
-
     addStyles();
+    createNavigation();
+    createSection();
+    addHearts();
+    updateFavoritesCount();
 
-    createFavoritesNavigation();
-
-    createFavoritesSection();
-
-    addHeartsToCards();
-
-    renderFavorites();
-
-    updateFavoriteButton();
-
-    const productsBox =
+    const products =
       document.getElementById(
         'products'
       );
 
-    if (productsBox) {
+    if (products) {
 
       const observer =
         new MutationObserver(
           function () {
-
-            addHeartsToCards();
-
-            const section =
-              document.getElementById(
-                'favoritesSection'
-              );
-
-            if (
-              section &&
-              section.style.display !==
-              'none'
-            ) {
-              renderFavorites();
-            }
-
+            addHearts();
+            updateFavoritesCount();
           }
         );
 
       observer.observe(
-        productsBox,
+        products,
         {
-          childList: true,
-          subtree: true
+          childList:true,
+          subtree:true
         }
       );
     }
@@ -742,16 +542,13 @@
       );
 
     if (catalogNav) {
-
       catalogNav.addEventListener(
         'click',
         function () {
-
           setTimeout(
             showCatalog,
-            0
+            50
           );
-
         }
       );
     }
@@ -761,16 +558,12 @@
     document.readyState ===
     'loading'
   ) {
-
     document.addEventListener(
       'DOMContentLoaded',
       init
     );
-
   } else {
-
     init();
-
   }
 
 })();
