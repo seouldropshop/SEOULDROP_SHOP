@@ -303,16 +303,121 @@ function removeProduct(i){
 }
 
 async function saveAll(){
- try{
-  const data=await api("save",{products});
-  if(!data.ok)throw new Error(data.error||"Не удалось сохранить");
-  products=Array.isArray(data.products)?data.products:products;
-  render();
-  alert("Изменения сохранены 💜");
- }catch(e){alert("Ошибка сохранения: "+e.message)}
-}
+  try {
 
-function logout(){adminPassword="";location.reload()}
-</script>
-</body>
-</html>
+    const button =
+      document.querySelector(
+        'button[onclick="saveAll()"]'
+      );
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = "⏳ Сохраняю...";
+    }
+
+    /*
+     * Сохраняем каталог одним запросом.
+     * Перед отправкой убираем лишние старые поля.
+     */
+
+    const cleanProducts =
+      products.map(p => {
+
+        const images =
+          Array.isArray(p.images)
+            ? p.images.filter(Boolean)
+            : (p.image ? [p.image] : []);
+
+        const status =
+          getStatus(p);
+
+        let stock =
+          getStock(p);
+
+        if (status !== "in_stock") {
+          stock = 0;
+        }
+
+        let finalStatus =
+          status;
+
+        if (
+          finalStatus === "in_stock" &&
+          stock === 0
+        ) {
+          finalStatus =
+            "out_of_stock";
+        }
+
+        return {
+          id: p.id,
+          name: p.name || "",
+          price: Number(p.price || 0),
+          category: p.category || "albums",
+          description: p.description || "",
+          status: finalStatus,
+          stock:
+            finalStatus === "in_stock"
+              ? stock
+              : 0,
+          available:
+            finalStatus !== "out_of_stock",
+          images: images,
+          image: images[0] || ""
+        };
+      });
+
+
+    const data =
+      await api(
+        "save",
+        {
+          products:
+            cleanProducts
+        }
+      );
+
+
+    if (!data.ok) {
+      throw new Error(
+        data.error ||
+        "Не удалось сохранить"
+      );
+    }
+
+
+    products =
+      Array.isArray(data.products)
+        ? data.products
+        : cleanProducts;
+
+
+    render();
+
+
+    alert(
+      "Изменения сохранены 💜"
+    );
+
+
+  } catch (e) {
+
+    alert(
+      "Ошибка сохранения: " +
+      e.message
+    );
+
+  } finally {
+
+    const button =
+      document.querySelector(
+        'button[onclick="saveAll()"]'
+      );
+
+    if (button) {
+      button.disabled = false;
+      button.textContent =
+        "💾 Сохранить изменения";
+    }
+  }
+}
