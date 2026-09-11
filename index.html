@@ -3436,7 +3436,384 @@ updateCartBadge();
 
 loadProducts();
 
+/* =========================
+   ИЗБРАННОЕ
+========================= */
+
+const FAVORITES_KEY = 'seouldrop_favorites_v1';
+
+function getFavorites(){
+  try{
+    return JSON.parse(
+      localStorage.getItem(FAVORITES_KEY) || '[]'
+    ).map(String);
+  }catch(e){
+    return [];
+  }
+}
+
+function saveFavorites(list){
+  localStorage.setItem(
+    FAVORITES_KEY,
+    JSON.stringify(list)
+  );
+}
+
+function toggleFavorite(id){
+  id = String(id);
+
+  let list = getFavorites();
+
+  if(list.includes(id)){
+    list = list.filter(x => x !== id);
+  }else{
+    list.push(id);
+  }
+
+  saveFavorites(list);
+
+  updateFavoriteHearts();
+  renderFavorites();
+}
+
+function updateFavoriteHearts(){
+
+  document
+    .querySelectorAll('.favorite-btn')
+    .forEach(btn => {
+
+      const id = String(btn.dataset.id);
+
+      btn.textContent =
+        getFavorites().includes(id)
+          ? '❤️'
+          : '♡';
+
+    });
+
+}
+
+function addFavoriteButtons(){
+
+  document
+    .querySelectorAll('#products .card')
+    .forEach(card => {
+
+      if(card.querySelector('.favorite-btn')){
+        return;
+      }
+
+      const id = card.dataset.id;
+
+      if(!id){
+        return;
+      }
+
+      const btn =
+        document.createElement('button');
+
+      btn.type = 'button';
+
+      btn.className = 'favorite-btn';
+
+      btn.dataset.id = id;
+
+      btn.textContent =
+        getFavorites().includes(String(id))
+          ? '❤️'
+          : '♡';
+
+      btn.onclick = function(e){
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        toggleFavorite(id);
+
+      };
+
+      card.appendChild(btn);
+
+    });
+
+}
+
+function createFavoritesSection(){
+
+  if(document.getElementById('favorites-section')){
+    return;
+  }
+
+  const section =
+    document.createElement('section');
+
+  section.id = 'favorites-section';
+
+  section.className = 'section';
+
+  section.style.display = 'none';
+
+  section.innerHTML = `
+    <div class="section-head">
+      <h2>❤️ Избранное</h2>
+      <span
+        class="product-count"
+        id="favorites-count">
+      </span>
+    </div>
+
+    <div
+      class="grid"
+      id="favorites-products">
+    </div>
+  `;
+
+  const app =
+    document.querySelector('.app');
+
+  if(app){
+    app.appendChild(section);
+  }
+
+}
+
+function renderFavorites(){
+
+  createFavoritesSection();
+
+  const grid =
+    document.getElementById(
+      'favorites-products'
+    );
+
+  const count =
+    document.getElementById(
+      'favorites-count'
+    );
+
+  if(!grid){
+    return;
+  }
+
+  const ids = getFavorites();
+
+  const favoriteProducts =
+    products.filter(product =>
+      ids.includes(String(product.id))
+    );
+
+  if(count){
+    count.textContent =
+      favoriteProducts.length +
+      (
+        favoriteProducts.length === 1
+          ? ' товар'
+          : ' товаров'
+      );
+  }
+
+  if(!favoriteProducts.length){
+
+    grid.innerHTML = `
+      <div
+        class="message"
+        style="grid-column:1/-1"
+      >
+        ❤️ Избранное пока пусто
+        <br><br>
+        Нажми ♡ на товаре,
+        чтобы сохранить его.
+      </div>
+    `;
+
+    return;
+  }
+
+  grid.innerHTML =
+    favoriteProducts
+      .map(product =>
+        createProductCard(product)
+      )
+      .join('');
+
+  if(typeof attachCardEvents === 'function'){
+    attachCardEvents();
+  }
+
+  updateFavoriteHearts();
+
+}
+
+function showFavorites(){
+
+  createFavoritesSection();
+
+  document
+    .getElementById('catalogSection')
+    ?.style.setProperty(
+      'display',
+      'none'
+    );
+
+  document
+    .getElementById('favorites-section')
+    ?.style.setProperty(
+      'display',
+      'block'
+    );
+
+  renderFavorites();
+
+}
+
+function showCatalog(){
+
+  document
+    .getElementById('favorites-section')
+    ?.style.setProperty(
+      'display',
+      'none'
+    );
+
+  document
+    .getElementById('catalogSection')
+    ?.style.setProperty(
+      'display',
+      'block'
+    );
+
+}
+
+function createFavoritesNav(){
+
+  const nav =
+    document.querySelector(
+      '.bottom-inner'
+    );
+
+  if(!nav){
+    return;
+  }
+
+  if(
+    nav.querySelector(
+      '.favorites-nav'
+    )
+  ){
+    return;
+  }
+
+  const btn =
+    document.createElement('button');
+
+  btn.type = 'button';
+
+  btn.className =
+    'nav favorites-nav';
+
+  btn.innerHTML =
+    '<strong>♡</strong>Избранное';
+
+  btn.onclick = function(){
+    showFavorites();
+  };
+
+  nav.appendChild(btn);
+
+  nav.style.gridTemplateColumns =
+    'repeat(4,1fr)';
+
+}
+
+function addFavoritesStyles(){
+
+  if(
+    document.getElementById(
+      'favorites-inline-style'
+    )
+  ){
+    return;
+  }
+
+  const style =
+    document.createElement('style');
+
+  style.id =
+    'favorites-inline-style';
+
+  style.textContent = `
+
+    .favorite-btn{
+      position:absolute;
+      top:9px;
+      right:9px;
+      z-index:20;
+
+      width:38px;
+      height:38px;
+
+      border-radius:50%;
+      border:1px solid
+        rgba(255,145,209,.4);
+
+      background:
+        rgba(5,3,8,.8);
+
+      color:#fff;
+
+      font-size:22px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      padding:0;
+
+      cursor:pointer;
+    }
+
+    .favorites-nav strong{
+      font-size:19px;
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+}
+
+createFavoritesNav();
+createFavoritesSection();
+addFavoritesStyles();
+
+const favoritesObserver =
+  new MutationObserver(function(){
+
+    addFavoriteButtons();
+
+  });
+
+const productsElement =
+  document.getElementById('products');
+
+if(productsElement){
+
+  favoritesObserver.observe(
+    productsElement,
+    {
+      childList:true,
+      subtree:true
+    }
+  );
+
+}
+
+setTimeout(function(){
+
+  addFavoriteButtons();
+  updateFavoriteHearts();
+
+},500);
 </script> 
-<script src="/favorites.js?v=3"></script>
 </body>
 </html>
