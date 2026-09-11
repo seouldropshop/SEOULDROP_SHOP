@@ -26,25 +26,19 @@
 body{
   margin:0;
   background:
-    radial-gradient(
-      circle at 15% 5%,
-      rgba(255,79,179,.14),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(167,108,255,.14),
-      transparent 30%
-    ),
+    radial-gradient(circle at 15% 5%,rgba(255,79,179,.14),transparent 28%),
+    radial-gradient(circle at 90% 20%,rgba(167,108,255,.14),transparent 30%),
     var(--bg);
   color:var(--text);
   font-family:Inter,system-ui,-apple-system,sans-serif;
 }
 
-button,
-input,
-textarea{
+button,input,textarea{
   font:inherit;
+}
+
+button{
+  cursor:pointer;
 }
 
 .app{
@@ -84,7 +78,6 @@ textarea{
   background:var(--panel);
   color:#fff;
   border-radius:14px;
-  cursor:pointer;
 }
 
 .icon{
@@ -118,17 +111,12 @@ textarea{
 }
 
 .cta{
-  background:linear-gradient(
-    90deg,
-    var(--pink),
-    var(--violet)
-  );
+  background:linear-gradient(90deg,var(--pink),var(--violet));
   border:0;
   color:#fff;
   font-weight:800;
   border-radius:14px;
   padding:12px 18px;
-  cursor:pointer;
 }
 
 /* CATALOG */
@@ -152,6 +140,25 @@ textarea{
 .muted{
   color:var(--muted);
   font-size:12px;
+}
+
+.search-wrap{
+  margin:0 0 14px;
+}
+
+.search-input{
+  width:100%;
+  padding:12px 15px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  outline:none;
+  font-size:15px;
+}
+
+.search-input::placeholder{
+  color:rgba(255,255,255,.55);
 }
 
 .categories{
@@ -178,15 +185,14 @@ textarea{
   margin-top:12px;
 }
 
-/* PRODUCT CARD */
+/* PRODUCT */
 
 .card{
-  background:
-    linear-gradient(
-      180deg,
-      var(--panel2),
-      var(--panel)
-    );
+  background:linear-gradient(
+    180deg,
+    var(--panel2),
+    var(--panel)
+  );
   border:1px solid var(--line);
   border-radius:19px;
   overflow:hidden;
@@ -205,6 +211,8 @@ textarea{
       transparent 52%
     ),
     #09050b;
+  touch-action:pan-y;
+  user-select:none;
 }
 
 .pic img{
@@ -212,6 +220,7 @@ textarea{
   height:100%;
   object-fit:contain;
   padding:12px;
+  touch-action:pan-y;
 }
 
 .placeholder{
@@ -282,7 +291,33 @@ textarea{
   padding:30px 15px;
 }
 
-/* BOTTOM NAV */
+/* GALLERY DOTS */
+
+.gallery-dots{
+  position:absolute;
+  bottom:8px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  z-index:3;
+  pointer-events:none;
+}
+
+.gallery-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:rgba(255,255,255,.32);
+  display:block;
+}
+
+.gallery-dot.active{
+  background:#fff;
+}
+
+/* BOTTOM */
 
 .bottom{
   position:fixed;
@@ -466,16 +501,11 @@ textarea{
 
 .submit{
   border:0;
-  background:linear-gradient(
-    90deg,
-    var(--pink),
-    var(--violet)
-  );
+  background:linear-gradient(90deg,var(--pink),var(--violet));
   color:#fff;
   font-weight:800;
   border-radius:14px;
   padding:13px;
-  cursor:pointer;
 }
 
 .submit:disabled{
@@ -498,13 +528,144 @@ textarea{
   font-size:20px;
 }
 
+/* DESCRIPTION */
+
+.description-modal{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  background:rgba(0,0,0,.78);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.description-modal.show{
+  display:flex;
+}
+
+.description-sheet{
+  width:min(760px,100%);
+  max-height:85vh;
+  overflow:auto;
+  background:#0c0710;
+  border:1px solid var(--line);
+  border-radius:24px 24px 0 0;
+  padding:20px 18px 28px;
+  box-shadow:0 -10px 40px rgba(0,0,0,.45);
+}
+
+.description-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.description-title{
+  font-size:20px;
+  font-weight:850;
+  line-height:1.2;
+}
+
+.description-close{
+  flex:0 0 auto;
+  width:38px;
+  height:38px;
+  border:1px solid var(--line);
+  background:#160d1b;
+  color:#fff;
+  border-radius:50%;
+  font-size:23px;
+}
+
+.description-text{
+  margin-top:16px;
+  color:#d8c5d5;
+  font-size:14px;
+  line-height:1.6;
+  white-space:pre-wrap;
+}
+
+/* PHOTO GALLERY */
+
+.gallery-modal{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.gallery-modal.show{
+  display:flex;
+}
+
+.gallery-box{
+  width:min(760px,100%);
+  max-height:92vh;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.gallery-main{
+  width:100%;
+  max-height:70vh;
+  object-fit:contain;
+  border-radius:16px;
+}
+
+.gallery-close{
+  position:absolute;
+  top:14px;
+  right:16px;
+  border:0;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  border-radius:50%;
+  width:42px;
+  height:42px;
+  font-size:24px;
+}
+
+.gallery-thumbs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px;
+}
+
+.gallery-thumb{
+  width:64px;
+  height:64px;
+  padding:0;
+  border:2px solid transparent;
+  border-radius:10px;
+  overflow:hidden;
+  background:transparent;
+  flex:0 0 auto;
+}
+
+.gallery-thumb.active{
+  border-color:#fff;
+}
+
+.gallery-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
 /* DESKTOP */
 
 @media(min-width:650px){
 
   .grid{
-    grid-template-columns:
-      repeat(3,minmax(0,1fr));
+    grid-template-columns:repeat(3,minmax(0,1fr));
   }
 
   .pic{
@@ -519,26 +680,16 @@ textarea{
     border-radius:24px;
     max-height:88vh;
   }
-}
 
-.search-wrap{margin:0 0 14px}
-.search-input{width:100%;box-sizing:border-box;padding:12px 15px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;outline:none;font-size:15px}
-.search-input::placeholder{color:rgba(255,255,255,.55)}
-.gallery-dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:5px;z-index:3;pointer-events:none}.gallery-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 1px 5px rgba(0,0,0,.7)}.gallery-dot.active{background:#fff}
-.gallery-modal{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
-.gallery-modal.show{display:flex}
-.gallery-box{width:min(760px,100%);max-height:92vh;display:flex;flex-direction:column;gap:12px}
-.gallery-main{width:100%;max-height:70vh;object-fit:contain;border-radius:16px}
-.gallery-close{position:absolute;top:14px;right:16px;border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:50%;width:42px;height:42px;font-size:24px;cursor:pointer}
-.gallery-thumbs{display:flex;gap:8px;overflow-x:auto;padding:4px}
-.gallery-thumb{width:64px;height:64px;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:transparent;flex:0 0 auto;cursor:pointer}
-.gallery-thumb.active{border-color:#fff}
-.gallery-thumb img{width:100%;height:100%;object-fit:cover}
-.gallery-dots{display:flex;justify-content:center;gap:6px;margin-top:7px;min-height:7px}
-.gallery-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.32);display:block}
-.gallery-dot.active{background:#fff}
-.pic{position:relative;touch-action:pan-y;user-select:none}
-.pic img{touch-action:pan-y}
+  .description-modal{
+    align-items:center;
+    padding:20px;
+  }
+
+  .description-sheet{
+    border-radius:24px;
+  }
+}
 </style>
 </head>
 
@@ -608,56 +759,48 @@ id="productCount">
 
 
 <div class="search-wrap">
-  <input id="searchInput" class="search-input" type="search"
-         placeholder="🔎 Поиск по каталогу..." autocomplete="off">
+
+<input
+id="searchInput"
+class="search-input"
+type="search"
+placeholder="🔎 Поиск по каталогу..."
+autocomplete="off">
+
 </div>
+
+
 <div class="categories">
 
-<button
-class="cat active"
-data-category="all">
+<button class="cat active" data-category="all">
 Все
 </button>
 
-<button
-class="cat"
-data-category="albums">
+<button class="cat" data-category="albums">
 💿 Альбомы
 </button>
 
-<button
-class="cat"
-data-category="photocards">
+<button class="cat" data-category="photocards">
 🃏 Карты
 </button>
 
-<button
-class="cat"
-data-category="merch">
+<button class="cat" data-category="merch">
 🎁 Мерч
 </button>
 
-<button
-class="cat"
-data-category="cosmetics">
+<button class="cat" data-category="cosmetics">
 🧴 Косметика
 </button>
 
-<button
-class="cat"
-data-category="sweets">
+<button class="cat" data-category="sweets">
 🍪 Сладости
 </button>
 
-<button
-class="cat"
-data-category="vinyl">
+<button class="cat" data-category="vinyl">
 🎶 Винил
 </button>
 
-<button
-class="cat"
-data-category="other">
+<button class="cat" data-category="other">
 🌟 Другое
 </button>
 
@@ -679,6 +822,8 @@ class="grid">
 </div>
 
 
+<!-- НИЖНЕЕ МЕНЮ -->
+
 <nav class="bottom">
 
 <div class="bottom-inner">
@@ -692,9 +837,7 @@ behavior:'smooth'
 })
 ">
 
-<strong>
-⌂
-</strong>
+<strong>⌂</strong>
 
 Главная
 
@@ -711,9 +854,7 @@ behavior:'smooth'
 })
 ">
 
-<strong>
-◈
-</strong>
+<strong>◈</strong>
 
 Каталог
 
@@ -725,15 +866,12 @@ class="nav"
 onclick="showCart()">
 
 <strong>
-
 🛒
-
 <span
 class="badge"
 id="navCount">
 0
 </span>
-
 </strong>
 
 Корзина
@@ -744,6 +882,8 @@ id="navCount">
 
 </nav>
 
+
+<!-- КОРЗИНА -->
 
 <div
 class="overlay"
@@ -769,9 +909,77 @@ onclick="closeCart()">
 
 </div>
 
+<div id="cartContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- ОПИСАНИЕ ТОВАРА -->
 
 <div
-id="cartContent">
+id="descriptionModal"
+class="description-modal"
+onclick="
+if(event.target===this)
+closeDescription()
+">
+
+<div class="description-sheet">
+
+<div class="description-head">
+
+<div
+id="descriptionTitle"
+class="description-title">
+</div>
+
+<button
+class="description-close"
+onclick="closeDescription()">
+×
+</button>
+
+</div>
+
+<div
+id="descriptionText"
+class="description-text">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ГАЛЕРЕЯ -->
+
+<div
+id="galleryModal"
+class="gallery-modal"
+onclick="
+if(event.target===this)
+closeGallery()
+">
+
+<button
+class="gallery-close"
+onclick="closeGallery()">
+×
+</button>
+
+<div class="gallery-box">
+
+<img
+id="galleryMainImage"
+class="gallery-main"
+src=""
+alt="">
+
+<div
+id="galleryThumbs"
+class="gallery-thumbs">
 </div>
 
 </div>
@@ -782,8 +990,8 @@ id="cartContent">
 <script>
 
 let products=[];
-
 let cart={};
+let currentCategory='all';
 
 try{
 
@@ -799,10 +1007,8 @@ try{
 
 }
 
-let currentCategory='all';
 
-
-/* РЕЗЕРВНЫЕ ТОВАРЫ */
+/* FALLBACK */
 
 const FALLBACK_PRODUCTS=[
 
@@ -874,40 +1080,33 @@ function getTelegramUsername(){
 }
 
 
-/* КОРЗИНА */
+/* HTML */
 
-function saveCart(){
+function escapeHtml(value){
 
-  localStorage.setItem(
-    'seouldrop_cart',
-    JSON.stringify(cart)
+  return String(
+    value??''
+  ).replace(
+    /[&<>'"]/g,
+    function(c){
+
+      return {
+
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        "'":'&#39;',
+        '"':'&quot;'
+
+      }[c];
+
+    }
   );
 
-  updateCount();
-
 }
 
 
-function updateCount(){
-
-  const el=
-    document.getElementById(
-      'navCount'
-    );
-
-  if(!el)return;
-
-  el.textContent=
-    Object.values(cart).reduce(
-      (a,b)=>
-        a+Number(b||0),
-      0
-    );
-
-}
-
-
-/* СТАТУС */
+/* STATUS */
 
 function getStatus(product){
 
@@ -928,7 +1127,7 @@ function getStatus(product){
 }
 
 
-/* ОСТАТОК */
+/* STOCK */
 
 function getStock(product){
 
@@ -949,7 +1148,7 @@ function getStock(product){
 }
 
 
-/* ТЕКСТ СТАТУСА */
+/* STATUS TEXT */
 
 function getStatusText(product){
 
@@ -984,13 +1183,13 @@ function getStatusText(product){
 }
 
 
-/* КАТЕГОРИЯ */
+/* CATEGORY */
 
 function categoryName(category){
 
   const names={
 
-    albums:'Альбом',
+    albums:'Альбомы',
     photocards:'Карты',
     merch:'Мерч',
     cosmetics:'Косметика',
@@ -1010,33 +1209,7 @@ function categoryName(category){
 }
 
 
-/* ЗАЩИТА HTML */
-
-function escapeHtml(value){
-
-  return String(
-    value??''
-  ).replace(
-    /[&<>'"]/g,
-    function(c){
-
-      return {
-
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        "'":'&#39;',
-        '"':'&quot;'
-
-      }[c];
-
-    }
-  );
-
-}
-
-
-/* ЗАГРУЗКА ТОВАРОВ */
+/* LOAD */
 
 async function loadProducts(){
 
@@ -1112,109 +1285,277 @@ async function loadProducts(){
 
     renderProducts();
 
-    document.getElementById(
-      'productCount'
-    ).textContent=
-      products.length+
-      ' товара';
-
   }
 
 }
 
 
-/* ОТРИСОВКА ТОВАРОВ */
-
+/* PRODUCT IMAGES */
 
 function getProductImages(product){
-  if(Array.isArray(product.images) && product.images.length){
+
+  if(
+    Array.isArray(product.images) &&
+    product.images.length
+  ){
+
     return product.images.filter(Boolean);
+
   }
-  return product.image ? [product.image] : [];
-}
 
-let galleryImages = [];
-let galleryIndex = 0;
+  return product.image
+    ? [product.image]
+    : [];
 
-function openGallery(images, index=0){
-  galleryImages = Array.isArray(images) ? images.filter(Boolean) : [];
-  galleryIndex = Math.max(0, Math.min(index, galleryImages.length-1));
-  const modal = document.getElementById('galleryModal');
-  if(!modal || !galleryImages.length) return;
-  modal.classList.add('show');
-  setGalleryImage(galleryIndex);
-}
-
-function setGalleryImage(index){
-  if(!galleryImages.length) return;
-  galleryIndex = Math.max(0, Math.min(index, galleryImages.length-1));
-  const main = document.getElementById('galleryMainImage');
-  const thumbs = document.getElementById('galleryThumbs');
-  if(main) main.src = galleryImages[galleryIndex];
-  if(thumbs){
-    thumbs.innerHTML = galleryImages.map((src,i)=>
-      `<button class="gallery-thumb ${i===galleryIndex?'active':''}" onclick="setGalleryImage(${i})">
-        <img src="${src}" alt="">
-      </button>`
-    ).join('');
-  }
-}
-
-function closeGallery(){
-  const modal = document.getElementById('galleryModal');
-  if(modal) modal.classList.remove('show');
 }
 
 
-function renderProducts(){
-  const searchEl = document.getElementById('searchInput');
-  const search = (searchEl?.value || '').trim().toLowerCase();
+/* GALLERY */
 
-  const filteredProducts = products.filter(product => {
-    const productCategory = product.category || '';
-    const categoryOk = currentCategory === 'all' || productCategory === currentCategory;
-
-    const haystack = [
-      product.name,
-      product.title,
-      product.description,
-      product.artist,
-      product.group,
-      product.category
-    ].filter(Boolean).join(' ').toLowerCase();
-
-    const searchOk = !search || haystack.includes(search);
-    return categoryOk && searchOk;
-  });
+let galleryImages=[];
+let galleryIndex=0;
 
 
+function openGallery(
+  images,
+  index=0
+){
 
-  const box=
-    document.getElementById(
-      'products'
+  galleryImages=
+    Array.isArray(images)
+    ? images.filter(Boolean)
+    : [];
+
+  if(!galleryImages.length)
+    return;
+
+  galleryIndex=
+    Math.max(
+      0,
+      Math.min(
+        index,
+        galleryImages.length-1
+      )
     );
 
+  const modal=
+    document.getElementById(
+      'galleryModal'
+    );
+
+  if(!modal)
+    return;
+
+  modal.classList.add('show');
+
+  setGalleryImage(
+    galleryIndex
+  );
+
+}
+
+
+function setGalleryImage(index){
+
+  if(!galleryImages.length)
+    return;
+
+  galleryIndex=
+    Math.max(
+      0,
+      Math.min(
+        index,
+        galleryImages.length-1
+      )
+    );
+
+  const main=
+    document.getElementById(
+      'galleryMainImage'
+    );
+
+  const thumbs=
+    document.getElementById(
+      'galleryThumbs'
+    );
+
+  if(main){
+
+    main.src=
+      galleryImages[
+        galleryIndex
+      ];
+
+  }
+
+  if(thumbs){
+
+    thumbs.innerHTML=
+      galleryImages.map(
+        (src,i)=>`
+
+<button
+class="gallery-thumb ${
+  i===galleryIndex
+  ?'active'
+  :''
+}"
+onclick="setGalleryImage(${i})">
+
+<img
+src="${escapeHtml(src)}"
+alt="">
+
+</button>
+
+`
+      ).join('');
+
+  }
+
+}
+
+
+function closeGallery(){
+
+  const modal=
+    document.getElementById(
+      'galleryModal'
+    );
+
+  if(modal){
+
+    modal.classList.remove(
+      'show'
+    );
+
+  }
+
+}
+
+
+/* DESCRIPTION */
+
+function openDescription(product){
+
+  const modal=
+    document.getElementById(
+      'descriptionModal'
+    );
+
+  const title=
+    document.getElementById(
+      'descriptionTitle'
+    );
+
+  const text=
+    document.getElementById(
+      'descriptionText'
+    );
+
+  if(
+    !modal ||
+    !title ||
+    !text
+  )
+    return;
+
+  title.textContent=
+    product.name ||
+    'Товар';
+
+  const description=
+    String(
+      product.description ||
+      ''
+    ).trim();
+
+  text.textContent=
+    description ||
+    'Описание товара пока не добавлено.';
+
+  modal.classList.add(
+    'show'
+  );
+
+}
+
+
+function closeDescription(){
+
+  const modal=
+    document.getElementById(
+      'descriptionModal'
+    );
+
+  if(modal){
+
+    modal.classList.remove(
+      'show'
+    );
+
+  }
+
+}
+
+
+/* RENDER */
+
+function renderProducts(){
+
+  const searchEl=
+    document.getElementById(
+      'searchInput'
+    );
+
+  const search=
+    (
+      searchEl?.value ||
+      ''
+    )
+    .trim()
+    .toLowerCase();
+
+
   const list=
-    filteredProducts.filter(
+    products.filter(
       product=>{
 
-        if(
-          currentCategory==='all'
-        ){
+        const category=
+          product.category ||
+          '';
 
-          return true;
-
-        }
-
-        return (
-          product.category===
-            currentCategory ||
-
+        const categoryOk=
+          currentCategory==='all' ||
+          category===currentCategory ||
           (
             currentCategory==='albums' &&
-            product.category==='Альбомы'
-          )
-        );
+            category==='Альбомы'
+          );
+
+        if(!categoryOk)
+          return false;
+
+
+        const haystack=[
+
+          product.name,
+          product.title,
+          product.description,
+          product.artist,
+          product.group,
+          product.category
+
+        ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+
+        return !search ||
+          haystack.includes(
+            search
+          );
 
       }
     );
@@ -1229,6 +1570,12 @@ function renderProducts(){
       products.length===1
       ?''
       :'а'
+    );
+
+
+  const box=
+    document.getElementById(
+      'products'
     );
 
 
@@ -1269,17 +1616,29 @@ function renderProducts(){
           'article'
         );
 
-      card.className='card';
+      card.className=
+        'card';
+
+
+      const images=
+        getProductImages(
+          product
+        );
+
+
+      let currentImageIndex=0;
 
 
       let image='';
 
 
-      if(product.image){
+      if(images.length){
 
         image=
           '<img src="'+
-          escapeHtml(product.image)+
+          escapeHtml(
+            images[0]
+          )+
           '" alt="">';
 
       }else{
@@ -1337,39 +1696,80 @@ function renderProducts(){
       }
 
 
-      const productImages = Array.isArray(product.images) && product.images.length ? product.images.filter(Boolean) : (product.image ? [product.image] : []);
-      let currentImageIndex = 0;
-
       card.innerHTML=`
 
 <div class="pic">
+
 ${image}
-${productImages.length > 1 ? '<div class="gallery-dots">' + productImages.map((_,i)=>'<span class="gallery-dot '+(i===0?'active':'')+'"></span>').join('') + '</div>' : ''}
+
+${
+  images.length>1
+  ?
+  `
+  <div class="gallery-dots">
+
+  ${
+    images.map(
+      (_,i)=>
+      `
+      <span
+      class="gallery-dot ${
+        i===0?'active':''
+      }">
+      </span>
+      `
+    ).join('')
+  }
+
+  </div>
+  `
+  :
+  ''
+}
+
 </div>
+
 
 <div class="info">
 
 <div class="name">
+
 ${escapeHtml(
-  product.name||'Товар'
+  product.name ||
+  'Товар'
 )}
+
 </div>
+
 
 <div class="meta">
+
 ${escapeHtml(
-  categoryName(product.category)
+  categoryName(
+    product.category
+  )
 )}
+
 </div>
 
+
 <div class="price">
+
 ${Number(
   product.price||0
 ).toLocaleString('ru-RU')} ₽
+
 </div>
 
+
 <div class="status ${statusClass}">
-${getStatusText(product)}
+
+${getStatusText(
+  product
+)}
+
 </div>
+
 
 <button
 class="add ${
@@ -1388,30 +1788,128 @@ ${buttonText}
 </button>
 
 </div>
+
 `;
 
 
-      const gallerySources = productImages;
-      const galleryImg = card.querySelector('.pic img');
-      const galleryPic = card.querySelector('.pic');
-      const galleryDots = [...card.querySelectorAll('.gallery-dot')];
-      if(galleryImg && galleryPic && gallerySources.length > 1){
-        galleryPic.style.touchAction='pan-y';
-        let startX=0, startY=0;
-        galleryPic.addEventListener('touchstart', e=>{
-          const t=e.touches[0];
-          startX=t.clientX; startY=t.clientY;
-        }, {passive:true});
-        galleryPic.addEventListener('touchend', e=>{
-          const t=e.changedTouches[0];
-          const dx=t.clientX-startX, dy=t.clientY-startY;
-          if(Math.abs(dx)<45 || Math.abs(dx)<Math.abs(dy)*1.2) return;
-          currentImageIndex = Math.max(0, Math.min(gallerySources.length-1, currentImageIndex + (dx<0 ? 1 : -1)));
-          galleryImg.src=gallerySources[currentImageIndex];
-          galleryDots.forEach((dot,i)=>dot.classList.toggle('active',i===currentImageIndex));
-        }, {passive:true});
+      /* ФОТО */
+
+      const galleryImg=
+        card.querySelector(
+          '.pic img'
+        );
+
+      const galleryPic=
+        card.querySelector(
+          '.pic'
+        );
+
+      const dots=[
+        ...card.querySelectorAll(
+          '.gallery-dot'
+        )
+      ];
+
+
+      if(
+        galleryImg &&
+        galleryPic &&
+        images.length>1
+      ){
+
+        let startX=0;
+        let startY=0;
+
+
+        galleryPic.addEventListener(
+          'touchstart',
+          event=>{
+
+            const t=
+              event.touches[0];
+
+            startX=
+              t.clientX;
+
+            startY=
+              t.clientY;
+
+          },
+          {passive:true}
+        );
+
+
+        galleryPic.addEventListener(
+          'touchend',
+          event=>{
+
+            const t=
+              event.changedTouches[0];
+
+            const dx=
+              t.clientX-startX;
+
+            const dy=
+              t.clientY-startY;
+
+
+            if(
+              Math.abs(dx)<45 ||
+              Math.abs(dx)<
+              Math.abs(dy)*1.2
+            )
+              return;
+
+
+            currentImageIndex=
+              Math.max(
+                0,
+                Math.min(
+                  images.length-1,
+                  currentImageIndex+
+                  (
+                    dx<0
+                    ?1
+                    :-1
+                  )
+                )
+              );
+
+
+            galleryImg.src=
+              images[
+                currentImageIndex
+              ];
+
+
+            dots.forEach(
+              (dot,i)=>
+                dot.classList.toggle(
+                  'active',
+                  i===
+                  currentImageIndex
+                )
+            );
+
+          },
+          {passive:true}
+        );
+
+
+        galleryPic.addEventListener(
+          'click',
+          ()=>{
+            openGallery(
+              images,
+              currentImageIndex
+            );
+          }
+        );
+
       }
 
+
+      /* КОРЗИНА */
 
       const button=
         card.querySelector(
@@ -1423,24 +1921,93 @@ ${buttonText}
 
         button.addEventListener(
           'click',
-          ()=>addToCart(
-            product.id
-          )
+          event=>{
+
+            event.stopPropagation();
+
+            addToCart(
+              product.id
+            );
+
+          }
         );
 
       }
 
 
-      box.appendChild(card);
+      /* ОПИСАНИЕ */
+
+      card.addEventListener(
+        'click',
+        event=>{
+
+          if(
+            event.target.closest(
+              '.add'
+            )
+          )
+            return;
+
+          if(
+            event.target.closest(
+              '.pic'
+            )
+          )
+            return;
+
+          openDescription(
+            product
+          );
+
+        }
+      );
+
+
+      box.appendChild(
+        card
+      );
 
     }
   );
 
+}
+
+
+/* CART */
+
+function saveCart(){
+
+  localStorage.setItem(
+    'seouldrop_cart',
+    JSON.stringify(cart)
+  );
+
+  updateCount();
 
 }
 
 
-/* ДОБАВИТЬ В КОРЗИНУ */
+function updateCount(){
+
+  const el=
+    document.getElementById(
+      'navCount'
+    );
+
+  if(!el)
+    return;
+
+  el.textContent=
+    Object.values(cart).reduce(
+      (a,b)=>
+        a+Number(b||0),
+      0
+    );
+
+}
+
+
+/* ADD TO CART */
 
 function addToCart(id){
 
@@ -1451,25 +2018,19 @@ function addToCart(id){
         String(id)
     );
 
-  if(!product)return;
+  if(!product)
+    return;
 
 
   const status=
     getStatus(product);
 
 
-  if(
-    status==='out_of_stock'
-  ){
-
+  if(status==='out_of_stock')
     return;
 
-  }
 
-
-  if(
-    status==='preorder'
-  ){
+  if(status==='preorder'){
 
     cart[id]=
       (cart[id]||0)+1;
@@ -1485,7 +2046,9 @@ function addToCart(id){
     getStock(product);
 
   const current=
-    Number(cart[id]||0);
+    Number(
+      cart[id]||0
+    );
 
 
   if(current>=stock){
@@ -1511,7 +2074,7 @@ function addToCart(id){
 }
 
 
-/* ИЗМЕНЕНИЕ КОЛИЧЕСТВА */
+/* QUANTITY */
 
 function changeQty(
   id,
@@ -1525,14 +2088,17 @@ function changeQty(
         String(id)
     );
 
-  if(!product)return;
+  if(!product)
+    return;
 
 
   const status=
     getStatus(product);
 
   const current=
-    Number(cart[id]||0);
+    Number(
+      cart[id]||0
+    );
 
   const newQuantity=
     current+difference;
@@ -1551,9 +2117,7 @@ function changeQty(
   }
 
 
-  if(
-    status==='preorder'
-  ){
+  if(status==='preorder'){
 
     cart[id]=
       newQuantity;
@@ -1595,7 +2159,7 @@ function changeQty(
 }
 
 
-/* ПОКАЗАТЬ КОРЗИНУ */
+/* SHOW CART */
 
 function showCart(){
 
@@ -1605,12 +2169,14 @@ function showCart(){
     .getElementById(
       'cartOverlay'
     )
-    .classList.add('open');
+    .classList.add(
+      'open'
+    );
 
 }
 
 
-/* ЗАКРЫТЬ КОРЗИНУ */
+/* CLOSE CART */
 
 function closeCart(){
 
@@ -1618,12 +2184,14 @@ function closeCart(){
     .getElementById(
       'cartOverlay'
     )
-    .classList.remove('open');
+    .classList.remove(
+      'open'
+    );
 
 }
 
 
-/* ОТРИСОВКА КОРЗИНЫ */
+/* RENDER CART */
 
 function renderCart(){
 
@@ -1680,10 +2248,6 @@ function renderCart(){
     );
 
 
-  /*
-   * TELEGRAM USER
-   */
-
   const telegramUsername=
     getTelegramUsername();
 
@@ -1718,14 +2282,20 @@ function renderCart(){
 <div>
 
 <div class="cart-name">
-${escapeHtml(product.name)}
+
+${escapeHtml(
+  product.name
+)}
+
 </div>
 
 <div class="cart-price">
+
 ${Number(
   product.price||0
 ).toLocaleString('ru-RU')}
  ₽ × ${item.quantity}
+
 </div>
 
 ${
@@ -1742,13 +2312,16 @@ ${
 
 </div>
 
+
 <div class="qty">
 
 <button
 data-minus="${escapeHtml(
   product.id
 )}">
+
 −
+
 </button>
 
 <b>
@@ -1760,7 +2333,9 @@ data-plus="${escapeHtml(
   product.id
 )}"
 ${plusDisabled?'disabled':''}>
+
 +
+
 </button>
 
 </div>
@@ -1791,9 +2366,6 @@ ${total.toLocaleString(
 
 
 <div class="checkout">
-
-
-<!-- TELEGRAM -->
 
 <div class="telegram-line">
 
@@ -1854,8 +2426,6 @@ onclick="submitOrder()">
     html;
 
 
-  /* МИНУС */
-
   box
     .querySelectorAll(
       '[data-minus]'
@@ -1864,16 +2434,16 @@ onclick="submitOrder()">
       button=>{
 
         button.onclick=
-          ()=>changeQty(
-            button.dataset.minus,
-            -1
-          );
+          ()=>{
+            changeQty(
+              button.dataset.minus,
+              -1
+            );
+          };
 
       }
     );
 
-
-  /* ПЛЮС */
 
   box
     .querySelectorAll(
@@ -1883,10 +2453,12 @@ onclick="submitOrder()">
       button=>{
 
         button.onclick=
-          ()=>changeQty(
-            button.dataset.plus,
-            1
-          );
+          ()=>{
+            changeQty(
+              button.dataset.plus,
+              1
+            );
+          };
 
       }
     );
@@ -1894,7 +2466,7 @@ onclick="submitOrder()">
 }
 
 
-/* ОФОРМЛЕНИЕ ЗАКАЗА */
+/* ORDER */
 
 async function submitOrder(){
 
@@ -1906,7 +2478,6 @@ async function submitOrder(){
       .value
       .trim();
 
-
   const phone=
     document
       .getElementById(
@@ -1915,7 +2486,6 @@ async function submitOrder(){
       .value
       .trim();
 
-
   const address=
     document
       .getElementById(
@@ -1923,7 +2493,6 @@ async function submitOrder(){
       )
       .value
       .trim();
-
 
   const comment=
     document
@@ -1946,12 +2515,8 @@ async function submitOrder(){
               String(id)
           );
 
-        if(!product){
-
+        if(!product)
           return null;
-
-        }
-
 
         return {
 
@@ -2002,10 +2567,7 @@ async function submitOrder(){
   }
 
 
-  /*
-   * Проверяем остаток
-   * перед отправкой.
-   */
+  /* ПРОВЕРКА ОСТАТКОВ */
 
   for(
     const item of items
@@ -2018,7 +2580,8 @@ async function submitOrder(){
           String(item.id)
       );
 
-    if(!product)continue;
+    if(!product)
+      continue;
 
 
     if(
@@ -2040,7 +2603,6 @@ async function submitOrder(){
           stock+
           ' шт.'
         );
-
 
         await loadProducts();
 
@@ -2068,11 +2630,6 @@ async function submitOrder(){
 
 
   try{
-
-    /*
-     * Получаем пользователя
-     * Telegram автоматически.
-     */
 
     const telegramUser=
       getTelegramUser();
@@ -2153,19 +2710,10 @@ async function submitOrder(){
     }
 
 
-    /*
-     * Очищаем корзину
-     */
-
     cart={};
 
     saveCart();
 
-
-    /*
-     * Обновляем товары,
-     * чтобы показать новый остаток.
-     */
 
     await loadProducts();
 
@@ -2218,10 +2766,12 @@ onclick="closeCart()">
 }
 
 
-/* КАТЕГОРИИ */
+/* CATEGORIES */
 
 document
-  .querySelectorAll('.cat')
+  .querySelectorAll(
+    '.cat'
+  )
   .forEach(
     button=>{
 
@@ -2260,7 +2810,43 @@ document
   );
 
 
-/* TELEGRAM MINI APP */
+/* SEARCH */
+
+const searchInput=
+  document.getElementById(
+    'searchInput'
+  );
+
+if(searchInput){
+
+  searchInput.addEventListener(
+    'input',
+    ()=>{
+      renderProducts();
+    }
+  );
+
+}
+
+
+/* KEYBOARD */
+
+document.addEventListener(
+  'keydown',
+  event=>{
+
+    if(event.key==='Escape'){
+
+      closeGallery();
+      closeDescription();
+
+    }
+
+  }
+);
+
+
+/* TELEGRAM */
 
 try{
 
@@ -2285,30 +2871,13 @@ try{
 }
 
 
-/* СТАРТ */
+/* START */
 
 updateCount();
 
 loadProducts();
 
-
-const searchInput = document.getElementById('searchInput');
-if(searchInput){
-  searchInput.addEventListener('input', () => renderProducts());
-}
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') closeGallery();
-});
-
 </script>
 
-
-<div id="galleryModal" class="gallery-modal" onclick="if(event.target===this)closeGallery()">
-  <button class="gallery-close" onclick="closeGallery()">×</button>
-  <div class="gallery-box">
-    <img id="galleryMainImage" class="gallery-main" src="" alt="">
-    <div id="galleryThumbs" class="gallery-thumbs"></div>
-  </div>
-</div>
 </body>
 </html>
