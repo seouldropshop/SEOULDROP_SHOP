@@ -19,9 +19,7 @@
   --line:rgba(255,111,194,.18);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -46,8 +44,6 @@ button{
   margin:auto;
   padding:16px 14px 92px;
 }
-
-/* HEADER */
 
 .header{
   display:flex;
@@ -84,8 +80,6 @@ button{
   padding:10px 12px;
 }
 
-/* HERO */
-
 .hero{
   border:1px solid var(--line);
   border-radius:26px;
@@ -110,7 +104,8 @@ button{
   margin:10px 0 16px;
 }
 
-.cta{
+.cta,
+.submit{
   background:linear-gradient(90deg,var(--pink),var(--violet));
   border:0;
   color:#fff;
@@ -118,8 +113,6 @@ button{
   border-radius:14px;
   padding:12px 18px;
 }
-
-/* CATALOG */
 
 .section{
   margin-top:22px;
@@ -185,8 +178,6 @@ button{
   margin-top:12px;
 }
 
-/* PRODUCT */
-
 .card{
   background:linear-gradient(
     180deg,
@@ -220,7 +211,6 @@ button{
   height:100%;
   object-fit:contain;
   padding:12px;
-  touch-action:pan-y;
 }
 
 .placeholder{
@@ -234,13 +224,28 @@ button{
 .name{
   font-weight:750;
   font-size:14px;
-  min-height:38px;
+  line-height:1.3;
 }
 
 .meta{
   color:var(--muted);
   font-size:11px;
-  margin:4px 0 9px;
+  margin:4px 0 7px;
+}
+
+/* ОПИСАНИЕ В КАРТОЧКЕ */
+
+.description{
+  color:#d8c5d5;
+  font-size:12px;
+  line-height:1.45;
+  margin:0 0 9px;
+  white-space:pre-wrap;
+
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:5;
+  overflow:hidden;
 }
 
 .price{
@@ -291,8 +296,6 @@ button{
   padding:30px 15px;
 }
 
-/* GALLERY DOTS */
-
 .gallery-dots{
   position:absolute;
   bottom:8px;
@@ -310,14 +313,11 @@ button{
   height:7px;
   border-radius:50%;
   background:rgba(255,255,255,.32);
-  display:block;
 }
 
 .gallery-dot.active{
   background:#fff;
 }
-
-/* BOTTOM */
 
 .bottom{
   position:fixed;
@@ -369,23 +369,26 @@ button{
   margin-left:3px;
 }
 
-/* CART */
-
-.overlay{
+.overlay,
+.description-modal,
+.gallery-modal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.72);
+  background:rgba(0,0,0,.78);
   z-index:50;
   align-items:flex-end;
   justify-content:center;
 }
 
-.overlay.open{
+.overlay.open,
+.description-modal.show,
+.gallery-modal.show{
   display:flex;
 }
 
-.sheet{
+.sheet,
+.description-sheet{
   width:min(760px,100%);
   max-height:92vh;
   overflow:auto;
@@ -395,7 +398,8 @@ button{
   padding:18px 16px 28px;
 }
 
-.sheet-head{
+.sheet-head,
+.description-head{
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -405,8 +409,30 @@ button{
   margin:0;
 }
 
-.close{
+.close,
+.description-close{
   padding:8px 12px;
+}
+
+.description-modal{
+  z-index:10000;
+}
+
+.description-sheet{
+  max-height:85vh;
+}
+
+.description-title{
+  font-size:20px;
+  font-weight:850;
+}
+
+.description-text{
+  margin-top:16px;
+  color:#d8c5d5;
+  font-size:14px;
+  line-height:1.6;
+  white-space:pre-wrap;
 }
 
 .cart-item{
@@ -450,8 +476,6 @@ button{
   cursor:not-allowed;
 }
 
-/* TELEGRAM */
-
 .telegram-line{
   background:rgba(167,108,255,.10);
   border:1px solid var(--line);
@@ -462,12 +486,6 @@ button{
   margin-bottom:2px;
 }
 
-.telegram-line b{
-  color:#fff;
-}
-
-/* TOTAL */
-
 .total{
   display:flex;
   justify-content:space-between;
@@ -475,8 +493,6 @@ button{
   font-weight:850;
   padding:16px 0;
 }
-
-/* CHECKOUT */
 
 .checkout{
   display:grid;
@@ -500,17 +516,12 @@ button{
 }
 
 .submit{
-  border:0;
-  background:linear-gradient(90deg,var(--pink),var(--violet));
-  color:#fff;
-  font-weight:800;
-  border-radius:14px;
+  width:100%;
   padding:13px;
 }
 
 .submit:disabled{
   opacity:.6;
-  cursor:not-allowed;
 }
 
 .note{
@@ -524,84 +535,10 @@ button{
   padding:30px 10px;
 }
 
-.success b{
-  font-size:20px;
-}
-
-/* DESCRIPTION */
-
-.description-modal{
-  position:fixed;
-  inset:0;
-  z-index:10000;
-  background:rgba(0,0,0,.78);
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-}
-
-.description-modal.show{
-  display:flex;
-}
-
-.description-sheet{
-  width:min(760px,100%);
-  max-height:85vh;
-  overflow:auto;
-  background:#0c0710;
-  border:1px solid var(--line);
-  border-radius:24px 24px 0 0;
-  padding:20px 18px 28px;
-  box-shadow:0 -10px 40px rgba(0,0,0,.45);
-}
-
-.description-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-}
-
-.description-title{
-  font-size:20px;
-  font-weight:850;
-  line-height:1.2;
-}
-
-.description-close{
-  flex:0 0 auto;
-  width:38px;
-  height:38px;
-  border:1px solid var(--line);
-  background:#160d1b;
-  color:#fff;
-  border-radius:50%;
-  font-size:23px;
-}
-
-.description-text{
-  margin-top:16px;
-  color:#d8c5d5;
-  font-size:14px;
-  line-height:1.6;
-  white-space:pre-wrap;
-}
-
-/* PHOTO GALLERY */
-
 .gallery-modal{
-  position:fixed;
-  inset:0;
   z-index:9999;
-  background:rgba(0,0,0,.9);
-  display:none;
   align-items:center;
-  justify-content:center;
   padding:20px;
-}
-
-.gallery-modal.show{
-  display:flex;
 }
 
 .gallery-box{
@@ -660,8 +597,6 @@ button{
   object-fit:cover;
 }
 
-/* DESKTOP */
-
 @media(min-width:650px){
 
   .grid{
@@ -672,20 +607,12 @@ button{
     height:190px;
   }
 
-  .overlay{
-    align-items:center;
-  }
-
-  .sheet{
-    border-radius:24px;
-    max-height:88vh;
-  }
-
+  .overlay,
   .description-modal{
     align-items:center;
-    padding:20px;
   }
 
+  .sheet,
   .description-sheet{
     border-radius:24px;
   }
@@ -712,7 +639,6 @@ onclick="loadProducts()">
 
 </header>
 
-
 <section class="hero">
 
 <h1>
@@ -738,7 +664,6 @@ behavior:'smooth'
 
 </section>
 
-
 <section
 class="section"
 id="catalog">
@@ -757,7 +682,6 @@ id="productCount">
 
 </div>
 
-
 <div class="search-wrap">
 
 <input
@@ -768,7 +692,6 @@ placeholder="🔎 Поиск по каталогу..."
 autocomplete="off">
 
 </div>
-
 
 <div class="categories">
 
@@ -806,7 +729,6 @@ autocomplete="off">
 
 </div>
 
-
 <div
 id="products"
 class="grid">
@@ -820,9 +742,6 @@ class="grid">
 </section>
 
 </div>
-
-
-<!-- НИЖНЕЕ МЕНЮ -->
 
 <nav class="bottom">
 
@@ -843,7 +762,6 @@ behavior:'smooth'
 
 </button>
 
-
 <button
 class="nav"
 onclick="
@@ -859,7 +777,6 @@ behavior:'smooth'
 Каталог
 
 </button>
-
 
 <button
 class="nav"
@@ -881,9 +798,6 @@ id="navCount">
 </div>
 
 </nav>
-
-
-<!-- КОРЗИНА -->
 
 <div
 class="overlay"
@@ -915,9 +829,6 @@ onclick="closeCart()">
 
 </div>
 
-
-<!-- ОПИСАНИЕ ТОВАРА -->
-
 <div
 id="descriptionModal"
 class="description-modal"
@@ -936,7 +847,7 @@ class="description-title">
 </div>
 
 <button
-class="description-close"
+class="description-close close"
 onclick="closeDescription()">
 ×
 </button>
@@ -951,9 +862,6 @@ class="description-text">
 </div>
 
 </div>
-
-
-<!-- ГАЛЕРЕЯ -->
 
 <div
 id="galleryModal"
@@ -986,7 +894,6 @@ class="gallery-thumbs">
 
 </div>
 
-
 <script>
 
 let products=[];
@@ -995,410 +902,284 @@ let currentCategory='all';
 
 try{
 
-  cart=JSON.parse(
-    localStorage.getItem(
-      'seouldrop_cart'
-    )||'{}'
-  );
+cart=JSON.parse(
+localStorage.getItem(
+'seouldrop_cart'
+)||'{}'
+);
 
 }catch{
 
-  cart={};
+cart={};
 
 }
-
-
-/* FALLBACK */
-
-const FALLBACK_PRODUCTS=[
-
-{
-  id:'dynamite',
-  name:'BTS — DYNAMITE',
-  price:5000,
-  category:'albums',
-  description:'BTS — DYNAMITE',
-  available:true,
-  status:'preorder',
-  stock:0,
-  image:''
-},
-
-{
-  id:'ynwa',
-  name:'BTS — You Never Walk Alone',
-  price:1925,
-  category:'albums',
-  description:'BTS — You Never Walk Alone',
-  available:true,
-  status:'in_stock',
-  stock:0,
-  image:''
-},
-
-{
-  id:'butter',
-  name:'BTS — Butter',
-  price:3335,
-  category:'albums',
-  description:'BTS — Butter',
-  available:true,
-  status:'in_stock',
-  stock:0,
-  image:''
-}
-
-];
-
-
-/* TELEGRAM */
 
 function getTelegramUser(){
 
-  return (
-    window.Telegram &&
-    window.Telegram.WebApp &&
-    window.Telegram.WebApp.initDataUnsafe &&
-    window.Telegram.WebApp.initDataUnsafe.user
-  ) || null;
+return (
+window.Telegram &&
+window.Telegram.WebApp &&
+window.Telegram.WebApp.initDataUnsafe &&
+window.Telegram.WebApp.initDataUnsafe.user
+)||null;
 
 }
-
 
 function getTelegramUsername(){
 
-  const user=getTelegramUser();
+const user=getTelegramUser();
 
-  if(user && user.username){
-
-    return '@'+user.username;
-
-  }
-
-  return 'не указан';
-
+if(user && user.username){
+return '@'+user.username;
 }
 
+return 'не указан';
 
-/* HTML */
+}
 
 function escapeHtml(value){
 
-  return String(
-    value??''
-  ).replace(
-    /[&<>'"]/g,
-    function(c){
+return String(value??'').replace(
+/[&<>'"]/g,
+function(c){
 
-      return {
-
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        "'":'&#39;',
-        '"':'&quot;'
-
-      }[c];
-
-    }
-  );
+return {
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+"'":'&#39;',
+'"':'&quot;'
+}[c];
 
 }
+);
 
-
-/* STATUS */
+}
 
 function getStatus(product){
 
-  if(product.status){
-
-    return product.status;
-
-  }
-
-  if(product.available===false){
-
-    return 'out_of_stock';
-
-  }
-
-  return 'in_stock';
-
+if(product.status){
+return product.status;
 }
 
+if(product.available===false){
+return 'out_of_stock';
+}
 
-/* STOCK */
+return 'in_stock';
+
+}
 
 function getStock(product){
 
-  const stock=
-    Number(product.stock);
+const stock=Number(product.stock);
 
-  if(
-    !Number.isFinite(stock) ||
-    stock<0
-  ){
-
-    return 0;
-
-  }
-
-  return Math.floor(stock);
-
+if(!Number.isFinite(stock)||stock<0){
+return 0;
 }
 
+return Math.floor(stock);
 
-/* STATUS TEXT */
+}
 
 function getStatusText(product){
 
-  const status=
-    getStatus(product);
+const status=getStatus(product);
 
-  if(status==='preorder'){
-
-    return '🟡 Под заказ';
-
-  }
-
-  if(status==='out_of_stock'){
-
-    return '🔴 Нет в наличии';
-
-  }
-
-  const stock=
-    getStock(product);
-
-  if(stock>0){
-
-    return '🟢 В наличии · '+
-      stock+
-      ' шт.';
-
-  }
-
-  return '🔴 Нет в наличии';
-
+if(status==='preorder'){
+return '🟡 Под заказ';
 }
 
+if(status==='out_of_stock'){
+return '🔴 Нет в наличии';
+}
 
-/* CATEGORY */
+const stock=getStock(product);
+
+if(stock>0){
+return '🟢 В наличии · '+stock+' шт.';
+}
+
+return '🔴 Нет в наличии';
+
+}
 
 function categoryName(category){
 
-  const names={
+const names={
 
-    albums:'Альбомы',
-    photocards:'Карты',
-    merch:'Мерч',
-    cosmetics:'Косметика',
-    sweets:'Сладости',
-    vinyl:'Винил',
-    other:'Другое',
-    'Альбомы':'Альбомы'
+albums:'Альбомы',
+photocards:'Карты',
+merch:'Мерч',
+cosmetics:'Косметика',
+sweets:'Сладости',
+vinyl:'Винил',
+other:'Другое',
+'Альбомы':'Альбомы'
 
-  };
+};
 
-  return (
-    names[category] ||
-    category ||
-    'Товар'
-  );
+return names[category]||category||'Товар';
 
 }
-
-
-/* LOAD */
-
-async function loadProducts(){
-
-  const box=
-    document.getElementById(
-      'products'
-    );
-
-  box.innerHTML=
-    '<div class="loading">'+
-    'Загружаем каталог...'+
-    '</div>';
-
-  const controller=
-    new AbortController();
-
-  const timer=
-    setTimeout(
-      ()=>controller.abort(),
-      5000
-    );
-
-  try{
-
-    const response=
-      await fetch(
-        '/api/products?action=list&_='+
-        Date.now(),
-        {
-          cache:'no-store',
-          signal:controller.signal
-        }
-      );
-
-    clearTimeout(timer);
-
-    if(!response.ok){
-
-      throw new Error(
-        'HTTP '+response.status
-      );
-
-    }
-
-    const data=
-      await response.json();
-
-    if(
-      data &&
-      data.ok &&
-      Array.isArray(data.products)
-    ){
-
-      products=
-        data.products;
-
-    }else{
-
-      throw new Error(
-        'Неверный ответ API'
-      );
-
-    }
-
-    renderProducts();
-
-  }catch(error){
-
-    clearTimeout(timer);
-
-    products=
-      FALLBACK_PRODUCTS;
-
-    renderProducts();
-
-  }
-
-}
-
-
-/* PRODUCT IMAGES */
 
 function getProductImages(product){
 
-  if(
-    Array.isArray(product.images) &&
-    product.images.length
-  ){
+if(
+Array.isArray(product.images)&&
+product.images.length
+){
 
-    return product.images.filter(Boolean);
-
-  }
-
-  return product.image
-    ? [product.image]
-    : [];
+return product.images.filter(Boolean);
 
 }
 
+return product.image
+?[product.image]
+:[];
 
-/* GALLERY */
+}
+
+async function loadProducts(){
+
+const box=document.getElementById('products');
+
+box.innerHTML=
+'<div class="loading">'+
+'Загружаем каталог...'+
+'</div>';
+
+const controller=new AbortController();
+
+const timer=setTimeout(
+()=>controller.abort(),
+5000
+);
+
+try{
+
+const response=await fetch(
+'/api/products?action=list&_='+
+Date.now(),
+{
+cache:'no-store',
+signal:controller.signal
+}
+);
+
+clearTimeout(timer);
+
+if(!response.ok){
+throw new Error(
+'HTTP '+response.status
+);
+}
+
+const data=await response.json();
+
+if(
+data &&
+data.ok &&
+Array.isArray(data.products)
+){
+
+products=data.products;
+
+}else{
+
+throw new Error(
+'Неверный ответ API'
+);
+
+}
+
+renderProducts();
+
+}catch(error){
+
+clearTimeout(timer);
+
+products=[];
+
+renderProducts();
+
+}
+
+}
 
 let galleryImages=[];
 let galleryIndex=0;
 
-
 function openGallery(
-  images,
-  index=0
+images,
+index=0
 ){
 
-  galleryImages=
-    Array.isArray(images)
-    ? images.filter(Boolean)
-    : [];
+galleryImages=
+Array.isArray(images)
+?images.filter(Boolean)
+:[];
 
-  if(!galleryImages.length)
-    return;
+if(!galleryImages.length)
+return;
 
-  galleryIndex=
-    Math.max(
-      0,
-      Math.min(
-        index,
-        galleryImages.length-1
-      )
-    );
+galleryIndex=Math.max(
+0,
+Math.min(
+index,
+galleryImages.length-1
+)
+);
 
-  const modal=
-    document.getElementById(
-      'galleryModal'
-    );
+document
+.getElementById('galleryModal')
+.classList.add('show');
 
-  if(!modal)
-    return;
-
-  modal.classList.add('show');
-
-  setGalleryImage(
-    galleryIndex
-  );
+setGalleryImage(
+galleryIndex
+);
 
 }
 
-
 function setGalleryImage(index){
 
-  if(!galleryImages.length)
-    return;
+if(!galleryImages.length)
+return;
 
-  galleryIndex=
-    Math.max(
-      0,
-      Math.min(
-        index,
-        galleryImages.length-1
-      )
-    );
+galleryIndex=Math.max(
+0,
+Math.min(
+index,
+galleryImages.length-1
+)
+);
 
-  const main=
-    document.getElementById(
-      'galleryMainImage'
-    );
+const main=document.getElementById(
+'galleryMainImage'
+);
 
-  const thumbs=
-    document.getElementById(
-      'galleryThumbs'
-    );
+const thumbs=document.getElementById(
+'galleryThumbs'
+);
 
-  if(main){
+if(main){
 
-    main.src=
-      galleryImages[
-        galleryIndex
-      ];
+main.src=
+galleryImages[
+galleryIndex
+];
 
-  }
+}
 
-  if(thumbs){
+if(thumbs){
 
-    thumbs.innerHTML=
-      galleryImages.map(
-        (src,i)=>`
+thumbs.innerHTML=
+galleryImages.map(
+(src,i)=>`
 
 <button
 class="gallery-thumb ${
-  i===galleryIndex
-  ?'active'
-  :''
+i===galleryIndex?'active':''
 }"
 onclick="setGalleryImage(${i})">
 
@@ -1409,1475 +1190,218 @@ alt="">
 </button>
 
 `
-      ).join('');
-
-  }
+).join('');
 
 }
 
+}
 
 function closeGallery(){
 
-  const modal=
-    document.getElementById(
-      'galleryModal'
-    );
-
-  if(modal){
-
-    modal.classList.remove(
-      'show'
-    );
-
-  }
+document
+.getElementById('galleryModal')
+.classList.remove(
+'show'
+);
 
 }
-
-
-/* DESCRIPTION */
 
 function openDescription(product){
 
-  const modal=
-    document.getElementById(
-      'descriptionModal'
-    );
+const modal=
+document.getElementById(
+'descriptionModal'
+);
 
-  const title=
-    document.getElementById(
-      'descriptionTitle'
-    );
+const title=
+document.getElementById(
+'descriptionTitle'
+);
 
-  const text=
-    document.getElementById(
-      'descriptionText'
-    );
+const text=
+document.getElementById(
+'descriptionText'
+);
 
-  if(
-    !modal ||
-    !title ||
-    !text
-  )
-    return;
+title.textContent=
+product.name||
+'Товар';
 
-  title.textContent=
-    product.name ||
-    'Товар';
+text.textContent=
+String(
+product.description||
+''
+).trim()||
+'Описание товара пока не добавлено.';
 
-  const description=
-    String(
-      product.description ||
-      ''
-    ).trim();
-
-  text.textContent=
-    description ||
-    'Описание товара пока не добавлено.';
-
-  modal.classList.add(
-    'show'
-  );
+modal.classList.add(
+'show'
+);
 
 }
-
 
 function closeDescription(){
 
-  const modal=
-    document.getElementById(
-      'descriptionModal'
-    );
-
-  if(modal){
-
-    modal.classList.remove(
-      'show'
-    );
-
-  }
+document
+.getElementById(
+'descriptionModal'
+)
+.classList.remove(
+'show'
+);
 
 }
-
-
-/* RENDER */
 
 function renderProducts(){
 
-  const searchEl=
-    document.getElementById(
-      'searchInput'
-    );
-
-  const search=
-    (
-      searchEl?.value ||
-      ''
-    )
-    .trim()
-    .toLowerCase();
-
-
-  const list=
-    products.filter(
-      product=>{
-
-        const category=
-          product.category ||
-          '';
-
-        const categoryOk=
-          currentCategory==='all' ||
-          category===currentCategory ||
-          (
-            currentCategory==='albums' &&
-            category==='Альбомы'
-          );
-
-        if(!categoryOk)
-          return false;
-
-
-        const haystack=[
-
-          product.name,
-          product.title,
-          product.description,
-          product.artist,
-          product.group,
-          product.category
-
-        ]
-        .filter(Boolean)
-        .join(' ')
-        .toLowerCase();
-
-
-        return !search ||
-          haystack.includes(
-            search
-          );
-
-      }
-    );
-
-
-  document.getElementById(
-    'productCount'
-  ).textContent=
-    products.length+
-    ' товар'+
-    (
-      products.length===1
-      ?''
-      :'а'
-    );
-
-
-  const box=
-    document.getElementById(
-      'products'
-    );
-
-
-  if(!list.length){
-
-    box.innerHTML=
-      '<div class="empty">'+
-      'В этой категории пока нет товаров.'+
-      '</div>';
-
-    return;
-
-  }
-
-
-  box.innerHTML='';
-
-
-  list.forEach(
-    product=>{
-
-      const status=
-        getStatus(product);
-
-      const stock=
-        getStock(product);
-
-      const disabled=
-        status==='out_of_stock' ||
-        (
-          status==='in_stock' &&
-          stock<=0
-        );
-
-
-      const card=
-        document.createElement(
-          'article'
-        );
-
-      card.className=
-        'card';
-
-
-      const images=
-        getProductImages(
-          product
-        );
-
-
-      let currentImageIndex=0;
-
-
-      let image='';
-
-
-      if(images.length){
-
-        image=
-          '<img src="'+
-          escapeHtml(
-            images[0]
-          )+
-          '" alt="">';
-
-      }else{
-
-        image=
-          '<div class="placeholder">'+
-          '💿'+
-          '</div>';
-
-      }
-
-
-      let statusClass=
-        'green';
-
-      if(status==='preorder'){
-
-        statusClass=
-          'yellow';
-
-      }
-
-      if(
-        status==='out_of_stock' ||
-        (
-          status==='in_stock' &&
-          stock<=0
-        )
-      ){
-
-        statusClass=
-          'red';
-
-      }
-
-
-      let buttonText='';
-
-
-      if(status==='preorder'){
-
-        buttonText=
-          '＋ Заказать';
-
-      }else if(disabled){
-
-        buttonText=
-          'Нет в наличии';
-
-      }else{
-
-        buttonText=
-          '＋ В корзину';
-
-      }
-
-
-      card.innerHTML=`
-
-<div class="pic">
-
-${image}
-
-${
-  images.length>1
-  ?
-  `
-  <div class="gallery-dots">
-
-  ${
-    images.map(
-      (_,i)=>
-      `
-      <span
-      class="gallery-dot ${
-        i===0?'active':''
-      }">
-      </span>
-      `
-    ).join('')
-  }
-
-  </div>
-  `
-  :
-  ''
-}
-
-</div>
-
-
-<div class="info">
-
-<div class="name">
-
-${escapeHtml(
-  product.name ||
-  'Товар'
-)}
-
-</div>
-
-
-<div class="meta">
-
-${escapeHtml(
-  categoryName(
-    product.category
-  )
-)}
-
-</div>
-
-
-<div class="price">
-
-${Number(
-  product.price||0
-).toLocaleString('ru-RU')} ₽
-
-</div>
-
-
-<div class="status ${statusClass}">
-
-${getStatusText(
-  product
-)}
-
-</div>
-
-
-<button
-class="add ${
-  status==='preorder'
-  ?'preorder'
-  :''
-} ${
-  disabled
-  ?'disabled'
-  :''
-}"
-${disabled?'disabled':''}>
-
-${buttonText}
-
-</button>
-
-</div>
-
-`;
-
-
-      /* ФОТО */
-
-      const galleryImg=
-        card.querySelector(
-          '.pic img'
-        );
-
-      const galleryPic=
-        card.querySelector(
-          '.pic'
-        );
-
-      const dots=[
-        ...card.querySelectorAll(
-          '.gallery-dot'
-        )
-      ];
-
-
-      if(
-        galleryImg &&
-        galleryPic &&
-        images.length>1
-      ){
-
-        let startX=0;
-        let startY=0;
-
-
-        galleryPic.addEventListener(
-          'touchstart',
-          event=>{
-
-            const t=
-              event.touches[0];
-
-            startX=
-              t.clientX;
-
-            startY=
-              t.clientY;
-
-          },
-          {passive:true}
-        );
-
-
-        galleryPic.addEventListener(
-          'touchend',
-          event=>{
-
-            const t=
-              event.changedTouches[0];
-
-            const dx=
-              t.clientX-startX;
-
-            const dy=
-              t.clientY-startY;
-
-
-            if(
-              Math.abs(dx)<45 ||
-              Math.abs(dx)<
-              Math.abs(dy)*1.2
-            )
-              return;
-
-
-            currentImageIndex=
-              Math.max(
-                0,
-                Math.min(
-                  images.length-1,
-                  currentImageIndex+
-                  (
-                    dx<0
-                    ?1
-                    :-1
-                  )
-                )
-              );
-
-
-            galleryImg.src=
-              images[
-                currentImageIndex
-              ];
-
-
-            dots.forEach(
-              (dot,i)=>
-                dot.classList.toggle(
-                  'active',
-                  i===
-                  currentImageIndex
-                )
-            );
-
-          },
-          {passive:true}
-        );
-
-
-        galleryPic.addEventListener(
-          'click',
-          ()=>{
-            openGallery(
-              images,
-              currentImageIndex
-            );
-          }
-        );
-
-      }
-
-
-      /* КОРЗИНА */
-
-      const button=
-        card.querySelector(
-          '.add'
-        );
-
-
-      if(!disabled){
-
-        button.addEventListener(
-          'click',
-          event=>{
-
-            event.stopPropagation();
-
-            addToCart(
-              product.id
-            );
-
-          }
-        );
-
-      }
-
-
-      /* ОПИСАНИЕ */
-
-      card.addEventListener(
-        'click',
-        event=>{
-
-          if(
-            event.target.closest(
-              '.add'
-            )
-          )
-            return;
-
-          if(
-            event.target.closest(
-              '.pic'
-            )
-          )
-            return;
-
-          openDescription(
-            product
-          );
-
-        }
-      );
-
-
-      box.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-/* CART */
-
-function saveCart(){
-
-  localStorage.setItem(
-    'seouldrop_cart',
-    JSON.stringify(cart)
-  );
-
-  updateCount();
-
-}
-
-
-function updateCount(){
-
-  const el=
-    document.getElementById(
-      'navCount'
-    );
-
-  if(!el)
-    return;
-
-  el.textContent=
-    Object.values(cart).reduce(
-      (a,b)=>
-        a+Number(b||0),
-      0
-    );
-
-}
-
-
-/* ADD TO CART */
-
-function addToCart(id){
-
-  const product=
-    products.find(
-      item=>
-        String(item.id)===
-        String(id)
-    );
-
-  if(!product)
-    return;
-
-
-  const status=
-    getStatus(product);
-
-
-  if(status==='out_of_stock')
-    return;
-
-
-  if(status==='preorder'){
-
-    cart[id]=
-      (cart[id]||0)+1;
-
-    saveCart();
-
-    return;
-
-  }
-
-
-  const stock=
-    getStock(product);
-
-  const current=
-    Number(
-      cart[id]||0
-    );
-
-
-  if(current>=stock){
-
-    alert(
-      'Больше этого товара '+
-      'добавить нельзя.\n\n'+
-      'В наличии: '+
-      stock+
-      ' шт.'
-    );
-
-    return;
-
-  }
-
-
-  cart[id]=
-    current+1;
-
-  saveCart();
-
-}
-
-
-/* QUANTITY */
-
-function changeQty(
-  id,
-  difference
-){
-
-  const product=
-    products.find(
-      item=>
-        String(item.id)===
-        String(id)
-    );
-
-  if(!product)
-    return;
-
-
-  const status=
-    getStatus(product);
-
-  const current=
-    Number(
-      cart[id]||0
-    );
-
-  const newQuantity=
-    current+difference;
-
-
-  if(newQuantity<=0){
-
-    delete cart[id];
-
-    saveCart();
-
-    renderCart();
-
-    return;
-
-  }
-
-
-  if(status==='preorder'){
-
-    cart[id]=
-      newQuantity;
-
-    saveCart();
-
-    renderCart();
-
-    return;
-
-  }
-
-
-  const stock=
-    getStock(product);
-
-
-  if(newQuantity>stock){
-
-    alert(
-      'Нельзя добавить больше товара.\n\n'+
-      'В наличии: '+
-      stock+
-      ' шт.'
-    );
-
-    return;
-
-  }
-
-
-  cart[id]=
-    newQuantity;
-
-  saveCart();
-
-  renderCart();
-
-}
-
-
-/* SHOW CART */
-
-function showCart(){
-
-  renderCart();
-
-  document
-    .getElementById(
-      'cartOverlay'
-    )
-    .classList.add(
-      'open'
-    );
-
-}
-
-
-/* CLOSE CART */
-
-function closeCart(){
-
-  document
-    .getElementById(
-      'cartOverlay'
-    )
-    .classList.remove(
-      'open'
-    );
-
-}
-
-
-/* RENDER CART */
-
-function renderCart(){
-
-  const box=
-    document.getElementById(
-      'cartContent'
-    );
-
-
-  const items=
-    Object.entries(cart)
-    .map(
-      ([id,quantity])=>({
-
-        product:
-          products.find(
-            item=>
-              String(item.id)===
-              String(id)
-          ),
-
-        quantity:
-          Number(quantity)
-
-      })
-    )
-    .filter(
-      item=>item.product
-    );
-
-
-  if(!items.length){
-
-    box.innerHTML=
-      '<div class="empty">'+
-      'Корзина пока пуста.<br>'+
-      'Добавьте товары из каталога.'+
-      '</div>';
-
-    return;
-
-  }
-
-
-  const total=
-    items.reduce(
-      (sum,item)=>
-        sum+
-        Number(
-          item.product.price||0
-        )*
-        item.quantity,
-      0
-    );
-
-
-  const telegramUsername=
-    getTelegramUsername();
-
-
-  let html='';
-
-
-  items.forEach(
-    item=>{
-
-      const product=
-        item.product;
-
-      const status=
-        getStatus(product);
-
-      const stock=
-        getStock(product);
-
-      const isLimited=
-        status==='in_stock';
-
-      const plusDisabled=
-        isLimited &&
-        item.quantity>=stock;
-
-
-      html+=`
-
-<div class="cart-item">
-
-<div>
-
-<div class="cart-name">
-
-${escapeHtml(
-  product.name
-)}
-
-</div>
-
-<div class="cart-price">
-
-${Number(
-  product.price||0
-).toLocaleString('ru-RU')}
- ₽ × ${item.quantity}
-
-</div>
-
-${
-  isLimited
-  ?
-  `
-  <div class="cart-stock">
-  Осталось: ${stock} шт.
-  </div>
-  `
-  :
-  ''
-}
-
-</div>
-
-
-<div class="qty">
-
-<button
-data-minus="${escapeHtml(
-  product.id
-)}">
-
-−
-
-</button>
-
-<b>
-${item.quantity}
-</b>
-
-<button
-data-plus="${escapeHtml(
-  product.id
-)}"
-${plusDisabled?'disabled':''}>
-
-+
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-    }
-  );
-
-
-  html+=`
-
-<div class="total">
-
-<span>
-Итого
-</span>
-
-<span>
-${total.toLocaleString(
-  'ru-RU'
-)} ₽
-</span>
-
-</div>
-
-
-<div class="checkout">
-
-<div class="telegram-line">
-
-👤 Telegram:
-<b>
-${escapeHtml(
-  telegramUsername
-)}
-</b>
-
-</div>
-
-
-<input
-id="orderName"
-placeholder="Ваше имя *">
-
-
-<input
-id="orderPhone"
-placeholder="Телефон *"
-type="tel">
-
-
-<textarea
-id="orderAddress"
-placeholder="Адрес доставки *"></textarea>
-
-
-<textarea
-id="orderComment"
-placeholder="Комментарий к заказу"></textarea>
-
-
-<button
-class="submit"
-onclick="submitOrder()">
-
-Оформить заказ
-
-</button>
-
-
-<div class="note">
-
-🚚 Доставка рассчитывается отдельно.<br>
-Оплата сейчас не производится.<br>
-После отправки заказа мы свяжемся с вами для подтверждения.
-
-</div>
-
-</div>
-
-`;
-
-
-  box.innerHTML=
-    html;
-
-
-  box
-    .querySelectorAll(
-      '[data-minus]'
-    )
-    .forEach(
-      button=>{
-
-        button.onclick=
-          ()=>{
-            changeQty(
-              button.dataset.minus,
-              -1
-            );
-          };
-
-      }
-    );
-
-
-  box
-    .querySelectorAll(
-      '[data-plus]'
-    )
-    .forEach(
-      button=>{
-
-        button.onclick=
-          ()=>{
-            changeQty(
-              button.dataset.plus,
-              1
-            );
-          };
-
-      }
-    );
-
-}
-
-
-/* ORDER */
-
-async function submitOrder(){
-
-  const name=
-    document
-      .getElementById(
-        'orderName'
-      )
-      .value
-      .trim();
-
-  const phone=
-    document
-      .getElementById(
-        'orderPhone'
-      )
-      .value
-      .trim();
-
-  const address=
-    document
-      .getElementById(
-        'orderAddress'
-      )
-      .value
-      .trim();
-
-  const comment=
-    document
-      .getElementById(
-        'orderComment'
-      )
-      .value
-      .trim();
-
-
-  const items=
-    Object.entries(cart)
-    .map(
-      ([id,quantity])=>{
-
-        const product=
-          products.find(
-            item=>
-              String(item.id)===
-              String(id)
-          );
-
-        if(!product)
-          return null;
-
-        return {
-
-          id:
-            product.id,
-
-          имя:
-            product.name,
-
-          цена:
-            Number(
-              product.price||0
-            ),
-
-          количество:
-            Number(quantity)
-
-        };
-
-      }
-    )
-    .filter(Boolean);
-
-
-  const total=
-    items.reduce(
-      (sum,item)=>
-        sum+
-        item.цена*
-        item.количество,
-      0
-    );
-
-
-  if(
-    !name ||
-    !phone ||
-    !address ||
-    !items.length
-  ){
-
-    alert(
-      'Заполните имя, телефон и адрес.'
-    );
-
-    return;
-
-  }
-
-
-  /* ПРОВЕРКА ОСТАТКОВ */
-
-  for(
-    const item of items
-  ){
-
-    const product=
-      products.find(
-        p=>
-          String(p.id)===
-          String(item.id)
-      );
-
-    if(!product)
-      continue;
-
-
-    if(
-      getStatus(product)==='in_stock'
-    ){
-
-      const stock=
-        getStock(product);
-
-
-      if(
-        item.количество>stock
-      ){
-
-        alert(
-          'Товара "'+
-          product.name+
-          '" осталось только '+
-          stock+
-          ' шт.'
-        );
-
-        await loadProducts();
-
-        renderCart();
-
-        return;
-
-      }
-
-    }
-
-  }
-
-
-  const button=
-    document.querySelector(
-      '.submit'
-    );
-
-
-  button.disabled=true;
-
-  button.textContent=
-    'Отправляем заказ...';
-
-
-  try{
-
-    const telegramUser=
-      getTelegramUser();
-
-
-    const telegramData=
-      telegramUser
-      ?
-      {
-
-        id:
-          telegramUser.id,
-
-        имя_пользователя:
-          telegramUser.username,
-
-        имя:
-          telegramUser.first_name,
-
-        фамилия:
-          telegramUser.last_name
-
-      }
-      :
-      null;
-
-
-    const response=
-      await fetch(
-        '/api/create-order',
-        {
-
-          method:'POST',
-
-          headers:{
-            'Content-Type':
-              'application/json'
-          },
-
-          body:
-            JSON.stringify({
-
-              имя:name,
-
-              телефон:phone,
-
-              адрес:address,
-
-              комментарий:comment,
-
-              предметы:items,
-
-              общий:total,
-
-              telegramUser:
-                telegramData
-
-            })
-
-        }
-      );
-
-
-    const data=
-      await response.json();
-
-
-    if(
-      !response.ok ||
-      !data.хорошо
-    ){
-
-      throw new Error(
-        data.ошибка ||
-        'Не удалось отправить заказ'
-      );
-
-    }
-
-
-    cart={};
-
-    saveCart();
-
-
-    await loadProducts();
-
-
-    document.getElementById(
-      'cartContent'
-    ).innerHTML=`
-
-<div class="success">
-
-<b>
-✅ Заказ отправлен!
-</b>
-
-<p class="note">
-
-Мы получили ваш заказ
-и свяжемся с вами для подтверждения.
-
-</p>
-
-<button
-class="submit"
-onclick="closeCart()">
-
-Вернуться в каталог
-
-</button>
-
-</div>
-
-`;
-
-
-  }catch(error){
-
-    button.disabled=false;
-
-    button.textContent=
-      'Оформить заказ';
-
-
-    alert(
-      error.message ||
-      'Не удалось отправить заказ'
-    );
-
-  }
-
-}
-
-
-/* CATEGORIES */
-
-document
-  .querySelectorAll(
-    '.cat'
-  )
-  .forEach(
-    button=>{
-
-      button.addEventListener(
-        'click',
-        ()=>{
-
-          document
-            .querySelectorAll(
-              '.cat'
-            )
-            .forEach(
-              item=>
-                item.classList
-                  .remove(
-                    'active'
-                  )
-            );
-
-
-          button.classList.add(
-            'active'
-          );
-
-
-          currentCategory=
-            button.dataset.category;
-
-
-          renderProducts();
-
-        }
-      );
-
-    }
-  );
-
-
-/* SEARCH */
-
-const searchInput=
-  document.getElementById(
-    'searchInput'
-  );
-
-if(searchInput){
-
-  searchInput.addEventListener(
-    'input',
-    ()=>{
-      renderProducts();
-    }
-  );
-
-}
-
-
-/* KEYBOARD */
-
-document.addEventListener(
-  'keydown',
-  event=>{
-
-    if(event.key==='Escape'){
-
-      closeGallery();
-      closeDescription();
-
-    }
-
-  }
+const search=
+(
+document.getElementById(
+'searchInput'
+).value||''
+)
+.trim()
+.toLowerCase();
+
+const list=
+products.filter(
+product=>{
+
+const category=
+product.category||'';
+
+const categoryOk=
+currentCategory==='all'||
+category===currentCategory||
+(
+currentCategory==='albums'&&
+category==='Альбомы'
 );
 
+if(!categoryOk)
+return false;
 
-/* TELEGRAM */
+const haystack=[
 
-try{
+product.name,
+product.title,
+product.description,
+product.artist,
+product.group,
+product.category
 
-  if(
-    window.Telegram &&
-    window.Telegram.WebApp
-  ){
+]
+.filter(Boolean)
+.join(' ')
+.toLowerCase();
 
-    window.Telegram.WebApp.ready();
+return !search||
+haystack.includes(search);
 
-    window.Telegram.WebApp.expand();
+}
+);
 
-  }
+document.getElementById(
+'productCount'
+).textContent=
+products.length+
+' товар'+
+(
+products.length===1
+?''
+:'а'
+);
 
-}catch(error){
+const box=
+document.getElementById(
+'products'
+);
 
-  console.log(
-    'Telegram WebApp:',
-    error
-  );
+if(!list.length){
+
+box.innerHTML=
+'<div class="empty">'+
+'Товаров не найдено.'+
+'</div>';
+
+return;
 
 }
 
+box.innerHTML='';
 
-/* START */
+list.forEach(
+product=>{
 
-updateCount();
+const status=
+getStatus(product);
 
-loadProducts();
+const stock=
+getStock(product);
 
-</script>
+const disabled=
+status==='out_of_stock'||
+(
+status==='in_stock'&&
+stock<=0
+);
 
-</body>
-</html>
+const images=
+getProductImages(product);
+
+const card=
+document.createElement(
+'article'
+);
+
+card.className='card';
+
+let image='';
+
+if(images.length){
+
+image=
+'<img src="'+
+escapeHtml(images[0])+
+'" alt="">';
+
+}else{
+
+image=
+'<div class="placeholder">'+
+'💿'+
+'</div>';
+
+}
+
+let statusClass='green';
+
+if(status==='preorder'){
+statusClass='yellow';
+}
+
+if(disabled){
+statusClass='red';
+}
+
+let buttonText='';
+
+if(status==='preorder'){
+
+buttonText='＋ Заказать';
+
+}else if(disabled){
+
+buttonText='Нет в наличии';
+
+}else{
+
+buttonText='＋ В корзину';
+
+}
+
+/* ВОТ ЗДЕСЬ ОПИСАНИЕ ВЫВОДИТСЯ ПРЯМО В КАРТОЧКЕ */
+
+card.innerHTML=`
+
+<div class="pic
