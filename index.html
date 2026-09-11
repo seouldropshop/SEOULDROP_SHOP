@@ -48,8 +48,6 @@ button{-webkit-tap-highlight-color:transparent}
   padding:16px 14px 100px;
 }
 
-/* HEADER */
-
 .header{
   display:flex;
   align-items:center;
@@ -90,13 +88,7 @@ button{-webkit-tap-highlight-color:transparent}
   margin-top:2px;
 }
 
-.header-actions{
-  display:flex;
-  align-items:center;
-  gap:7px;
-}
-
-.header-button{
+.cart-top{
   position:relative;
   border:1px solid var(--line);
   background:var(--panel);
@@ -108,12 +100,7 @@ button{-webkit-tap-highlight-color:transparent}
   font-size:20px;
 }
 
-.favorite-top{
-  font-size:21px;
-}
-
-.cart-badge,
-.favorite-badge{
+.cart-badge{
   position:absolute;
   right:-4px;
   top:-5px;
@@ -129,8 +116,6 @@ button{-webkit-tap-highlight-color:transparent}
   font-size:10px;
   font-weight:800;
 }
-
-/* HERO */
 
 .hero{
   border:1px solid var(--line);
@@ -170,8 +155,6 @@ button{-webkit-tap-highlight-color:transparent}
   cursor:pointer;
 }
 
-/* SEARCH */
-
 .search{margin-top:18px}
 
 .search-input{
@@ -186,8 +169,6 @@ button{-webkit-tap-highlight-color:transparent}
 }
 
 .search-input::placeholder{color:#8e7d8d}
-
-/* SECTIONS */
 
 .section{margin-top:22px}
 
@@ -207,8 +188,6 @@ button{-webkit-tap-highlight-color:transparent}
   color:var(--muted);
   font-size:11px;
 }
-
-/* CATEGORIES */
 
 .categories{
   display:flex;
@@ -236,219 +215,101 @@ button{-webkit-tap-highlight-color:transparent}
   color:#fff;
 }
 
-/* PRODUCTS */
-
 .grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:13px;
+  gap:12px;
 }
 
 .card{
   position:relative;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.055),
-      rgba(255,79,179,.045) 45%,
-      rgba(167,108,255,.035)
-    ),
-    var(--panel);
-  border:1px solid rgba(255,145,209,.18);
-  border-radius:22px;
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid var(--line);
+  border-radius:19px;
   overflow:hidden;
   cursor:pointer;
-  box-shadow:
-    0 8px 30px rgba(0,0,0,.25),
-    inset 0 1px 0 rgba(255,255,255,.035);
-  transition:
-    transform .18s ease,
-    border-color .18s ease,
-    box-shadow .18s ease;
 }
-
-.card:active{
-  transform:scale(.985);
-}
-
-.card:hover{
-  border-color:rgba(255,145,209,.38);
-  box-shadow:
-    0 12px 38px rgba(0,0,0,.34),
-    0 0 24px rgba(255,79,179,.08);
-}
-
-/* PRODUCT PHOTO */
 
 .pic{
   position:relative;
-  height:205px;
+  height:180px;
   display:flex;
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(
-      circle at 50% 45%,
-      rgba(255,79,179,.18),
-      transparent 48%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(167,108,255,.12),
-      transparent 40%
-    ),
+    radial-gradient(circle,rgba(255,79,179,.18),transparent 52%),
     #09050b;
   overflow:hidden;
-}
-
-.pic:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(
-      180deg,
-      transparent 55%,
-      rgba(0,0,0,.18)
-    );
 }
 
 .pic img{
   width:100%;
   height:100%;
   object-fit:contain;
-  padding:9px;
-  transition:transform .25s ease;
-  position:relative;
-  z-index:1;
+  padding:10px;
 }
-
-.card:hover .pic img{
-  transform:scale(1.035);
-}
-
-/* FAVORITE */
-
-.favorite-button{
-  position:absolute;
-  top:9px;
-  right:9px;
-  z-index:10;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(5,3,8,.68);
-  backdrop-filter:blur(8px);
-  color:#fff;
-  font-size:19px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:
-    transform .18s ease,
-    background .18s ease;
-}
-
-.favorite-button:active{
-  transform:scale(.88);
-}
-
-.favorite-button.active{
-  background:rgba(255,79,179,.2);
-  border-color:rgba(255,145,209,.5);
-  color:var(--pink2);
-}
-
-/* PHOTO ARROWS */
 
 .photo-arrow{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  width:31px;
-  height:31px;
+  width:30px;
+  height:30px;
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(5,3,8,.68);
-  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.5);
   color:#fff;
-  z-index:5;
+  z-index:3;
   cursor:pointer;
-  font-size:20px;
-  line-height:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
-.photo-arrow.left{left:8px}
-.photo-arrow.right{right:8px}
-
-/* PHOTO DOTS */
+.photo-arrow.left{left:7px}
+.photo-arrow.right{right:7px}
 
 .photo-dots{
   position:absolute;
-  bottom:8px;
+  bottom:7px;
   left:0;
   right:0;
   display:flex;
   justify-content:center;
-  gap:5px;
-  z-index:5;
+  gap:4px;
+  z-index:3;
 }
 
 .photo-dot{
-  width:6px;
-  height:6px;
+  width:5px;
+  height:5px;
   border-radius:50%;
-  background:rgba(255,255,255,.38);
-  box-shadow:0 1px 4px rgba(0,0,0,.4);
+  background:rgba(255,255,255,.35);
 }
 
-.photo-dot.active{
-  background:#fff;
-  transform:scale(1.15);
-}
+.photo-dot.active{background:#fff}
 
-/* PRODUCT INFO */
-
-.info{
-  padding:13px 13px 14px;
-}
+.info{padding:12px}
 
 .name{
-  font-weight:800;
+  font-weight:750;
   font-size:14px;
   min-height:38px;
   line-height:1.35;
-  letter-spacing:-.01em;
 }
 
 .meta{
   color:var(--muted);
-  font-size:10px;
-  margin:5px 0 9px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  font-size:11px;
+  margin:4px 0 8px;
 }
 
 .price{
-  display:inline-flex;
-  align-items:center;
-  font-size:19px;
-  font-weight:900;
-  letter-spacing:-.02em;
-  margin-bottom:2px;
+  font-size:17px;
+  font-weight:850;
 }
 
 .description{
   color:#cbb7c7;
   font-size:11px;
-  line-height:1.45;
+  line-height:1.4;
   margin-top:7px;
   display:-webkit-box;
   -webkit-box-orient:vertical;
@@ -464,88 +325,34 @@ button{-webkit-tap-highlight-color:transparent}
   background:none;
   color:var(--pink2);
   font-size:11px;
-  font-weight:700;
   cursor:pointer;
 }
-
-/* STOCK BADGE */
-
-.status{
-  display:inline-flex;
-  align-items:center;
-  width:max-content;
-  max-width:100%;
-  margin-top:8px;
-  padding:5px 8px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:750;
-  line-height:1;
-  border:1px solid transparent;
-}
-
-.status.instock{
-  color:var(--green);
-  background:rgba(91,228,155,.08);
-  border-color:rgba(91,228,155,.16);
-}
-
-.status.preorder{
-  color:var(--yellow);
-  background:rgba(255,214,90,.08);
-  border-color:rgba(255,214,90,.16);
-}
-
-.status.out{
-  color:var(--red);
-  background:rgba(255,99,124,.08);
-  border-color:rgba(255,99,124,.16);
-}
-
-/* ADD */
 
 .add{
   width:100%;
-  margin-top:10px;
-  border:1px solid rgba(255,145,209,.28);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,79,179,.17),
-      rgba(167,108,255,.11)
-    );
+  margin-top:9px;
+  border:1px solid rgba(255,145,209,.32);
+  background:rgba(255,79,179,.1);
   color:#fff;
-  border-radius:13px;
-  padding:10px 9px;
+  border-radius:12px;
+  padding:9px;
   cursor:pointer;
-  font-weight:800;
-  font-size:12px;
-  transition:
-    background .18s ease,
-    transform .18s ease,
-    border-color .18s ease;
-}
-
-.add:active{
-  transform:scale(.98);
-}
-
-.add:not(.disabled):hover{
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,79,179,.28),
-      rgba(167,108,255,.2)
-    );
-  border-color:rgba(255,145,209,.5);
+  font-weight:700;
 }
 
 .add.disabled{
-  opacity:.4;
+  opacity:.45;
   cursor:not-allowed;
 }
 
-/* MESSAGE */
+.status{
+  margin-top:6px;
+  font-size:11px;
+}
+
+.status.instock{color:var(--green)}
+.status.preorder{color:var(--yellow)}
+.status.out{color:var(--red)}
 
 .message{
   border:1px solid var(--line);
@@ -558,8 +365,6 @@ button{-webkit-tap-highlight-color:transparent}
 }
 
 .message strong{color:#fff}
-
-/* BOTTOM */
 
 .bottom{
   position:fixed;
@@ -609,8 +414,6 @@ button{-webkit-tap-highlight-color:transparent}
   font-size:10px;
   margin-left:3px;
 }
-
-/* MODALS */
 
 .modal,
 .product-modal{
@@ -663,8 +466,6 @@ button{-webkit-tap-highlight-color:transparent}
   font-size:22px;
   cursor:pointer;
 }
-
-/* FULL PRODUCT */
 
 .product-modal{
   z-index:115;
@@ -794,56 +595,6 @@ button{-webkit-tap-highlight-color:transparent}
   padding:12px;
 }
 
-/* FAVORITES MODAL */
-
-.favorite-item{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  background:rgba(255,255,255,.02);
-  margin-bottom:9px;
-}
-
-.favorite-thumb{
-  width:62px;
-  height:62px;
-  border-radius:12px;
-  object-fit:contain;
-  background:#09050b;
-  flex-shrink:0;
-}
-
-.favorite-item-info{
-  flex:1;
-  min-width:0;
-}
-
-.favorite-item-name{
-  font-size:13px;
-  font-weight:750;
-  line-height:1.35;
-}
-
-.favorite-item-price{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:4px;
-}
-
-.favorite-remove{
-  border:0;
-  background:none;
-  color:var(--pink2);
-  font-size:20px;
-  cursor:pointer;
-  padding:6px;
-}
-
-/* GALLERY */
-
 .gallery-modal{
   position:fixed;
   inset:0;
@@ -899,8 +650,6 @@ button{-webkit-tap-highlight-color:transparent}
 
 .gallery-arrow.left{left:14px}
 .gallery-arrow.right{right:14px}
-
-/* CART */
 
 .cart-items{
   display:flex;
@@ -985,8 +734,6 @@ button{-webkit-tap-highlight-color:transparent}
 
 .checkout:disabled{opacity:.45}
 
-/* FORM */
-
 .form{
   display:flex;
   flex-direction:column;
@@ -1024,56 +771,14 @@ button{-webkit-tap-highlight-color:transparent}
   margin-bottom:12px;
 }
 
-/* MOBILE */
-
-@media(max-width:420px){
-
-  .grid{
-    gap:10px;
-  }
-
-  .pic{
-    height:185px;
-  }
-
-  .info{
-    padding:11px;
-  }
-
-  .name{
-    font-size:13px;
-  }
-
-  .price{
-    font-size:17px;
-  }
-
-  .add{
-    padding:9px 7px;
-    font-size:11px;
-  }
-
-  .favorite-button{
-    width:34px;
-    height:34px;
-    font-size:18px;
-  }
-
-}
-
-/* TABLET / DESKTOP */
-
 @media(min-width:650px){
-
   .grid{
     grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:14px;
   }
 
   .pic{
-    height:205px;
+    height:190px;
   }
-
 }
 </style>
 </head>
@@ -1100,26 +805,2449 @@ onerror="this.style.display='none'"
 
 </div>
 
-<div class="header-actions">
-
 <button
-class="header-button favorite-top"
-type="button"
-onclick="openFavorites()"
->
-❤️
-<span
-id="favoriteBadge"
-class="favorite-badge"
->0</span>
-</button>
-
-<button
-class="header-button"
+class="cart-top"
 type="button"
 onclick="openCart()"
 >
 🛒
 <span
 id="cartBadge"
-class="cart-b
+class="cart-badge"
+>0</span>
+</button>
+
+</header>
+
+<section class="hero">
+
+<h1>
+K-POP из Кореи<br>
+с любовью 💜
+</h1>
+
+<p>
+Оригинальные альбомы, винил, карты,
+мерч, косметика и сладости из Кореи.
+</p>
+
+<button
+class="cta"
+type="button"
+onclick="scrollToCatalog()"
+>
+🛍 Смотреть каталог
+</button>
+
+</section>
+
+<div class="search">
+
+<input
+id="searchInput"
+class="search-input"
+type="search"
+placeholder="🔎 Поиск товара..."
+autocomplete="off"
+>
+
+</div>
+
+<section
+id="catalogSection"
+class="section"
+>
+
+<div class="section-head">
+
+<h2>Каталог</h2>
+
+<div
+id="productCount"
+class="product-count"
+>
+Загрузка...
+</div>
+
+</div>
+
+<div
+id="categories"
+class="categories"
+></div>
+
+<div
+id="products"
+class="grid"
+>
+
+<div class="message">
+Загружаем каталог...
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<nav class="bottom">
+
+<div class="bottom-inner">
+
+<button
+class="nav active"
+onclick="scrollToCatalog()"
+>
+<strong>🏠</strong>
+Каталог
+</button>
+
+<button
+class="nav"
+onclick="openCart()"
+>
+<strong>
+🛒
+<span
+id="navBadge"
+class="badge"
+style="display:none"
+>0</span>
+</strong>
+Корзина
+</button>
+
+<button
+class="nav"
+onclick="showInfo()"
+>
+<strong>ℹ️</strong>
+Информация
+</button>
+
+</div>
+
+</nav>
+
+<div
+id="productModal"
+class="product-modal"
+onclick="
+if(event.target===this){
+closeProduct();
+}
+"
+>
+
+<div class="product-sheet">
+
+<div class="product-photo">
+
+<img
+id="productModalImage"
+src=""
+alt=""
+>
+
+<button
+id="productModalLeft"
+class="product-photo-arrow left"
+type="button"
+onclick="changeProductPhoto(-1)"
+>
+‹
+</button>
+
+<button
+id="productModalRight"
+class="product-photo-arrow right"
+type="button"
+onclick="changeProductPhoto(1)"
+>
+›
+</button>
+
+<div
+id="productModalDots"
+class="product-photo-dots"
+></div>
+
+</div>
+
+<div class="product-info">
+
+<div
+id="productModalTitle"
+class="product-title"
+></div>
+
+<div
+id="productModalCategory"
+class="product-category"
+></div>
+
+<div
+id="productModalPrice"
+class="product-price"
+></div>
+
+<div
+id="productModalStatus"
+class="product-status"
+></div>
+
+<div
+id="productModalDescription"
+class="product-full-description"
+></div>
+
+<button
+id="productModalAdd"
+class="product-add"
+type="button"
+>
+🛒 Добавить в корзину
+</button>
+
+<button
+class="product-close"
+type="button"
+onclick="closeProduct()"
+>
+Закрыть
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="descriptionModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeDescription();
+}
+"
+>
+
+<div class="sheet">
+
+<div class="sheet-head">
+
+<div
+id="descriptionTitle"
+class="sheet-title"
+></div>
+
+<button
+class="close"
+onclick="closeDescription()"
+>
+×
+</button>
+
+</div>
+
+<div
+id="descriptionText"
+class="product-full-description"
+></div>
+
+</div>
+
+</div>
+
+<div
+id="galleryModal"
+class="gallery-modal"
+>
+
+<div class="gallery-inner">
+
+<button
+class="gallery-close"
+onclick="closeGallery()"
+>
+×
+</button>
+
+<button
+class="gallery-arrow left"
+onclick="changeGallery(-1)"
+>
+‹
+</button>
+
+<img
+id="galleryImage"
+class="gallery-image"
+src=""
+alt=""
+>
+
+<button
+class="gallery-arrow right"
+onclick="changeGallery(1)"
+>
+›
+</button>
+
+</div>
+
+</div>
+
+<div
+id="cartModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeCart();
+}
+"
+>
+
+<div class="sheet">
+
+<div class="sheet-head">
+
+<div class="sheet-title">
+🛒 Корзина
+</div>
+
+<button
+class="close"
+onclick="closeCart()"
+>
+×
+</button>
+
+</div>
+
+<div
+id="cartItems"
+class="cart-items"
+></div>
+
+<div
+id="cartFooter"
+></div>
+
+</div>
+
+</div>
+
+<div
+id="checkoutModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeCheckout();
+}
+"
+>
+
+<div class="sheet">
+
+<div class="sheet-head">
+
+<div class="sheet-title">
+📦 Оформление заказа
+</div>
+
+<button
+class="close"
+onclick="closeCheckout()"
+>
+×
+</button>
+
+</div>
+
+<div id="checkoutContent">
+
+<div class="form">
+
+<div>
+<label>Ваш Telegram</label>
+
+<input
+id="telegramUsername"
+readonly
+>
+</div>
+
+<div>
+<label>Имя</label>
+
+<input
+id="customerName"
+placeholder="Как к вам обращаться?"
+>
+</div>
+
+<div>
+<label>Контакт для связи</label>
+
+<input
+id="customerContact"
+placeholder="@username или телефон"
+>
+</div>
+
+<div>
+<label>Комментарий к заказу</label>
+
+<textarea
+id="customerComment"
+placeholder="Например: нужен подарок / уточнить наличие"
+></textarea>
+</div>
+
+<button
+id="sendOrderButton"
+class="checkout"
+onclick="sendOrder()"
+>
+📩 Отправить заказ
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="infoModal"
+class="modal"
+onclick="
+if(event.target===this){
+closeInfo();
+}
+"
+>
+
+<div class="sheet">
+
+<div class="sheet-head">
+
+<div class="sheet-title">
+ℹ️ SEOULDROP
+</div>
+
+<button
+class="close"
+onclick="closeInfo()"
+>
+×
+</button>
+
+</div>
+
+<div
+style="
+color:#d8c8d5;
+line-height:1.6;
+font-size:14px;
+"
+>
+
+<p>
+🇰🇷 SEOULDROP — магазин оригинальных
+K-POP товаров из Кореи.
+</p>
+
+<p>
+💿 Альбомы<br>
+🎶 Винил<br>
+🃏 Фотокарты<br>
+🎁 Мерч<br>
+🧴 Косметика<br>
+🍪 Сладости
+</p>
+
+<p>
+Все заказы оформляются через каталог.
+После отправки заявки с вами свяжутся
+для уточнения деталей.
+</p>
+
+<p>
+💜 Спасибо, что выбираете SEOULDROP!
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const API_URL =
+'https://seouldrop-shop.outemnikova.workers.dev';
+
+const ORDER_API =
+API_URL +
+'/api/create-order';
+
+const tg =
+window.Telegram &&
+window.Telegram.WebApp
+? window.Telegram.WebApp
+: null;
+
+if(tg){
+
+try{
+tg.ready();
+tg.expand();
+}catch(e){}
+
+}
+
+let products = [];
+let currentCategory = 'Все';
+let searchText = '';
+let cart = loadCart();
+
+let currentGalleryImages = [];
+let currentGalleryIndex = 0;
+
+let currentProduct = null;
+let currentProductImages = [];
+let currentProductImageIndex = 0;
+
+function loadCart(){
+
+try{
+
+const saved =
+localStorage.getItem(
+'seouldrop_cart'
+);
+
+const parsed =
+saved
+? JSON.parse(saved)
+: [];
+
+return Array.isArray(parsed)
+? parsed
+: [];
+
+}catch(e){
+
+return [];
+
+}
+
+}
+
+function saveCart(){
+
+try{
+
+localStorage.setItem(
+'seouldrop_cart',
+JSON.stringify(cart)
+);
+
+}catch(e){}
+
+updateCartBadge();
+
+}
+
+function escapeHtml(value){
+
+return String(value ?? '')
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
+
+}
+
+function formatPrice(value){
+
+return new Intl.NumberFormat(
+'ru-RU'
+).format(
+Number(value) || 0
+) + ' ₽';
+
+}
+
+function getImages(product){
+
+let images = [];
+
+if(Array.isArray(product.images)){
+
+images =
+product.images
+.filter(Boolean)
+.map(String);
+
+}
+
+if(
+!images.length &&
+product.image
+){
+
+images = [
+String(product.image)
+];
+
+}
+
+return images;
+
+}
+
+function getStock(product){
+
+const stock =
+Number(product.stock);
+
+if(
+product.preorder === true ||
+product.preorder === 'true' ||
+product.status === 'preorder'
+){
+
+return {
+type:'preorder',
+count:null
+};
+
+}
+
+if(
+!Number.isFinite(stock) ||
+stock <= 0
+){
+
+return {
+type:'out',
+count:0
+};
+
+}
+
+return {
+type:'instock',
+count:stock
+};
+
+}
+
+async function loadProducts(){
+
+const container =
+document.getElementById(
+'products'
+);
+
+const count =
+document.getElementById(
+'productCount'
+);
+
+container.innerHTML =
+'<div class="message">Загружаем каталог...</div>';
+
+count.textContent =
+'Загрузка...';
+
+const controller =
+new AbortController();
+
+const timeout =
+setTimeout(
+()=>controller.abort(),
+8000
+);
+
+try{
+
+const response =
+await fetch(
+API_URL +
+'/api/products?action=list&_=' +
+Date.now(),
+{
+method:'GET',
+cache:'no-store',
+signal:controller.signal
+}
+);
+
+if(!response.ok){
+
+throw new Error(
+'HTTP ' +
+response.status
+);
+
+}
+
+const data =
+await response.json();
+
+if(
+!data ||
+!Array.isArray(data.products)
+){
+
+throw new Error(
+'Неверный ответ каталога'
+);
+
+}
+
+products =
+data.products;
+
+buildCategories();
+
+renderProducts();
+
+}catch(error){
+
+console.error(
+'SEOULDROP catalog error:',
+error
+);
+
+products = [];
+
+count.textContent =
+'Ошибка загрузки';
+
+container.innerHTML = `
+
+<div class="message">
+
+<strong>
+Не удалось загрузить каталог
+</strong>
+
+<br><br>
+
+Проверь интернет-соединение
+и попробуй открыть каталог ещё раз.
+
+<br><br>
+
+<button
+class="cta"
+onclick="loadProducts()"
+>
+🔄 Повторить
+</button>
+
+</div>
+
+`;
+
+}finally{
+
+clearTimeout(timeout);
+
+}
+
+}
+
+const categoryList = [
+
+'Все',
+'💿 Альбомы',
+'🎶 Винил',
+'🃏 Карты',
+'🎁 Мерч',
+'🧴 Косметика',
+'🍪 Сладости',
+'🌟 Другое'
+
+];
+
+function getCategory(product){
+
+return String(
+product.category ||
+'🌟 Другое'
+).trim();
+
+}
+
+function buildCategories(){
+
+const el =
+document.getElementById(
+'categories'
+);
+
+const existing =
+new Set(
+products.map(getCategory)
+);
+
+const categories =
+categoryList.filter(
+category =>
+category === 'Все' ||
+existing.has(category)
+);
+
+for(const product of products){
+
+const category =
+getCategory(product);
+
+if(
+category &&
+!categories.includes(category)
+){
+
+categories.push(category);
+
+}
+
+}
+
+el.innerHTML =
+categories.map(
+category => `
+
+<button
+type="button"
+class="cat ${
+category === currentCategory
+? 'active'
+: ''
+}"
+onclick="selectCategory(${JSON.stringify(category)})"
+>
+${escapeHtml(category)}
+</button>
+
+`
+).join('');
+
+}
+
+function selectCategory(category){
+
+currentCategory =
+category;
+
+buildCategories();
+
+renderProducts();
+
+}
+
+function filteredProducts(){
+
+const query =
+searchText
+.trim()
+.toLowerCase();
+
+return products.filter(
+product => {
+
+const category =
+getCategory(product);
+
+if(
+currentCategory !== 'Все' &&
+category !== currentCategory
+){
+
+return false;
+
+}
+
+if(!query){
+
+return true;
+
+}
+
+const text = [
+
+product.name,
+product.description,
+product.category,
+product.artist
+
+]
+.filter(Boolean)
+.join(' ')
+.toLowerCase();
+
+return text.includes(query);
+
+}
+);
+
+}
+
+function renderProducts(){
+
+const container =
+document.getElementById(
+'products'
+);
+
+const count =
+document.getElementById(
+'productCount'
+);
+
+const list =
+filteredProducts();
+
+count.textContent =
+list.length +
+(
+list.length === 1
+? ' товар'
+: ' товаров'
+);
+
+if(!list.length){
+
+container.innerHTML = `
+
+<div
+class="message"
+style="grid-column:1/-1"
+>
+
+<strong>
+Ничего не найдено
+</strong>
+
+<br><br>
+
+Попробуй изменить поиск
+или выбрать другую категорию.
+
+</div>
+
+`;
+
+return;
+
+}
+
+container.innerHTML =
+list.map(
+product =>
+createProductCard(product)
+).join('');
+
+attachCardEvents();
+
+}
+
+function createProductCard(product){
+
+const images =
+getImages(product);
+
+const firstImage =
+images[0] || '';
+
+const stock =
+getStock(product);
+
+let statusHtml = '';
+let disabled = false;
+
+if(stock.type === 'preorder'){
+
+statusHtml = `
+<div class="status preorder">
+🟡 Под заказ
+</div>
+`;
+
+}else if(stock.type === 'instock'){
+
+statusHtml = `
+<div class="status instock">
+🟢 В наличии · ${stock.count} шт.
+</div>
+`;
+
+}else{
+
+statusHtml = `
+<div class="status out">
+🔴 Нет в наличии
+</div>
+`;
+
+disabled = true;
+
+}
+
+const arrows =
+images.length > 1
+? `
+
+<button
+class="photo-arrow left"
+type="button"
+>
+‹
+</button>
+
+<button
+class="photo-arrow right"
+type="button"
+>
+›
+</button>
+
+`
+: '';
+
+const dots =
+images.length > 1
+? `
+
+<div class="photo-dots">
+
+${images.map(
+(_,i)=>`
+<span
+class="photo-dot ${
+i===0 ? 'active' : ''
+}"
+></span>
+`
+).join('')}
+
+</div>
+
+`
+: '';
+
+return `
+
+<article
+class="card"
+data-id="${escapeHtml(String(product.id))}"
+>
+
+<div class="pic">
+
+${
+firstImage
+? `
+<img
+src="${escapeHtml(firstImage)}"
+alt="${escapeHtml(product.name || 'Товар')}"
+loading="lazy"
+>
+`
+: `
+<div
+style="
+font-size:44px;
+opacity:.7;
+"
+>
+🛍️
+</div>
+`
+}
+
+${arrows}
+
+${dots}
+
+</div>
+
+<div class="info">
+
+<div class="name">
+${escapeHtml(
+product.name ||
+'Без названия'
+)}
+</div>
+
+<div class="meta">
+${
+product.artist
+? escapeHtml(product.artist)
+: escapeHtml(getCategory(product))
+}
+</div>
+
+<div class="price">
+${formatPrice(product.price)}
+</div>
+
+<div class="description">
+${escapeHtml(
+String(
+product.description || ''
+).trim() ||
+'Описание товара пока не добавлено.'
+)}
+</div>
+
+<button
+type="button"
+class="more-description"
+>
+Подробнее →
+</button>
+
+${statusHtml}
+
+<button
+type="button"
+class="add ${
+disabled ? 'disabled' : ''
+}"
+${disabled ? 'disabled' : ''}
+>
+${
+stock.type === 'preorder'
+? '🛒 Заказать'
+: '🛒 В корзину'
+}
+</button>
+
+</div>
+
+</article>
+
+`;
+
+}
+
+function attachCardEvents(){
+
+document
+.querySelectorAll('.card')
+.forEach(card=>{
+
+const id =
+card.dataset.id;
+
+const product =
+products.find(
+item =>
+String(item.id) ===
+String(id)
+);
+
+if(!product)return;
+
+const add =
+card.querySelector('.add');
+
+if(add){
+
+add.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+if(!add.disabled){
+
+addToCart(product);
+
+}
+
+}
+);
+
+}
+
+const more =
+card.querySelector(
+'.more-description'
+);
+
+if(more){
+
+more.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+openProduct(product);
+
+}
+);
+
+}
+
+const pic =
+card.querySelector('.pic');
+
+if(pic){
+
+pic.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+if(
+event.target.closest(
+'.photo-arrow'
+)
+)return;
+
+openGallery(product);
+
+}
+);
+
+}
+
+const left =
+card.querySelector(
+'.photo-arrow.left'
+);
+
+const right =
+card.querySelector(
+'.photo-arrow.right'
+);
+
+if(left){
+
+left.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+openGallery(
+product,
+-1
+);
+
+}
+);
+
+}
+
+if(right){
+
+right.addEventListener(
+'click',
+event=>{
+
+event.stopPropagation();
+
+openGallery(
+product,
+1
+);
+
+}
+);
+
+}
+
+card.addEventListener(
+'click',
+event=>{
+
+if(
+event.target.closest('.add') ||
+event.target.closest('.more-description') ||
+event.target.closest('.photo-arrow') ||
+event.target.closest('.pic')
+){
+
+return;
+
+}
+
+openProduct(product);
+
+}
+);
+
+});
+
+}
+
+function openProduct(product){
+
+currentProduct =
+product;
+
+currentProductImages =
+getImages(product);
+
+currentProductImageIndex =
+0;
+
+document.getElementById(
+'productModalTitle'
+).textContent =
+product.name ||
+'Товар';
+
+document.getElementById(
+'productModalCategory'
+).textContent =
+getCategory(product);
+
+document.getElementById(
+'productModalPrice'
+).textContent =
+formatPrice(product.price);
+
+document.getElementById(
+'productModalDescription'
+).textContent =
+String(
+product.description || ''
+).trim() ||
+'Описание товара пока не добавлено.';
+
+updateProductModalStatus();
+updateProductModalPhoto();
+
+const button =
+document.getElementById(
+'productModalAdd'
+);
+
+button.textContent =
+'🛒 Добавить в корзину';
+
+button.onclick =
+()=>{
+
+if(!currentProduct)return;
+
+const stock =
+getStock(currentProduct);
+
+if(stock.type === 'out')return;
+
+addToCart(currentProduct);
+
+button.textContent =
+'✓ Добавлено в корзину';
+
+setTimeout(
+()=>{
+if(currentProduct){
+button.textContent =
+'🛒 Добавить в корзину';
+}
+},
+1200
+);
+
+};
+
+document
+.getElementById(
+'productModal'
+)
+.classList.add('show');
+
+}
+
+function updateProductModalStatus(){
+
+if(!currentProduct)return;
+
+const stock =
+getStock(currentProduct);
+
+const status =
+document.getElementById(
+'productModalStatus'
+);
+
+const button =
+document.getElementById(
+'productModalAdd'
+);
+
+if(stock.type === 'preorder'){
+
+status.textContent =
+'🟡 Под заказ';
+
+status.style.color =
+'var(--yellow)';
+
+button.disabled =
+false;
+
+}
+else if(stock.type === 'instock'){
+
+status.textContent =
+'🟢 В наличии · ' +
+stock.count +
+' шт.';
+
+status.style.color =
+'var(--green)';
+
+button.disabled =
+false;
+
+}
+else{
+
+status.textContent =
+'🔴 Нет в наличии';
+
+status.style.color =
+'var(--red)';
+
+button.disabled =
+true;
+
+button.textContent =
+'Нет в наличии';
+
+}
+
+}
+
+function updateProductModalPhoto(){
+
+const image =
+document.getElementById(
+'productModalImage'
+);
+
+const dots =
+document.getElementById(
+'productModalDots'
+);
+
+const left =
+document.getElementById(
+'productModalLeft'
+);
+
+const right =
+document.getElementById(
+'productModalRight'
+);
+
+if(!currentProductImages.length){
+
+image.style.display =
+'none';
+
+left.style.display =
+'none';
+
+right.style.display =
+'none';
+
+dots.innerHTML =
+'';
+
+return;
+
+}
+
+image.style.display =
+'block';
+
+image.src =
+currentProductImages[
+currentProductImageIndex
+];
+
+if(
+currentProductImages.length <= 1
+){
+
+left.style.display =
+'none';
+
+right.style.display =
+'none';
+
+dots.innerHTML =
+'';
+
+return;
+
+}
+
+left.style.display =
+'block';
+
+right.style.display =
+'block';
+
+dots.innerHTML =
+currentProductImages.map(
+(_,index)=>`
+
+<span
+class="
+product-photo-dot
+${
+index === currentProductImageIndex
+? 'active'
+: ''
+}
+"
+></span>
+
+`
+).join('');
+
+}
+
+function changeProductPhoto(direction){
+
+if(
+currentProductImages.length <= 1
+){
+
+return;
+
+}
+
+currentProductImageIndex =
+(
+currentProductImageIndex +
+direction +
+currentProductImages.length
+) %
+currentProductImages.length;
+
+updateProductModalPhoto();
+
+}
+
+function closeProduct(){
+
+document
+.getElementById(
+'productModal'
+)
+.classList.remove(
+'show'
+);
+
+currentProduct =
+null;
+
+}
+
+function openDescription(product){
+
+document.getElementById(
+'descriptionTitle'
+).textContent =
+product.name ||
+'Товар';
+
+document.getElementById(
+'descriptionText'
+).textContent =
+String(
+product.description || ''
+).trim() ||
+'Описание товара пока не добавлено.';
+
+document
+.getElementById(
+'descriptionModal'
+)
+.classList.add('show');
+
+}
+
+function closeDescription(){
+
+document
+.getElementById(
+'descriptionModal'
+)
+.classList.remove('show');
+
+}
+
+function openGallery(
+product,
+direction=0
+){
+
+currentGalleryImages =
+getImages(product);
+
+if(!currentGalleryImages.length){
+
+return;
+
+}
+
+currentGalleryIndex =
+direction > 0
+? 1 % currentGalleryImages.length
+: direction < 0
+? currentGalleryImages.length - 1
+: 0;
+
+updateGallery();
+
+document
+.getElementById(
+'galleryModal'
+)
+.classList.add('show');
+
+}
+
+function updateGallery(){
+
+document
+.getElementById(
+'galleryImage'
+)
+.src =
+currentGalleryImages[
+currentGalleryIndex
+] || '';
+
+}
+
+function changeGallery(direction){
+
+if(
+currentGalleryImages.length <= 1
+)return;
+
+currentGalleryIndex =
+(
+currentGalleryIndex +
+direction +
+currentGalleryImages.length
+) %
+currentGalleryImages.length;
+
+updateGallery();
+
+}
+
+function closeGallery(){
+
+document
+.getElementById(
+'galleryModal'
+)
+.classList.remove('show');
+
+}
+
+function addToCart(product){
+
+const existing =
+cart.find(
+item =>
+String(item.id) ===
+String(product.id)
+);
+
+const stock =
+getStock(product);
+
+if(stock.type === 'out')return;
+
+if(existing){
+
+if(
+stock.type === 'instock' &&
+existing.qty >= stock.count
+){
+
+alert(
+'Больше этого товара сейчас нет в наличии.'
+);
+
+return;
+
+}
+
+existing.qty += 1;
+
+}else{
+
+cart.push({
+id:product.id,
+qty:1
+});
+
+}
+
+saveCart();
+
+}
+
+function getCartDetailed(){
+
+return cart
+.map(item=>{
+
+const product =
+products.find(
+p =>
+String(p.id) ===
+String(item.id)
+);
+
+if(!product)return null;
+
+return {
+product,
+qty:Number(item.qty)||1
+};
+
+})
+.filter(Boolean);
+
+}
+
+function changeQty(
+productId,
+delta
+){
+
+const item =
+cart.find(
+item =>
+String(item.id) ===
+String(productId)
+);
+
+const product =
+products.find(
+p =>
+String(p.id) ===
+String(productId)
+);
+
+if(!item || !product)return;
+
+const stock =
+getStock(product);
+
+let next =
+Number(item.qty) +
+delta;
+
+if(next < 1)next=1;
+
+if(
+stock.type === 'instock' &&
+next > stock.count
+){
+
+next=stock.count;
+
+}
+
+item.qty=next;
+
+saveCart();
+
+renderCart();
+
+}
+
+function removeFromCart(productId){
+
+cart =
+cart.filter(
+item =>
+String(item.id) !==
+String(productId)
+);
+
+saveCart();
+
+renderCart();
+
+}
+
+function cartTotal(){
+
+return getCartDetailed()
+.reduce(
+(sum,item)=>
+sum +
+(
+Number(item.product.price)||0
+) *
+item.qty,
+0
+);
+
+}
+
+function cartCount(){
+
+return cart.reduce(
+(sum,item)=>
+sum +
+(Number(item.qty)||0),
+0
+);
+
+}
+
+function updateCartBadge(){
+
+const count =
+cartCount();
+
+const top =
+document.getElementById(
+'cartBadge'
+);
+
+const nav =
+document.getElementById(
+'navBadge'
+);
+
+if(count>0){
+
+top.style.display =
+'flex';
+
+top.textContent =
+count;
+
+nav.style.display =
+'inline-flex';
+
+nav.textContent =
+count;
+
+}else{
+
+top.style.display =
+'none';
+
+nav.style.display =
+'none';
+
+}
+
+}
+
+function renderCart(){
+
+const container =
+document.getElementById(
+'cartItems'
+);
+
+const footer =
+document.getElementById(
+'cartFooter'
+);
+
+const detailed =
+getCartDetailed();
+
+if(!detailed.length){
+
+container.innerHTML = `
+
+<div class="message">
+
+🛒 Корзина пока пустая.
+
+<br><br>
+
+Добавь товары из каталога.
+
+</div>
+
+`;
+
+footer.innerHTML='';
+
+return;
+
+}
+
+container.innerHTML =
+detailed.map(
+item=>{
+
+const images =
+getImages(item.product);
+
+const image =
+images[0] || '';
+
+return `
+
+<div class="cart-item">
+
+${
+image
+? `
+<img
+class="cart-thumb"
+src="${escapeHtml(image)}"
+alt=""
+>
+`
+: `
+<div
+class="cart-thumb"
+style="
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+"
+>
+🛍️
+</div>
+`
+}
+
+<div>
+
+<div class="cart-name">
+${escapeHtml(
+item.product.name ||
+'Товар'
+)}
+</div>
+
+<div class="cart-price">
+${formatPrice(
+item.product.price
+)}
+</div>
+
+<div class="qty">
+
+<button
+onclick="
+changeQty(
+${JSON.stringify(item.product.id)},
+-1
+)
+"
+>
+−
+</button>
+
+<span>
+${item.qty}
+</span>
+
+<button
+onclick="
+changeQty(
+${JSON.stringify(item.product.id)},
+1
+)
+"
+>
++
+</button>
+
+</div>
+
+<button
+class="remove"
+onclick="
+removeFromCart(
+${JSON.stringify(item.product.id)}
+)
+"
+>
+Удалить
+</button>
+
+</div>
+
+<strong>
+${formatPrice(
+(
+Number(item.product.price)||0
+) *
+item.qty
+)}
+</strong>
+
+</div>
+
+`;
+
+}
+).join('');
+
+footer.innerHTML = `
+
+<div class="cart-total">
+
+<span>Итого</span>
+
+<span>
+${formatPrice(cartTotal())}
+</span>
+
+</div>
+
+<button
+class="checkout"
+onclick="openCheckout()"
+>
+📦 Оформить заказ
+</button>
+
+`;
+
+}
+
+function openCart(){
+
+renderCart();
+
+document
+.getElementById(
+'cartModal'
+)
+.classList.add('show');
+
+}
+
+function closeCart(){
+
+document
+.getElementById(
+'cartModal'
+)
+.classList.remove('show');
+
+}
+
+function openCheckout(){
+
+if(!cartCount())return;
+
+const username =
+tg &&
+tg.initDataUnsafe &&
+tg.initDataUnsafe.user
+? (
+tg.initDataUnsafe.user.username
+? '@'+
+tg.initDataUnsafe.user.username
+:
+(
+tg.initDataUnsafe.user.first_name ||
+'Пользователь'
+)
+)
+: '';
+
+document.getElementById(
+'telegramUsername'
+).value =
+username;
+
+closeCart();
+
+document
+.getElementById(
+'checkoutModal'
+)
+.classList.add('show');
+
+}
+
+function closeCheckout(){
+
+document
+.getElementById(
+'checkoutModal'
+)
+.classList.remove('show');
+
+}
+
+async function sendOrder(){
+
+const button =
+document.getElementById(
+'sendOrderButton'
+);
+
+const name =
+document.getElementById(
+'customerName'
+).value.trim();
+
+const contact =
+document.getElementById(
+'customerContact'
+).value.trim();
+
+const comment =
+document.getElementById(
+'customerComment'
+).value.trim();
+
+if(!name){
+
+alert('Укажи имя.');
+
+return;
+
+}
+
+if(!contact){
+
+alert('Укажи контакт для связи.');
+
+return;
+
+}
+
+const items =
+getCartDetailed()
+.map(
+item=>({
+id:item.product.id,
+qty:item.qty
+})
+);
+
+if(!items.length){
+
+alert('Корзина пустая.');
+
+return;
+
+}
+
+button.disabled=true;
+
+button.textContent=
+'Отправляем...';
+
+try{
+
+const response =
+await fetch(
+ORDER_API,
+{
+method:'POST',
+headers:{
+'Content-Type':
+'application/json'
+},
+body:JSON.stringify({
+
+items,
+name,
+contact,
+comment,
+
+telegramUsername:
+document.getElementById(
+'telegramUsername'
+).value,
+
+telegramUser:
+tg &&
+tg.initDataUnsafe
+? tg.initDataUnsafe.user
+: null
+
+})
+}
+);
+
+const data =
+await response.json();
+
+if(
+!response.ok ||
+!data.ok
+){
+
+throw new Error(
+data.error ||
+'Не удалось отправить заказ'
+);
+
+}
+
+cart=[];
+
+saveCart();
+
+document.getElementById(
+'checkoutContent'
+).innerHTML = `
+
+<div class="success">
+
+<div class="success-icon">
+💜
+</div>
+
+<h2>
+Заказ отправлен!
+</h2>
+
+<p
+style="
+color:var(--muted);
+line-height:1.5;
+"
+>
+Спасибо за заказ в SEOULDROP.
+Мы свяжемся с тобой для уточнения
+деталей.
+</p>
+
+<button
+class="checkout"
+onclick="closeCheckout()"
+>
+Вернуться в каталог
+</button>
+
+</div>
+
+`;
+
+}catch(error){
+
+console.error(
+'Order error:',
+error
+);
+
+alert(
+'Не удалось отправить заказ.\n\n' +
+(
+error.message ||
+'Попробуй ещё раз.'
+)
+);
+
+}finally{
+
+button.disabled=false;
+
+button.textContent=
+'📩 Отправить заказ';
+
+}
+
+}
+
+function showInfo(){
+
+document
+.getElementById(
+'infoModal'
+)
+.classList.add('show');
+
+}
+
+function closeInfo(){
+
+document
+.getElementById(
+'infoModal'
+)
+.classList.remove('show');
+
+}
+
+function scrollToCatalog(){
+
+document
+.getElementById(
+'catalogSection'
+)
+.scrollIntoView({
+behavior:'smooth',
+block:'start'
+});
+
+}
+
+document
+.getElementById(
+'searchInput'
+)
+.addEventListener(
+'input',
+event=>{
+
+searchText =
+event.target.value || '';
+
+renderProducts();
+
+}
+);
+
+document.addEventListener(
+'keydown',
+event=>{
+
+if(event.key !== 'Escape')return;
+
+closeProduct();
+closeDescription();
+closeGallery();
+closeCart();
+closeCheckout();
+closeInfo();
+
+}
+);
+
+let productTouchStartX=0;
+
+document
+.getElementById(
+'productModal'
+)
+.addEventListener(
+'touchstart',
+event=>{
+
+productTouchStartX =
+event.touches[0].clientX;
+
+},
+{passive:true}
+);
+
+document
+.getElementById(
+'productModal'
+)
+.addEventListener(
+'touchend',
+event=>{
+
+const endX =
+event.changedTouches[0].clientX;
+
+const diff =
+endX-productTouchStartX;
+
+if(Math.abs(diff)<40)return;
+
+if(diff<0){
+
+changeProductPhoto(1);
+
+}else{
+
+changeProductPhoto(-1);
+
+}
+
+},
+{passive:true}
+);
+
+let touchStartX=0;
+
+document
+.getElementById(
+'galleryModal'
+)
+.addEventListener(
+'touchstart',
+event=>{
+
+touchStartX =
+event.touches[0].clientX;
+
+},
+{passive:true}
+);
+
+document
+.getElementById(
+'galleryModal'
+)
+.addEventListener(
+'touchend',
+event=>{
+
+const endX =
+event.changedTouches[0].clientX;
+
+const diff =
+endX-touchStartX;
+
+if(Math.abs(diff)<40)return;
+
+if(diff<0){
+
+changeGallery(1);
+
+}else{
+
+changeGallery(-1);
+
+}
+
+},
+{passive:true}
+);
+
+updateCartBadge();
+
+loadProducts();
+
+</script>
+
+</body>
+</html>
