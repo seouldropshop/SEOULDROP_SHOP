@@ -80,7 +80,28 @@ select option{background:#0b0610;color:#fff}.btn{border:0;border-radius:13px;pad
  style="margin-top:12px"
 ></div>
 
+<section class="panel" id="reviewsAdmin">
+
+<h2 style="margin-top:0">⭐ Отзывы</h2>
+
 <div
+ id="reviewsAdminList"
+ class="products"
+ style="margin-top:12px"
+>
+Загрузка отзывов...
+</div>
+
+<button
+ class="btn secondary"
+ style="margin-top:12px"
+ onclick="loadReviewsAdmin()"
+>
+🔄 Обновить отзывы
+</button>
+
+</section>
+ <div
  class="row"
  style="margin-top:16px;justify-content:flex-end"
 >
@@ -433,7 +454,8 @@ async function login(){
   }
 
   await load();
-
+ await loadReviewsAdmin();
+  
   document
    .getElementById("login")
    .classList
@@ -1432,6 +1454,229 @@ function logout(){
 
 }
 
+/* REVIEWS ADMIN */
+
+async function loadReviewsAdmin(){
+
+ const box =
+  document.getElementById("reviewsAdminList");
+
+ box.innerHTML = "⏳ Загружаю отзывы...";
+
+ try{
+
+  const response =
+   await fetch(
+    "/api/reviews-admin",
+    {
+     headers:{
+      "X-Admin-Password":
+       adminPassword
+     }
+    }
+   );
+
+  const data =
+   await response.json();
+
+  if(!response.ok || !data.ok)
+   throw new Error(
+    data.error || "Ошибка"
+   );
+
+  renderReviewsAdmin(
+   data.reviews || []
+  );
+
+ }catch(e){
+
+  box.innerHTML =
+   "<div class=\"muted\">" +
+   esc(e.message) +
+   "</div>";
+
+ }
+
+}
+
+
+function renderReviewsAdmin(reviews){
+
+ const box =
+  document.getElementById(
+   "reviewsAdminList"
+  );
+
+ if(!reviews.length){
+
+  box.innerHTML =
+   "<div class=\"muted\">" +
+   "Отзывов пока нет." +
+   "</div>";
+
+  return;
+
+ }
+
+ box.innerHTML =
+  reviews.map(function(review){
+
+   const stars =
+    "⭐".repeat(
+     Number(review.rating || 0)
+    );
+
+   const date =
+    review.createdAt
+     ? new Date(
+        review.createdAt
+       ).toLocaleDateString("ru-RU")
+     : "";
+
+   let status =
+    "🟡 На модерации";
+
+   if(review.status === "approved")
+    status = "🟢 Опубликован";
+
+   if(review.status === "hidden")
+    status = "👁 Скрыт";
+
+   return `
+    <div class="panel">
+
+     <div>
+      <b>${esc(review.name)}</b>
+     </div>
+
+     <div style="margin-top:5px">
+      ${stars}
+     </div>
+
+     <div
+      class="muted"
+      style="margin-top:5px"
+     >
+      ${date} · ${status}
+     </div>
+
+     <div
+      style="margin-top:10px;line-height:1.5"
+     >
+      ${esc(review.text)}
+     </div>
+
+     ${
+      review.telegram
+       ? `
+        <div
+         class="muted"
+         style="margin-top:7px"
+        >
+         Telegram: ${esc(review.telegram)}
+        </div>
+       `
+       : ""
+     }
+
+     <div
+      class="actions"
+      style="margin-top:12px"
+     >
+
+      ${
+       review.status !== "approved"
+        ? `
+         <button
+          class="btn"
+          onclick="moderateReview('${review.id}','approve')"
+         >
+          ✅ Одобрить
+         </button>
+        `
+        : ""
+      }
+
+      ${
+       review.status !== "hidden"
+        ? `
+         <button
+          class="btn secondary"
+          onclick="moderateReview('${review.id}','hide')"
+         >
+          👁 Скрыть
+         </button>
+        `
+        : ""
+      }
+
+      <button
+       class="btn secondary"
+       onclick="moderateReview('${review.id}','delete')"
+      >
+       🗑 Удалить
+      </button>
+
+     </div>
+
+    </div>
+   `;
+
+  }).join("");
+
+}
+
+
+async function moderateReview(id, action){
+
+ if(
+  action === "delete" &&
+  !confirm("Удалить этот отзыв?")
+ )
+  return;
+
+ try{
+
+  const response =
+   await fetch(
+    "/api/reviews",
+    {
+     method:"POST",
+
+     headers:{
+      "Content-Type":
+       "application/json",
+
+      "X-Admin-Password":
+       adminPassword
+     },
+
+     body:JSON.stringify({
+      action:action,
+      id:id
+     })
+    }
+   );
+
+  const data =
+   await response.json();
+
+  if(!response.ok || !data.ok)
+   throw new Error(
+    data.error || "Ошибка"
+   );
+
+  renderReviewsAdmin(
+   data.reviews || []
+  );
+
+ }catch(e){
+
+  alert(e.message);
+
+ }
+
+}
 </script>
 
 </body>
