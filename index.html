@@ -37,8 +37,216 @@
 <section id="catalogSection" class="section"><div class="section-head"><h2>Каталог</h2><div id="productCount" class="product-count">Загрузка...</div></div><div id="categories" class="categories"></div><div id="products" class="grid"><div class="message">Загружаем каталог...</div></div></section>
 <section id="favoritesSection" class="section fav-section"><div class="section-head"><h2>❤️ Избранное</h2><div id="favoriteCount" class="product-count"></div></div><div id="favorites" class="fav-grid"></div></section>
 </div>
+<section class="section" id="reviewsSection">
+  <div class="section-head">
+    <h2>⭐ Отзывы</h2>
+    <div class="product-count" id="visitCounter">Посещений: …</div>
+  </div>
 
-<nav class="bottom"><div class="bottom-inner">
+  <div id="reviewsSummary" class="message" style="margin-bottom:12px">
+    Загружаем отзывы…
+  </div>
+
+  <div id="reviewsList"></div>
+
+  <button class="cta" style="width:100%;margin-top:12px" onclick="openReviewForm()">
+    ✍️ Оставить отзыв
+  </button>
+</section>
+
+<div id="reviewModal" class="modal" onclick="if(event.target===this)closeReviewForm()">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div class="sheet-title">✍️ Оставить отзыв</div>
+      <button class="close" onclick="closeReviewForm()">×</button>
+    </div>
+
+    <div class="form">
+      <div>
+        <label>Ваше имя</label>
+        <input id="reviewName" placeholder="Как вас зовут?">
+      </div>
+
+      <div>
+        <label>Оценка</label>
+        <div id="reviewStars" style="display:flex;gap:6px;margin-top:6px">
+          <button type="button" onclick="setReviewRating(1)">⭐</button>
+          <button type="button" onclick="setReviewRating(2)">⭐</button>
+          <button type="button" onclick="setReviewRating(3)">⭐</button>
+          <button type="button" onclick="setReviewRating(4)">⭐</button>
+          <button type="button" onclick="setReviewRating(5)">⭐</button>
+        </div>
+        <div id="reviewRatingText" style="color:var(--muted);font-size:11px;margin-top:5px">
+          Выберите оценку
+        </div>
+      </div>
+
+      <div>
+        <label>Ваш отзыв</label>
+        <textarea id="reviewText" maxlength="1000" placeholder="Расскажите о покупке или магазине…"></textarea>
+      </div>
+
+      <button class="cta" onclick="sendReview()">Отправить отзыв</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedReviewRating = 0;
+
+function openReviewForm(){
+  document.getElementById('reviewModal').classList.add('show');
+}
+
+function closeReviewForm(){
+  document.getElementById('reviewModal').classList.remove('show');
+}
+
+function setReviewRating(rating){
+  selectedReviewRating = rating;
+  document.getElementById('reviewRatingText').textContent =
+    'Ваша оценка: ' + rating + ' из 5';
+}
+
+async function sendReview(){
+  const name = document.getElementById('reviewName').value.trim();
+  const text = document.getElementById('reviewText').value.trim();
+
+  if(!name || !text || !selectedReviewRating){
+    alert('Заполните имя, отзыв и выберите оценку.');
+    return;
+  }
+
+  let telegram = '';
+
+  try{
+    const user = window.Telegram &&
+      Telegram.WebApp &&
+      Telegram.WebApp.initDataUnsafe &&
+      Telegram.WebApp.initDataUnsafe.user;
+
+    if(user && user.username){
+      telegram = '@' + user.username;
+    }
+  }catch(e){}
+
+  try{
+    const response = await fetch(API_URL + '/api/reviews',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name:name,
+        text:text,
+        rating:selectedReviewRating,
+        telegram:telegram
+      })
+    });
+
+    const data = await response.json();
+
+    if(!data.ok){
+      alert(data.error || 'Не удалось отправить отзыв.');
+      return;
+    }
+
+    alert('Спасибо! 💜 Отзыв отправлен на модерацию.');
+    document.getElementById('reviewName').value = '';
+    document.getElementById('reviewText').value = '';
+    selectedReviewRating = 0;
+    document.getElementById('reviewRatingText').textContent = 'Выберите оценку';
+    closeReviewForm();
+
+  }catch(e){
+    alert('Ошибка отправки. Попробуйте ещё раз.');
+  }
+}
+
+async function loadReviews(){
+  try{
+    const response = await fetch(API_URL + '/api/reviews?_=' + Date.now(),{
+      cache:'no-store'
+    });
+
+    const data = await response.json();
+
+    const summary = document.getElementById('reviewsSummary');
+    const list = document.getElementById('reviewsList');
+
+    if(!data.ok){
+      summary.textContent = 'Отзывы пока недоступны.';
+      return;
+    }
+
+    if(!data.count){
+      summary.innerHTML = '<strong>Пока нет отзывов</strong><br>Будьте первым! 💜';
+      list.innerHTML = '';
+      return;
+    }
+
+    summary.innerHTML =
+      '⭐ <strong>' + data.average + '</strong> / 5 · ' +
+      data.count + ' ' +
+      (data.count === 1 ? 'отзыв' :
+       data.count < 5 ? 'отзыва' : 'отзывов');
+
+    list.innerHTML = data.reviews.map(function(review){
+      const stars = '⭐'.repeat(Number(review.rating || 0));
+
+      const date = review.createdAt
+        ? new Date(review.createdAt).toLocaleDateString('ru-RU')
+        : '';
+
+      return `
+        <div class="message" style="text-align:left;margin-bottom:10px">
+          <strong>${escapeHtml(review.name)}</strong>
+          <div style="margin-top:4px">${stars}</div>
+          <div style="margin-top:7px;color:#e8dbe5">
+            ${escapeHtml(review.text)}
+          </div>
+          <div style="margin-top:7px;color:var(--muted);font-size:10px">
+            ${date}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  }catch(e){
+    document.getElementById('reviewsSummary').textContent =
+      'Отзывы пока недоступны.';
+  }
+}
+
+function escapeHtml(value){
+  return String(value || '').replace(/[&<>"']/g,function(char){
+    return {
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    }[char];
+  });
+}
+
+async function countVisit(){
+  try{
+    const response = await fetch(API_URL + '/api/visits',{
+      method:'POST',
+      cache:'no-store'
+    });
+
+    const data = await response.json();
+
+    if(data.ok){
+      document.getElementById('visitCounter').textContent =
+        'Посещений: ' + data.visits;
+    }
+  }catch(e){}
+}
+
+</script>
+<nav class="bottom">
+<div class="bottom-inner">
 <button class="nav active" id="navCatalog" onclick="showCatalog()"><strong>🏠</strong>Каталог</button>
 <button class="nav" id="navCart" onclick="openCart()"><strong>🛒<span id="navBadge" class="badge" style="display:none">0</span></strong>Корзина</button>
 <button class="nav" id="navInfo" onclick="showInfo()"><strong>ℹ️</strong>Информация</button>
@@ -64,6 +272,8 @@ const ORDER_API=API_URL+'/api/create-order';
 const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
 if(tg){try{tg.ready();tg.expand()}catch(e){}}
 
+loadReviews();
+countVisit();
 let products=[],currentCategory='Все',searchText='',cart=loadCart();
 let currentProduct=null,currentProductImages=[],currentProductImageIndex=0;
 let currentGalleryImages=[],currentGalleryIndex=0;
