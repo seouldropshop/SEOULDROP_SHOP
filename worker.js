@@ -1119,6 +1119,247 @@ export default {
       }
     }
 
+        /* ПОСЕЩЕНИЯ И ОТЗЫВЫ */
+
+    if (url.pathname === "/api/visits") {
+      try {
+        const current = Number(
+          await env.PRODUCTS.get("visit_count") || 0
+        );
+
+        const next = current + 1;
+
+        await env.PRODUCTS.put(
+          "visit_count",
+          String(next)
+        );
+
+        return json({
+          ok: true,
+          visits: next
+        });
+      } catch (error) {
+        return json({
+          ok: false,
+          visits: 0
+        }, 500);
+      }
+    }
+
+    if (url.pathname === "/api/reviews") {
+      let reviews = [];
+
+      try {
+        reviews =
+          await env.PRODUCTS.get(
+            "reviews",
+            "json"
+          ) || [];
+      } catch (error) {
+        reviews = [];
+      }
+
+      if (request.method === "GET") {
+        const approved =
+          reviews.filter(
+            review =>
+              review.status === "approved"
+          );
+
+        const totalRating =
+          approved.reduce(
+            (sum, review) =>
+              sum + Number(review.rating || 0),
+            0
+          );
+
+        return json({
+          ok: true,
+          reviews: approved,
+          count: approved.length,
+          average:
+            approved.length
+              ? Math.round(
+                  (totalRating / approved.length) * 10
+                ) / 10
+              : 0
+        });
+      }
+
+      if (request.method === "POST") {
+        let body = {};
+
+        try {
+          body = await request.json();
+        } catch {
+          return json({
+            ok: false,
+            error: "Неверный JSON."
+          }, 400);
+        }
+
+        /* МОДЕРАЦИЯ */
+
+        if (body.action) {
+          if (
+            !validPassword(
+              request,
+              env,
+              body
+            )
+          ) {
+            return json({
+              ok: false,
+              error: "Неверный пароль."
+            }, 401);
+          }
+
+          const index =
+            reviews.findIndex(
+              review =>
+                String(review.id) ===
+                String(body.id)
+            );
+
+          if (index === -1) {
+            return json({
+              ok: false,
+              error: "Отзыв не найден."
+            }, 404);
+          }
+
+          if (
+            body.action === "approve"
+          ) {
+            reviews[index].status =
+              "approved";
+          }
+
+          if (
+            body.action === "hide"
+          ) {
+            reviews[index].status =
+              "hidden";
+          }
+
+          if (
+            body.action === "delete"
+          ) {
+            reviews.splice(index, 1);
+          }
+
+          await env.PRODUCTS.put(
+            "reviews",
+            JSON.stringify(reviews)
+          );
+
+          return json({
+            ok: true,
+            reviews
+          });
+        }
+
+        /* НОВЫЙ ОТЗЫВ */
+
+        const name =
+          String(body.name || "")
+            .trim()
+            .slice(0, 60);
+
+        const text =
+          String(body.text || "")
+            .trim()
+            .slice(0, 1000);
+
+        const rating =
+          Number(body.rating);
+
+        if (
+          !name ||
+          !text ||
+          !Number.isInteger(rating) ||
+          rating < 1 ||
+          rating > 5
+        ) {
+          return json({
+            ok: false,
+            error:
+              "Заполните имя, отзыв и оценку от 1 до 5."
+          }, 400);
+        }
+
+        const review = {
+          id:
+            Date.now().toString() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .slice(2, 8),
+
+          name,
+          text,
+          rating,
+
+          telegram:
+            body.telegram || "",
+
+          createdAt:
+            new Date().toISOString(),
+
+          status: "pending"
+        };
+
+        reviews.unshift(review);
+
+        await env.PRODUCTS.put(
+          "reviews",
+          JSON.stringify(reviews)
+        );
+
+        return json({
+          ok: true,
+          pending: true
+        });
+      }
+    }
+
+    /* ОТЗЫВЫ ДЛЯ АДМИНКИ */
+
+    if (
+      url.pathname ===
+      "/api/reviews-admin"
+    ) {
+      if (
+        !validPassword(
+          request,
+          env
+        )
+      ) {
+        return json({
+          ok: false,
+          error: "Неверный пароль."
+        }, 401);
+      }
+
+      try {
+        const reviews =
+          await env.PRODUCTS.get(
+            "reviews",
+            "json"
+          ) || [];
+
+        return json({
+          ok: true,
+          reviews
+        });
+      } catch (error) {
+        return json({
+          ok: false,
+          error:
+            "Не удалось получить отзывы."
+        }, 500);
+      }
+    }
     /* АДМИНКА */
 
     if (
